@@ -15,33 +15,31 @@ Noir는 소스 코드를 읽고, 그 서비스에 어떤 주소가 열려 있는
 
 찾은 엔드포인트에는 "여기는 결제", "여기는 웹훅" 같은 **태그**를 붙여요. 보안 점검하는 사람이 어디부터 볼지 고르기 쉬워지거든요.
 
-그런데 가끔 태그를 빠뜨려요. 토스페이먼츠가 공개한 [결제 연동 샘플](https://github.com/tosspayments/tosspayments-sample)에 이런 코드가 있어요. 결제를 최종 승인하는 엔드포인트예요.
+그런데 가끔 태그를 빠뜨려요. 카카오페이로 예를 들어 볼게요. 카카오페이는 결제가 끝나면 `pg_token`이라는 값을 붙여서 우리 서버로 돌려보내요. 그래서 카카오페이를 붙인 서버에는 보통 이런 코드가 있어요.
 
 ```js
-app.post("/confirm/widget", function (req, res) {
-  const { paymentKey, orderId, amount } = req.body;
+app.get("/kakaoPaySuccess", function (req, res) {
+  const pgToken = req.query.pg_token;
 
-  // 결제 승인 API를 호출하세요.
+  // 받은 pg_token으로 카카오페이에 결제 승인을 요청해요.
   ...
 });
 ```
 
-Noir로 스캔하면 주소와 받는 값 세 개를 잘 찾아요. 그런데 결제 태그가 안 붙어요.
+Noir로 스캔하면 주소와 받는 값을 잘 찾아요. 그런데 결제 태그가 안 붙어요.
 
 ```text
-POST /confirm/widget
-  ○ body: {"paymentKey":"","orderId":"","amount":""}
+GET /kakaoPaySuccess?pg_token=
 ```
 
-Noir가 `paymentKey`라는 이름을 모르기 때문이에요. 토스페이먼츠에서 쓰는 이름인데, Noir가 아는 이름은 대부분 해외 서비스 것이거든요. 이 이름을 추가하면 결과가 이렇게 바뀌어요.
+Noir가 `pg_token`이라는 이름을 모르기 때문이에요. Noir가 아는 이름은 대부분 해외 서비스 것이거든요. 이 이름을 추가하면 결과가 이렇게 바뀌어요.
 
 ```text
-POST /confirm/widget
-  ○ body: {"paymentKey":"","orderId":"","amount":""}
+GET /kakaoPaySuccess?pg_token=
   ○ tags: payment
 ```
 
-단어 하나를 추가했을 뿐인데, 이 샘플 저장소에서 결제 태그가 붙는 엔드포인트가 49개에서 62개로 늘어요. 오늘 할 일이 바로 이런 거예요. 국내 서비스를 써 본 사람만 아는 이름을 Noir에게 알려 줘요.
+실제로 카카오페이를 붙인 공개 저장소 다섯 곳을 스캔해 봤어요. `pg_token`을 받는 주소 6개 중 3개에 결제 태그가 없었고, 이 단어를 추가하니 6개 모두에 붙었어요. 오늘 할 일이 바로 이런 거예요. 국내 서비스를 써 본 사람만 아는 이름을 Noir에게 알려 줘요.
 
 ## 룰 파일은 이렇게 생겼어요
 
@@ -66,14 +64,14 @@ examples:
 | 이름 | 하는 일 | 예 |
 |---|---|---|
 | `path_segment` | 주소를 `/` `-` `_` `.`에서 잘라 조각으로 나눈 다음, 그 조각이 목록에 있는지 봐요. 대문자와 소문자는 구분하지 않아요. | `/kakao-pay/ready`는 `kakao`, `pay`, `ready`로 나뉘어요. `/kakaopay/ready`는 `kakaopay`, `ready`로 나뉘어요. |
-| `param`의 `name` | 요청에 담겨 오는 값의 이름을 봐요. 대문자와 소문자, `-`, `_`는 따지지 않아요. | `payment_key`, `paymentKey`, `payment-key`를 모두 같은 이름으로 봐요. 하나만 적으면 돼요. |
+| `param`의 `name` | 요청에 담겨 오는 값의 이름을 봐요. 대문자와 소문자, `-`, `_`는 따지지 않아요. | `pg_token`, `pgToken`, `pg-token`을 모두 같은 이름으로 봐요. 하나만 적으면 돼요. |
 | `examples` | 룰이 제대로 동작하는지 확인하는 예시예요. PR을 올리면 자동 검사가 하나씩 돌려 봐요. | 테스트 코드를 따로 쓸 필요가 없어요. |
 
 더 많은 조건은 [룰 폴더의 README](https://github.com/owasp-noir/noir/blob/main/src/tagger/rules/README.md)에 있어요.
 
 ## 따라 하기
 
-아래 예시는 진행자가 시연하는 토스페이먼츠예요. 여러분은 첫 단계에서 고른 과제에 맞게 바꿔서 따라 하면 돼요.
+아래 예시는 진행자가 시연하는 카카오페이예요. 여러분은 첫 단계에서 고른 과제에 맞게 바꿔서 따라 하면 돼요.
 
 <div class="steps">
 
@@ -101,21 +99,21 @@ examples:
 
 ### 단어 추가하기
 
-`match` 아래에서 알맞은 목록을 찾아 단어를 추가해요. 토스페이먼츠 예시에서는 이름 하나를 넣어요.
+`match` 아래에서 알맞은 목록을 찾아 단어를 추가해요. 카카오페이 예시에서는 이름 하나를 넣어요.
 
 ```diff
      - param:
          name: [card_number, cc_number, cvv, cvc, cvv2, cvn, csc, security_code,
                 ...
 -               iban, routing_number, sort_code]
-+               iban, routing_number, sort_code, payment_key]
++               iban, routing_number, sort_code, pg_token]
 ```
 
 - 띄어쓰기는 **스페이스**로 하고, 윗줄과 줄을 맞춰요. 탭 키는 쓰지 않아요.
 - 단어는 쉼표로 이어서 `]` 앞에 넣어요. `]`는 맨 끝에 하나만 있어야 해요.
-- 이름은 한 가지 모양으로만 적어요. `payment_key`를 넣으면 `paymentKey`도 같이 잡혀요.
+- 이름은 한 가지 모양으로만 적어요. `pg_token`을 넣으면 `pgToken`도 같이 잡혀요.
 - `path_segment`에는 `-`, `_`, `.`, `/`가 들어간 단어를 넣을 수 없어요. `kakao_pay`가 아니라 `kakaopay`로 적어요.
-- 너무 흔한 단어는 넣지 않아요. `key`만 넣으면 API 키를 받는 요청까지 전부 결제로 잡혀요.
+- 너무 흔한 단어는 넣지 않아요. `token`만 넣으면 로그인 토큰을 받는 요청까지 전부 결제로 잡혀요.
 
 > 화면 위쪽의 Preview 탭을 누르면 바뀐 줄만 초록색과 빨간색으로 보여요. 내가 고치려던 줄만 바뀌었어요.
 
@@ -127,10 +125,10 @@ examples:
  examples:
    match:
      ...
-+    - { method: POST, url: /confirm/widget, params: [{ name: paymentKey, type: json }] }
++    - { url: /kakaoPaySuccess, params: [{ name: pg_token }] }
    no_match:
      ...
-+    - { method: POST, url: /confirm/email, params: [{ name: key, type: json }] }
++    - { url: /auth/refresh, params: [{ name: token }] }
 ```
 
 여기서 제일 중요한 건 `no_match`예요. 태그는 붙이기보다 **엉뚱한 데 안 붙게 하기**가 더 어렵거든요. "이 단어를 넣으면 어떤 주소가 잘못 걸릴까?" 한 번 생각해 보고, 떠오른 주소를 적어 주세요.
@@ -148,20 +146,20 @@ examples:
 제목은 영어로, 무엇을 바꿨는지 한 줄로 적어요.
 
 ```text
-feat: tag Toss Payments confirm requests as payment
+feat: tag KakaoPay approval redirects as payment
 ```
 
 내용은 아래 틀에서 내 과제에 맞게 바꿔 적어요.
 
 ```markdown
 ## What
-Adds `payment_key` to the payment rule's parameter names.
+Adds `pg_token` to the payment rule's parameter names.
 
 ## Why
-`POST /confirm/widget` in the official Toss Payments sample takes `paymentKey`, `orderId` and `amount`, but it was not tagged `payment`.
+KakaoPay sends the user back to the merchant's approval URL with `pg_token`. Endpoints such as `GET /kakaoPaySuccess?pg_token=` were not tagged `payment`.
 
 ## Reference
-https://github.com/tosspayments/tosspayments-sample
+https://developers.kakaopay.com/docs/payment/online/single-payment
 
 Closes #이슈번호
 ```
