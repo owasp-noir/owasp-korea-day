@@ -13,6 +13,13 @@ allow_extensions = ["jpg", "jpeg", "png", "gif", "svg", "webp"]
 enabled = true
 theme = "github-dark"
 
+# The picture shown when the link is shared in a messenger. It is a screenshot
+# of the cover in the site's own style (1200x630).
+[og]
+default_image = "/images/og.png"
+type = "website"
+twitter_card = "summary_large_image"
+
 [sitemap]
 enabled = true
 
