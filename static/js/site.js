@@ -136,9 +136,12 @@
       render();
     });
     label.appendChild(box);
-    label.appendChild(document.createTextNode("완료"));
-    h.appendChild(stamp);
-    h.appendChild(label);
+    label.appendChild(document.createTextNode("끝냈어요"));
+    var group = document.createElement("span");
+    group.className = "step-check";
+    group.appendChild(stamp);
+    group.appendChild(label);
+    h.appendChild(group);
   });
 
   render();

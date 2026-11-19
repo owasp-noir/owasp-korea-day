@@ -6,8 +6,9 @@ default_language = "ko"
 [content.files]
 allow_extensions = ["jpg", "jpeg", "png", "gif", "svg", "webp"]
 
-# The theme only supplies the stylesheet link. static/css/style.css repaints
-# every .hljs token so code blocks follow the site palette.
+# hwaro marks up code at build time. The templates do not load a highlight.js
+# theme: static/css/style.css colours every .hljs token itself, so `theme` is
+# unused.
 [highlight]
 enabled = true
 theme = "github-dark"

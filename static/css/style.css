@@ -98,7 +98,7 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   color: var(--on-desk); text-decoration: none; font-weight: 700; font-size: 1rem; letter-spacing: -0.01em;
 }
 .brand img { width: 26px; height: 26px; }
-.desk__out { color: var(--on-desk-mute); font-size: 0.9375rem; text-decoration: none; border-bottom: 1px solid #555; padding-bottom: 0.1rem; }
+.desk__out { color: var(--on-desk-mute); font-size: 0.9375rem; text-decoration: none; border-bottom: 1px solid #555; padding-block: 0.45rem 0.3rem; }
 .desk__out:hover { color: var(--on-desk); border-bottom-color: var(--on-desk); }
 
 .site-footer { color: var(--on-desk-mute); font-size: 0.9375rem; }
@@ -132,7 +132,7 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   border-bottom: 3px double var(--ink);
   font-family: var(--font-type); font-size: 0.8125rem; color: var(--mute);
 }
-.cover__head span:first-child { color: var(--ink); font-weight: 700; letter-spacing: 0.3em; }
+.cover__head span:first-child { color: var(--ink); font-weight: 700; letter-spacing: 0.18em; }
 
 .cover__body {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
@@ -150,17 +150,20 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   min-height: 3rem; padding: 0.6rem 1.35rem; border-radius: 6px;
   font-weight: 650; font-size: 1rem; text-decoration: none; border: 1.5px solid transparent;
 }
-.btn--primary { background: var(--red); color: #fff; }
-.btn--primary:hover { background: #d7231c; }
+/* White on --red measures 4.2:1, short of AA for text this size, so the button
+   takes the darker ink (5.7:1). --red stays for stamps and marks. */
+.btn--primary { background: var(--red-ink); color: #fff; }
+.btn--primary:hover { background: #a91812; }
 .btn--line { color: var(--ink); border-color: var(--ink); }
 .btn--line:hover { background: var(--ink); color: var(--paper); }
 
 /* a photo held by a paper clip */
 .photo { position: relative; width: clamp(10.5rem, 25vw, 18rem); transform: rotate(2.5deg); margin-right: 0.5rem; }
-.cover--page .photo { width: clamp(8rem, 17vw, 12rem); }
+.cover--page .photo { width: clamp(7.5rem, 14vw, 10rem); }
+.cover--page .cover__body { padding-block: clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.25rem, 3vw, 2rem); }
 .photo__print {
   background: #fff; padding: 6%; padding-bottom: 6%;
-  border: 1px solid var(--rule); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.22), 0 10px 18px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--rule); box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.13);
 }
 .photo__print img { background: #000; }
 .photo__clip {
@@ -262,10 +265,10 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .doc__nav { display: none; }
 
 @media (min-width: 62rem) {
-  .doc { grid-template-columns: 13.5rem minmax(0, var(--measure)); justify-content: space-between; }
-  .doc__nav { display: block; position: sticky; top: 1.5rem; align-self: start; font-size: 0.9375rem; }
+  .js .doc { grid-template-columns: 13.5rem minmax(0, var(--measure)); justify-content: space-between; }
+  .js .doc__nav { display: block; position: sticky; top: 1.5rem; align-self: start; font-size: 0.9375rem; }
 }
-.doc__nav-title { font-family: var(--font-type); font-size: 0.8125rem; font-weight: 700; color: var(--ink); letter-spacing: 0.3em; margin-bottom: 0.7rem; }
+.doc__nav-title { font-family: var(--font-type); font-size: 0.8125rem; font-weight: 700; color: var(--ink); letter-spacing: 0.18em; margin-bottom: 0.7rem; }
 .doc__nav ol { list-style: none; padding: 0; margin: 0; }
 .doc__nav li a {
   display: block; padding: 0.3rem 0 0.3rem 0.9rem; border-left: 2px solid var(--rule);
@@ -278,6 +281,7 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .doc__progress { margin-top: 1.1rem; padding-top: 0.9rem; border-top: 1px solid var(--rule); color: var(--mute); font-family: var(--font-type); font-size: 0.8125rem; }
 .stamp--closed { margin: 1.4rem 0 0 0.3rem; font-size: 1.35rem; }
 
+.prose { max-width: var(--measure); }
 .prose > * + * { margin-top: 1.15rem; }
 .prose h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 3vw, 1.9rem); letter-spacing: -0.02em; margin-top: 3.75rem; }
 .prose > h2:first-child { margin-top: 0; }
@@ -307,7 +311,7 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .hljs-deletion { color: var(--del); background: var(--del-bg); }
 .copy {
   position: absolute; top: 0.55rem; right: 0.55rem; font: inherit; font-size: 0.8125rem; line-height: 1.4;
-  color: #cfcfcf; background: #1c1c1c; border: 1px solid #3a3a3a; border-radius: 4px; padding: 0.15rem 0.6rem; cursor: pointer;
+  color: #cfcfcf; background: #1c1c1c; border: 1px solid #3a3a3a; border-radius: 4px; padding: 0.35rem 0.7rem; cursor: pointer;
 }
 .copy:hover { color: #fff; border-color: #6a6a6a; }
 /* With a mouse the button stays out of the way until the block is pointed at. */
@@ -352,15 +356,16 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   font-family: var(--font-display); font-weight: 800; font-size: 2.4rem; line-height: 1; color: var(--red-ink);
   font-variant-numeric: lining-nums;
 }
-.steps > h3 .step-title { flex: 1 1 auto; }
+.steps > h3 .step-title { flex: 1 1 9rem; min-width: 0; }
+.step-check { flex: none; margin-left: auto; display: inline-flex; align-items: center; gap: 0.75rem; }
 .step-done {
   display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 500; letter-spacing: 0;
-  color: var(--mute); cursor: pointer; white-space: nowrap;
+  color: var(--mute); cursor: pointer; white-space: nowrap; min-height: 2.5rem; padding-left: 0.2rem;
 }
 .step-done input { width: 1.05rem; height: 1.05rem; margin: 0; accent-color: var(--red); }
 
 /* finishing a step stamps it */
-.step-stamp { display: none; font-size: 0.95rem; align-self: center; }
+.step-stamp { display: none; font-size: 0.95rem; }
 .steps > h3.is-done .step-stamp { display: inline-block; }
 .steps > h3.is-done .step-stamp.is-fresh { animation: stamp 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
 @keyframes stamp {
@@ -391,7 +396,7 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   .desk__in { padding-inline: 0.5rem; padding-block: 0.9rem 1.2rem; }
   .site-footer__in { padding-inline: 0.5rem; }
   .tabs { padding-left: 0.5rem; gap: 4px; }
-  .tab { padding: 0.55rem 0.95rem 0.5rem; font-size: 0.875rem; }
+  .tab { padding: 0.75rem 1rem 0.7rem; font-size: 0.9375rem; }
   .tab__long { display: none; }
   .tab__short { display: inline; }
   .folder__body { padding: 6px; }
