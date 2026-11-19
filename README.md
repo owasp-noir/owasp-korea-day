@@ -19,6 +19,7 @@ hwaro serve          # http://localhost:3000
 | `content/web.md` | 브라우저로 기여하기 (태그 룰 PR) |
 | `content/report.md` | 써 보고 제보하기 (스캔 후 이슈) |
 | `content/code.md` | 코드로 기여하기 (빌드, 테스트, 시크릿 탐지 룰) |
+| `content/security.md` | 취약점 제보하기 (Security Advisory로 연결) |
 | `templates/index.html` | 첫 화면. 시간표와 자주 묻는 것이 여기 있습니다 |
 | `templates/page.html` | 가이드 세 편이 쓰는 틀 |
 | `static/css/style.css` | 스타일. 맨 위 주석에 디자인 규칙이 있습니다 |

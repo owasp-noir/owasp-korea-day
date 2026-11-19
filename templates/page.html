@@ -25,6 +25,7 @@
         <div><dt>걸리는 시간</dt><dd>{{ page.extra.time | e }}</dd></div>
         <div><dt>끝나면</dt><dd>{{ page.extra.result | e }}</dd></div>
       </dl>
+      {% if page.extra.stamp is present %}<span class="stamp stamp--cover" aria-hidden="true">{{ page.extra.stamp | e }}</span>{% endif %}
     </div>
     {% endif %}
   </header>
@@ -59,6 +60,12 @@
       {% if page.url != "/code/" %}
       <li><a class="path" href="{{ base_url }}/code/">
         <div class="path__main"><h3>코드로 기여하기</h3><p>Noir 코드를 직접 고쳐요.</p></div>
+        <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a></li>
+      {% endif %}
+      {% if page.url != "/security/" %}
+      <li><a class="path" href="{{ base_url }}/security/">
+        <div class="path__main"><h3>취약점 제보하기</h3><p>Noir에서 찾은 보안 문제를 비공개로 알려 줘요.</p></div>
         <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
       </a></li>
       {% endif %}
