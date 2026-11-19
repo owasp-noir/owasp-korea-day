@@ -25,7 +25,7 @@
     btn.addEventListener("click", function () {
       var text = pre.innerText;
       var done = function () {
-        btn.textContent = "복사됨";
+        btn.textContent = "복사했어요";
         setTimeout(function () { btn.textContent = "복사"; }, 1600);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -103,7 +103,7 @@
     });
     if (progress && steps.length) {
       progress.hidden = false;
-      progress.textContent = steps.length + "단계 중 " + done + "단계 완료";
+      progress.textContent = steps.length + "단계 중 " + done + "단계 끝";
     }
     // Every step done closes the case.
     var closed = document.getElementById("case-closed");

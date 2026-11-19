@@ -255,6 +255,9 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .faq summary::after { content: "+"; color: var(--mute); font-weight: 400; font-size: 1.25rem; line-height: 1.3; }
 .faq details[open] summary::after { content: "\2212"; }
 .faq details p { padding-bottom: 1.1rem; }
+.faq dl { display: grid; gap: 0.7rem; padding-bottom: 1.2rem; }
+.faq dt { color: var(--ink); font-weight: 650; }
+.faq dd code { font-family: var(--font-type); font-size: 0.86em; background: var(--paper-shade); padding: 0.1em 0.32em; border-radius: 3px; }
 
 /* ---------- guide pages ---------- */
 
