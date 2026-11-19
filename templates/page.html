@@ -1,0 +1,61 @@
+{% include "header.html" %}
+<main id="main">
+
+  <header class="screen pagehead">
+    <div class="wrap pagehead__in">
+      <div class="pagehead__copy">
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description is present %}<p class="pagehead__lede">{{ page.description | e }}</p>{% endif %}
+        {% if page.extra.need is present %}
+        <dl class="facts facts--tight">
+          <div><dt>필요한 것</dt><dd>{{ page.extra.need | e }}</dd></div>
+          <div><dt>걸리는 시간</dt><dd>{{ page.extra.time | e }}</dd></div>
+          <div><dt>끝나면</dt><dd>{{ page.extra.result | e }}</dd></div>
+        </dl>
+        {% endif %}
+      </div>
+      {% if page.extra.mascot is present %}
+      <img class="pagehead__hak" src="{{ base_url }}/images/mascot/hak-{{ page.extra.mascot | e }}.webp" alt="" width="512" height="512">
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="wrap doc">
+    <aside class="doc__nav" aria-label="이 페이지">
+      <p class="doc__nav-title">이 페이지</p>
+      <nav id="page-nav"></nav>
+      <p class="doc__progress" id="step-progress" hidden></p>
+    </aside>
+    <article class="prose">
+      {{ content }}
+    </article>
+  </div>
+
+  <section class="band band--wash">
+    <div class="wrap">
+      <h2>다른 방법</h2>
+      <ul class="paths paths--compact">
+        {% if page.url != "/web/" %}
+        <li><a class="path" href="{{ base_url }}/web/">
+          <div class="path__main"><h3>브라우저로 기여하기</h3><p>태그 룰에 국내 서비스의 단어를 추가합니다. 설치가 필요 없습니다.</p></div>
+          <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </a></li>
+        {% endif %}
+        {% if page.url != "/report/" %}
+        <li><a class="path" href="{{ base_url }}/report/">
+          <div class="path__main"><h3>써 보고 제보하기</h3><p>Noir로 스캔해 보고, 빠뜨렸거나 잘못 잡은 엔드포인트를 이슈로 알립니다.</p></div>
+          <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </a></li>
+        {% endif %}
+        {% if page.url != "/code/" %}
+        <li><a class="path" href="{{ base_url }}/code/">
+          <div class="path__main"><h3>코드로 기여하기</h3><p>분석기와 탐지 룰을 직접 고칩니다.</p></div>
+          <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </section>
+
+</main>
+{% include "footer.html" %}

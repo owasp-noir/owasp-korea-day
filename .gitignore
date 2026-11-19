@@ -1,0 +1,6 @@
+# Build output (`hwaro build`)
+/public/
+
+# Hwaro workspace (`hwaro serve` output, remote-data cache) and build cache
+/.hwaro/
+/.hwaro_cache.json

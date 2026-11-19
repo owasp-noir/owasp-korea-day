@@ -1,0 +1,22 @@
+title = "Noir 기여 핸즈온"
+description = "OWASP Korea Day 2026에서 OWASP Noir에 첫 기여를 남기는 두 시간. 브라우저만으로 PR을 여는 방법부터 코드 기여까지 안내합니다."
+base_url = "https://owasp-noir.github.io/owasp-korea-day"
+default_language = "ko"
+
+[content.files]
+allow_extensions = ["jpg", "jpeg", "png", "gif", "svg", "webp"]
+
+# The theme only supplies the stylesheet link. static/css/style.css repaints
+# every .hljs token so code blocks follow the site palette.
+[highlight]
+enabled = true
+theme = "github-dark"
+
+[sitemap]
+enabled = true
+
+[feeds]
+enabled = false
+
+[templates]
+autoescape = true
