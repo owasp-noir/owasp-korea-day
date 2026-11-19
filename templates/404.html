@@ -1,15 +1,20 @@
 {% include "header.html" %}
 <main id="main">
-  <section class="screen pagehead pagehead--solo">
-    <div class="wrap pagehead__in">
-      <div class="pagehead__copy">
-        <h1>여기에는 페이지가 없습니다</h1>
-        <p class="pagehead__lede">주소가 바뀌었거나 잘못 입력되었습니다. 처음 화면에서 기여 방법을 다시 골라 주세요.</p>
-        <div class="hero__actions">
-          <a class="btn btn--primary" href="{{ base_url }}/">처음 화면으로</a>
+  <section class="cover cover--page">
+    <div class="cover__head">
+      <span>사건 파일</span>
+      <span>분류 없음</span>
+    </div>
+    <div class="cover__body">
+      <div class="cover__copy">
+        <h1>이 파일은 보관함에 없습니다</h1>
+        <p class="cover__lede">주소가 바뀌었거나 잘못 입력되었습니다. 개요로 돌아가 기여 방법을 다시 골라 주세요.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="{{ base_url }}/">개요로 돌아가기</a>
         </div>
       </div>
-      <img class="pagehead__hak" src="{{ base_url }}/images/mascot/hak-question.webp" alt="" width="512" height="512">
+      {% set photo_pose = "question" %}
+      {% include "partials/photo.html" %}
     </div>
   </section>
 </main>

@@ -105,6 +105,9 @@
       progress.hidden = false;
       progress.textContent = steps.length + "단계 중 " + done + "단계 완료";
     }
+    // Every step done closes the case.
+    var closed = document.getElementById("case-closed");
+    if (closed) closed.hidden = !(steps.length && done === steps.length);
   }
 
   steps.forEach(function (h, i) {
@@ -119,13 +122,22 @@
     box.type = "checkbox";
     box.id = "step-done-" + (i + 1);
     box.checked = !!saved[i];
+    // The stamp only animates when the person has just ticked the box, not
+    // when a remembered tick is restored on load.
+    var stamp = document.createElement("span");
+    stamp.className = "stamp step-stamp";
+    stamp.setAttribute("aria-hidden", "true");
+    stamp.textContent = "완료";
+
     box.addEventListener("change", function () {
       saved[i] = box.checked;
       try { localStorage.setItem(storeKey, JSON.stringify(saved)); } catch (e) {}
+      stamp.classList.toggle("is-fresh", box.checked);
       render();
     });
     label.appendChild(box);
     label.appendChild(document.createTextNode("완료"));
+    h.appendChild(stamp);
     h.appendChild(label);
   });
 
