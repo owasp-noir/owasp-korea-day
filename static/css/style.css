@@ -1,20 +1,26 @@
 /* Design contract
    ---------------
-   The site is a case file lying on a black desk.
+   The site is a detective's desk at night, and it plays like a game.
 
-   - The desk is true black. Only the top strip and the footer show it.
-   - The folder is manila. Its index tabs are the navigation; the open tab has
-     the folder's own colour, the others are a shade darker, like folders
-     stacked behind it.
-   - The sheet inside is paper. Everything a person reads sits on the sheet.
-   - Hak appears as a photo held to the sheet with a paper clip.
+   - The first screen is the desk itself, drawn in 3D (static/js/desk.js):
+     four case folders under a lamp that follows the pointer. Picking a
+     folder up shows its details in the panel along the bottom; opening it
+     goes to that guide. The same four are an ordinary list in the markup,
+     and that list is what shows when 3D cannot run.
+   - A guide is the opened file: a manila folder whose index tabs switch
+     between cases, with a paper sheet inside. Everything a person reads sits
+     on the sheet, flat and quiet, so the guide stays easy to follow.
+   - The strip along the top is the HUD: where you are, your rank, and on a
+     guide a bar with one segment per step.
+   - Hak appears as a photo held with a paper clip.
    - Red is stamp ink and nothing else: the primary button, step numbers,
-     links, and the stamps. Finishing a step stamps it.
+     links, and the stamps. Finishing a step stamps it; finishing them all
+     closes the case.
    - Code blocks are black, like photographs filed as evidence.
 
-   Flat colour only: no gradients, no textures. One look for every visitor,
-   so there is no dark variant. Titles are a Korean serif, typed details are
-   monospace, everything else is a quiet sans. */
+   Light and texture belong to the desk; the paper stays flat colour. One
+   look for every visitor, so there is no dark variant. Titles are a Korean
+   serif, typed details are monospace, everything else is a quiet sans. */
 
 :root {
   color-scheme: light;
@@ -47,6 +53,7 @@
     "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
   --font-type: "JetBrains Mono", "Nanum Gothic Coding", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
+  --hud-h: 4rem;
   --wrap: 72rem;
   --measure: 43rem;
   --pad: clamp(1.25rem, 4.2vw, 3.5rem);
@@ -66,6 +73,16 @@ body {
   word-break: keep-all;
   overflow-wrap: anywhere;
   -webkit-font-smoothing: antialiased;
+}
+
+/* The desk under every page: the same wood and light as the 3D desk, rendered
+   once from straight above (static/images/desk.jpg) and kept dark so the
+   folder is the brightest thing on it. */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(85% 75% at 50% 0%, rgba(0, 0, 0, 0.38) 0, rgba(0, 0, 0, 0.86) 100%),
+    url("../images/desk.jpg") center top / cover no-repeat;
 }
 
 [hidden] { display: none !important; }
@@ -89,17 +106,32 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 }
 .skip:focus { top: 1rem; }
 
-/* ---------- the desk ---------- */
+/* ---------- the HUD ---------- */
 
-.desk { color: var(--on-desk); }
-.desk__in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.1rem 1.6rem; }
+.hud { position: relative; z-index: 5; color: var(--on-desk); }
+.hud__in { display: flex; align-items: center; gap: 0.5rem 1.4rem; min-height: var(--hud-h); }
 .brand {
-  display: inline-flex; align-items: center; gap: 0.6rem;
+  display: inline-flex; align-items: center; gap: 0.6rem; flex: none;
   color: var(--on-desk); text-decoration: none; font-weight: 700; font-size: 1rem; letter-spacing: -0.01em;
 }
 .brand img { width: 26px; height: 26px; }
-.desk__out { color: var(--on-desk-mute); font-size: 0.9375rem; text-decoration: none; border-bottom: 1px solid #555; padding-block: 0.45rem 0.3rem; }
-.desk__out:hover { color: var(--on-desk); border-bottom-color: var(--on-desk); }
+.rank {
+  margin-left: auto; display: inline-flex; align-items: baseline; gap: 0.6rem; white-space: nowrap;
+  border: 1px solid #4d4d4d; border-radius: 999px; padding: 0.22rem 0.85rem; font-size: 0.875rem; line-height: 1.5;
+}
+.rank__name { color: #fff; font-weight: 700; }
+.rank__count { color: var(--on-desk-mute); font-family: var(--font-type); font-size: 0.8125rem; }
+.rank.is-up { animation: rank-up 0.9s ease-out; }
+@keyframes rank-up { 0% { border-color: var(--red); box-shadow: 0 0 0 0 rgba(238, 42, 34, 0.7); } 100% { box-shadow: 0 0 0 14px rgba(238, 42, 34, 0); } }
+.hud__links { margin-left: auto; display: flex; gap: 1.4rem; }
+.rank:not([hidden]) + .hud__links { margin-left: 0; }
+.hud__links a { color: var(--on-desk-mute); font-size: 0.9375rem; text-decoration: none; border-bottom: 1px solid #555; padding-block: 0.45rem 0.3rem; white-space: nowrap; }
+.hud__links a:hover { color: var(--on-desk); border-bottom-color: var(--on-desk); }
+
+/* one segment per step, along the very top of a guide */
+.steps-bar { position: fixed; z-index: 8; inset: 0 0 auto 0; height: 4px; display: flex; gap: 2px; background: #000; }
+.steps-bar span { flex: 1; background: #3a3a3a; transition: background-color 0.25s; }
+.steps-bar span.is-done { background: var(--red); }
 
 .site-footer { color: var(--on-desk-mute); font-size: 0.9375rem; }
 .site-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 2rem; padding-block: 2rem 2.5rem; }
@@ -121,6 +153,7 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .tab[aria-current="page"] { background: var(--manila); color: var(--ink); }
 .tab__short { display: none; }
 
+.folder { margin-top: 0.6rem; }
 .folder__body { background: var(--manila); padding: 10px; border-radius: 10px; }
 .sheet { background: var(--paper); border-radius: 3px; }
 
@@ -425,4 +458,198 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   .path__go { transition: none; }
   .steps > h3.is-done .step-stamp.is-fresh { animation: none; }
+}
+
+/* ---------- the desk (first screen) ---------- */
+
+.lobby { position: relative; margin-top: calc(-1 * var(--hud-h)); color: #fff; }
+.lobby__canvas, .lobby__fx, .lobby__paper, .lobby__stage { display: none; }
+.lobby__in { position: relative; padding-top: calc(var(--hud-h) + clamp(1.25rem, 4vh, 3rem)); padding-bottom: 1rem; }
+.lobby__event { color: var(--red); font-weight: 650; }
+.lobby h1 {
+  margin-top: 0.7rem; color: #fff; font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(2.1rem, 4.7vw, 3.75rem); line-height: 1.17; letter-spacing: -0.025em;
+}
+.lobby__lede { margin-top: 1.1rem; max-width: 35rem; color: #cfcfcf; }
+
+/* The list of cases. On its own (no script, or no WebGL) it is four folder
+   cards; under the 3D desk it becomes the panel for the picked folder. */
+.cases { list-style: none; padding: 0; margin: 2.5rem 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.2rem 1.25rem; }
+.case__link {
+  position: relative; height: 100%; display: grid; align-content: start; gap: 1.1rem;
+  padding: 1.5rem 1.5rem 1.4rem; border-radius: 0 10px 10px 10px; background: var(--manila); color: var(--text); text-decoration: none;
+}
+.case__link::before {
+  content: ""; position: absolute; left: 0; bottom: 100%; width: 8.5rem; height: 0.95rem;
+  background: var(--manila); border-radius: 9px 9px 0 0;
+}
+.case__name {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; color: var(--ink);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.8rem;
+}
+.case__tag {
+  font-family: var(--font-body); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0; white-space: nowrap;
+  color: var(--red-ink); border: 1.5px solid currentColor; border-radius: 4px; padding: 0.08rem 0.5rem; transform: rotate(-1.5deg);
+}
+.case__what { margin-top: 0.45rem; font-size: 1rem; line-height: 1.7; }
+.case__meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem 1.25rem; }
+.case__meta dt { font-size: 0.8125rem; color: var(--mute); }
+.case__meta dd { margin-top: 0.1rem; font-size: 0.9375rem; font-weight: 650; line-height: 1.5; color: var(--ink); }
+.case__link { grid-template-rows: auto 1fr auto; }
+.case__open {
+  justify-self: start; align-self: end; display: inline-flex; align-items: center; min-height: 2.9rem; padding: 0.5rem 1.4rem;
+  border-radius: 6px; background: var(--red-ink); color: #fff; font-weight: 700; white-space: nowrap;
+}
+.case__link:hover .case__open { background: #a91812; }
+
+/* difficulty: three pips */
+.level { display: inline-block; width: 2.5rem; height: 0.5rem; margin-right: 0.55rem; --on: var(--red); --off: rgba(127, 127, 127, 0.45);
+  background: linear-gradient(to right, var(--on) 0 30%, transparent 30% 35%, var(--p2) 35% 65%, transparent 65% 70%, var(--p3) 70% 100%); }
+.level[data-level="1"] { --p2: var(--off); --p3: var(--off); }
+.level[data-level="2"] { --p2: var(--on); --p3: var(--off); }
+.level[data-level="3"] { --p2: var(--on); --p3: var(--on); }
+
+/* --- with the 3D desk --- */
+
+.js .lobby:not(.is-flat) { height: 100svh; min-height: 39rem; max-height: 70rem; overflow: hidden; background: #000; }
+.js .lobby:not(.is-flat) .lobby__canvas {
+  display: block; position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease;
+  touch-action: pan-y; -webkit-tap-highlight-color: transparent;
+}
+.js .lobby.is-3d .lobby__canvas { opacity: 1; }
+
+/* film over the picture: darker corners, and room for text at top and bottom */
+.js .lobby:not(.is-flat) .lobby__fx {
+  display: block; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(62rem 30rem at 12% 14%, rgba(0, 0, 0, 0.86) 0, rgba(0, 0, 0, 0.6) 45%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0, rgba(0, 0, 0, 0) 30%),
+    linear-gradient(to top, #000 0, rgba(0, 0, 0, 0.82) 16%, rgba(0, 0, 0, 0) 40%),
+    radial-gradient(120% 90% at 50% 50%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.6) 100%);
+}
+.js .lobby:not(.is-flat) .lobby__fx::after {
+  content: ""; position: absolute; inset: 0; opacity: 0.16; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.js .lobby:not(.is-flat) .lobby__in {
+  height: 100%; display: grid; grid-template-rows: auto minmax(11rem, 1fr) auto;
+  padding-bottom: clamp(1rem, 2.6vh, 1.75rem); pointer-events: none;
+}
+.js .lobby:not(.is-flat) .lobby__title { text-shadow: 0 1px 22px rgba(0, 0, 0, 0.75); }
+.js .lobby:not(.is-flat) .lobby__title > * { pointer-events: auto; width: fit-content; }
+.js .lobby:not(.is-flat) .lobby__stage { display: block; margin-block: 0.5rem 1rem; }
+
+.js .lobby:not(.is-flat) .dock { pointer-events: auto; display: grid; gap: 0.9rem; }
+.js .lobby:not(.is-flat) .cases { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+.js .lobby:not(.is-flat) .case { grid-area: 1 / 1; opacity: 0; pointer-events: none; transition: opacity 0.16s ease; }
+.js .lobby:not(.is-flat) .case.is-selected { opacity: 1; pointer-events: auto; }
+.js .lobby:not(.is-flat) .case__link {
+  grid-template-columns: minmax(0, 11fr) minmax(0, 10fr) auto; grid-template-rows: none; align-items: center; gap: 1rem 2.5rem;
+  padding: 0; background: none; border-radius: 0; color: #cfcfcf;
+}
+.js .lobby:not(.is-flat) .case__link::before { content: none; }
+.js .lobby:not(.is-flat) .case__name { color: #fff; font-size: clamp(1.45rem, 2.3vw, 1.85rem); }
+.js .lobby:not(.is-flat) .case__tag { color: #ff5a50; }
+.js .lobby:not(.is-flat) .case__what { max-width: 33rem; }
+.js .lobby:not(.is-flat) .case__meta dt { color: #a3a3a3; }
+.js .lobby:not(.is-flat) .case__meta dd { color: #fff; }
+.js .lobby:not(.is-flat) .case__open { justify-self: end; align-self: center; min-height: 3.2rem; padding-inline: 1.7rem; font-size: 1.0625rem; }
+.js .lobby:not(.is-flat) .case__link:focus-visible { outline-offset: 8px; }
+
+.dock__ctl { order: -1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.28); }
+.pager { display: inline-flex; align-items: center; gap: 0.5rem; }
+.pager__btn {
+  width: 2.5rem; height: 2.5rem; display: grid; place-items: center; padding: 0; cursor: pointer;
+  color: #fff; background: rgba(0, 0, 0, 0.35); border: 1px solid #5a5a5a; border-radius: 50%;
+}
+.pager__btn:hover { border-color: #fff; }
+.pager__btn svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.pager__at { min-width: 3.6rem; text-align: center; font-family: var(--font-type); font-size: 0.9375rem; color: #fff; font-variant-numeric: tabular-nums; }
+.keys { display: flex; align-items: center; gap: 0.4rem; color: #a3a3a3; font-size: 0.875rem; }
+.keys kbd {
+  font-family: var(--font-type); font-size: 0.8125rem; color: #fff; border: 1px solid #6a6a6a; border-bottom-width: 2px; border-radius: 5px;
+  padding: 0.05rem 0.45rem; min-width: 1.7rem; text-align: center;
+}
+.keys kbd + kbd { margin-left: -0.15rem; }
+.keys kbd:nth-of-type(3) { margin-left: 0.9rem; }
+@media (hover: none) { .keys { display: none; } }
+
+/* the sheet the camera lands on when a folder opens */
+.js .lobby:not(.is-flat) .lobby__paper {
+  display: block; position: fixed; z-index: 30; inset: 0; background: var(--paper); opacity: 0; pointer-events: none; transition: opacity 0.34s ease-in;
+}
+.js .lobby .lobby__paper.is-on { opacity: 1; }
+.lobby.is-opening .lobby__title, .lobby.is-opening .dock { opacity: 0; transition: opacity 0.3s ease; }
+
+/* the sheet under the desk: when, what to bring, questions */
+.briefing { position: relative; margin-top: clamp(1.25rem, 3vw, 2.5rem); scroll-margin-top: 1rem; }
+/* the dark at the foot of the 3D desk fades into the desk below it */
+.below { background: linear-gradient(#000, rgba(0, 0, 0, 0) 18rem); }
+.record--top { margin-top: 2.9rem; }
+.briefing__about { display: none; margin-top: 1.4rem; }
+
+/* ---------- closing a case ---------- */
+
+.finale {
+  width: min(30rem, calc(100vw - 2rem)); padding: 2.4rem 2rem 2rem; border: 0; border-radius: 4px;
+  background: var(--paper); color: var(--text); text-align: center; box-shadow: 0 0 0 10px var(--manila);
+}
+.finale::backdrop { background: rgba(0, 0, 0, 0.78); }
+.finale__stamp { font-size: clamp(2.2rem, 9vw, 3.1rem); border-width: 5px; margin: 0.4rem 0 1.6rem; }
+.finale h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; }
+.finale p + p, .finale h2 + p { margin-top: 0.6rem; }
+.finale__rank { color: var(--red-ink); font-weight: 700; }
+.finale .actions { justify-content: center; margin-top: 1.7rem; }
+.finale .btn { font-family: inherit; cursor: pointer; background-color: transparent; }
+.finale .btn--primary { background-color: var(--red-ink); }
+.finale[open] { animation: finale-in 0.5s 0.16s both; }
+.finale[open] .finale__stamp { animation: slam 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.25) both; }
+@keyframes slam { from { transform: rotate(-8deg) scale(3.4); opacity: 0; } to { transform: rotate(-8deg) scale(1); opacity: 1; } }
+@keyframes finale-in {
+  0% { transform: translate(0, 0); } 15% { transform: translate(-5px, 4px); } 30% { transform: translate(5px, -3px); }
+  45% { transform: translate(-3px, 2px); } 60% { transform: translate(2px, -1px); } 100% { transform: translate(0, 0); }
+}
+
+@view-transition { navigation: auto; }
+
+/* ---------- the desk on narrow or short screens ---------- */
+
+@media (max-width: 60rem) {
+  .js .lobby:not(.is-flat) .case__link { grid-template-columns: minmax(0, 1fr) auto; }
+  .js .lobby:not(.is-flat) .case__meta { grid-column: 1 / -1; grid-row: 2; }
+  .js .lobby:not(.is-flat) .case__open { grid-row: 1; grid-column: 2; }
+  .cases { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 40rem) {
+  .hud__in { padding-inline: 0.5rem; gap: 0.4rem 0.8rem; }
+  .hud__links { gap: 0.9rem; }
+  .brand span { display: none; }
+  .rank__count { display: none; }
+  .lobby__in { padding-inline: 1rem; }
+  .lobby h1 { font-size: clamp(1.75rem, 8vw, 2.2rem); }
+  .lobby__lede { font-size: 0.9375rem; line-height: 1.65; margin-top: 0.7rem; }
+  .js .lobby:not(.is-flat) { min-height: 36rem; }
+  .js .lobby:not(.is-flat) .lobby__lede { display: none; }
+  .js .lobby:not(.is-flat) ~ .briefing .briefing__about { display: block; }
+  .keys { display: none; }
+  .js .lobby:not(.is-flat) .case__link { grid-template-columns: minmax(0, 1fr); gap: 0.8rem; }
+  .js .lobby:not(.is-flat) .case__meta { grid-row: auto; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0.3rem 1.4rem; }
+  .js .lobby:not(.is-flat) .case__open { grid-row: auto; grid-column: auto; justify-self: stretch; justify-content: center; }
+  .js .lobby:not(.is-flat) .case__what { font-size: 0.9375rem; line-height: 1.6; min-height: 3.2em; }
+  .case__meta { grid-template-columns: minmax(0, 1fr); }
+  .dock__ctl { padding-bottom: 0.6rem; }
+  .record--top { margin-top: 2.2rem; }
+}
+/* a short laptop screen: the title gives its room to the folders */
+@media (max-height: 47rem) and (min-width: 40.01rem) {
+  .js .lobby:not(.is-flat) .lobby__lede { display: none; }
+  .js .lobby:not(.is-flat) h1 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); }
+  .js .lobby:not(.is-flat) h1 br { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  .finale[open], .finale[open] .finale__stamp, .rank.is-up { animation: none; }
+  .js .lobby:not(.is-flat) .lobby__canvas, .js .lobby:not(.is-flat) .lobby__paper, .steps-bar span { transition: none; }
 }

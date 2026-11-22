@@ -1,4 +1,5 @@
 {% include "header.html" %}
+{% include "partials/folder-open.html" %}
 <main id="main">
 
   <header class="cover cover--page">
@@ -73,4 +74,16 @@
   </section>
 
 </main>
+{# Shown once, when the last step of this guide is ticked. #}
+<dialog class="finale" id="finale" aria-labelledby="finale-title">
+  <p class="stamp finale__stamp" aria-hidden="true">사건 종결</p>
+  <h2 id="finale-title">이 사건을 끝냈어요</h2>
+  <p>단계를 모두 마쳤어요. 책상으로 돌아가서 다음 사건을 골라 보세요.</p>
+  <p class="finale__rank" id="finale-rank" hidden></p>
+  <form method="dialog" class="actions">
+    <a class="btn btn--primary" href="{{ base_url }}/">책상으로 돌아가기</a>
+    <button class="btn btn--line">계속 읽기</button>
+  </form>
+</dialog>
+{% include "partials/folder-close.html" %}
 {% include "footer.html" %}

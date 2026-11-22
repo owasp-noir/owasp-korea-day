@@ -1,5 +1,55 @@
 // Everything here is an enhancement: the pages read fine without it.
 (function () {
+  // ---------- progress, shared by every page ----------
+  // Each guide remembers its ticked steps under its own path. A summary of
+  // [done, total] per case is kept beside them so the desk and the rank can
+  // read it without opening every guide.
+  var CASES = ["web", "report", "code"]; // the guides that have steps
+  var RANKS = ["수습 수사관", "수사관", "선임 수사관", "수사 반장"];
+  var SUMMARY = "noir-handson:cases";
+
+  function read(key) {
+    try { return JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function write(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+  }
+  function closedCount() {
+    var sum = read(SUMMARY), n = 0;
+    CASES.forEach(function (id) {
+      var p = sum[id];
+      if (p && p[1] > 0 && p[0] >= p[1]) n++;
+    });
+    return n;
+  }
+
+  var rank = document.getElementById("rank");
+  function showRank(celebrate) {
+    if (!rank) return;
+    var n = closedCount();
+    rank.querySelector(".rank__name").textContent = RANKS[n];
+    rank.querySelector(".rank__count").textContent = "종결 " + n + "/" + CASES.length;
+    rank.hidden = false;
+    if (celebrate) {
+      rank.classList.remove("is-up");
+      void rank.offsetWidth;
+      rank.classList.add("is-up");
+    }
+  }
+  showRank(false);
+  // The back button can bring a page back as it was; the rank may have moved.
+  window.addEventListener("pageshow", function (e) { if (e.persisted) showRank(false); });
+
+  // If the 3D desk has not come up after a while (script blocked, no WebGL),
+  // show the plain list of cases instead of an empty desk.
+  var lobby = document.getElementById("lobby");
+  if (lobby) {
+    setTimeout(function () {
+      if (!lobby.classList.contains("is-3d")) lobby.classList.add("is-flat");
+    }, 9000);
+  }
+
+  // ---------- guide pages ----------
   var prose = document.querySelector(".prose");
   if (!prose) return;
 
@@ -38,8 +88,8 @@
   // Step checkboxes, remembered per page in this browser.
   var steps = Array.prototype.slice.call(prose.querySelectorAll(".steps > h3"));
   var storeKey = "noir-handson" + location.pathname;
-  var saved = {};
-  try { saved = JSON.parse(localStorage.getItem(storeKey) || "{}") || {}; } catch (e) { saved = {}; }
+  var caseId = location.pathname.replace(/\/+$/, "").split("/").pop();
+  var saved = read(storeKey);
 
   // Side navigation: sections, with the steps nested under their section.
   var nav = document.getElementById("page-nav");
@@ -93,13 +143,29 @@
     mark();
   }
 
-  function render() {
+  // The bar along the top of the screen: one segment per step.
+  var bar = null;
+  if (steps.length) {
+    bar = document.createElement("div");
+    bar.className = "steps-bar";
+    bar.setAttribute("aria-hidden", "true");
+    steps.forEach(function () { bar.appendChild(document.createElement("span")); });
+    document.body.appendChild(bar);
+  }
+
+  function countDone() {
     var done = 0;
+    steps.forEach(function (h, i) { if (saved[i]) done++; });
+    return done;
+  }
+
+  function render() {
+    var done = countDone();
     steps.forEach(function (h, i) {
       var on = !!saved[i];
       h.classList.toggle("is-done", on);
       if (stepLinks[i]) stepLinks[i].classList.toggle("is-done", on);
-      if (on) done++;
+      if (bar) bar.children[i].classList.toggle("is-done", on);
     });
     if (progress && steps.length) {
       progress.hidden = false;
@@ -108,6 +174,26 @@
     // Every step done closes the case.
     var closed = document.getElementById("case-closed");
     if (closed) closed.hidden = !(steps.length && done === steps.length);
+
+    if (steps.length) {
+      var sum = read(SUMMARY);
+      sum[caseId] = [done, steps.length];
+      write(SUMMARY, sum);
+    }
+  }
+
+  // Ticking the last step closes the case: a stamp, and a higher rank.
+  function finish(before) {
+    var after = closedCount();
+    showRank(after > before);
+    var finale = document.getElementById("finale");
+    if (!finale || !finale.showModal) return;
+    var line = document.getElementById("finale-rank");
+    if (line) {
+      line.hidden = after <= before;
+      line.textContent = RANKS[after] + "으로 올랐어요.";
+    }
+    finale.showModal();
   }
 
   steps.forEach(function (h, i) {
@@ -130,10 +216,14 @@
     stamp.textContent = "완료";
 
     box.addEventListener("change", function () {
+      var before = closedCount();
+      var wasAll = countDone() === steps.length;
       saved[i] = box.checked;
-      try { localStorage.setItem(storeKey, JSON.stringify(saved)); } catch (e) {}
+      write(storeKey, saved);
       stamp.classList.toggle("is-fresh", box.checked);
       render();
+      if (!wasAll && countDone() === steps.length) finish(before);
+      else showRank(false);
     });
     label.appendChild(box);
     label.appendChild(document.createTextNode("끝냈어요"));
@@ -145,4 +235,5 @@
   });
 
   render();
+  showRank(false);
 })();
