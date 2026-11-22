@@ -28,17 +28,15 @@
 <body>
   <a class="skip" href="#main">본문으로 바로 가기</a>
 
-  {# The HUD: the strip along the top of every screen. The rank is filled in by
-     script from the steps ticked in this browser. #}
+  {# The HUD: the strip along the top of every screen. #}
   <header class="hud">
     <div class="wrap hud__in">
       <a class="brand" href="{{ base_url }}/">
         <img src="{{ base_url }}/images/logo-s.png" alt="" width="26" height="26">
         <span>Noir 기여 핸즈온</span>
       </a>
-      <p class="rank" id="rank" hidden><span class="rank__name"></span><span class="rank__count"></span></p>
       <nav class="hud__links" aria-label="바로 가기">
-        {% if page.url == "/" %}<a href="#briefing">시간표</a>{% else %}<a href="{{ base_url }}/">책상으로</a>{% endif %}
+        {% if page.url == "/" %}<a href="#briefing">시간표</a>{% else %}<a href="{{ base_url }}/">첫 화면</a>{% endif %}
         <a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day">과제 목록</a>
       </nav>
     </div>

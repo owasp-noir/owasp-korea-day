@@ -22,9 +22,9 @@
     {% if page.extra.need is present %}
     <div class="record">
       <dl class="form form--three">
-        <div><dt>필요한 것</dt><dd>{{ page.extra.need | e }}</dd></div>
-        <div><dt>걸리는 시간</dt><dd>{{ page.extra.time | e }}</dd></div>
-        <div><dt>끝나면</dt><dd>{{ page.extra.result | e }}</dd></div>
+        <div><dt>준비물</dt><dd>{{ page.extra.need | e }}</dd></div>
+        <div><dt>소요 시간</dt><dd>{{ page.extra.time | e }}</dd></div>
+        <div><dt>결과물</dt><dd>{{ page.extra.result | e }}</dd></div>
       </dl>
       {% if page.extra.stamp is present %}<span class="stamp stamp--cover" aria-hidden="true">{{ page.extra.stamp | e }}</span>{% endif %}
     </div>
@@ -44,17 +44,17 @@
   </div>
 
   <section class="part">
-    <h2>다른 방법</h2>
+    <h2>다른 사건</h2>
     <ul class="paths paths--compact">
       {% if page.url != "/web/" %}
       <li><a class="path" href="{{ base_url }}/web/">
-        <div class="path__main"><h3>브라우저로 기여하기</h3><p>Noir가 모르는 국내 서비스 이름을 알려 줘요. 설치할 게 없어요.</p></div>
+        <div class="path__main"><h3>브라우저로 기여하기</h3><p>태그 룰에 국내 서비스 키워드를 추가해요. 설치할 게 없어요.</p></div>
         <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
       </a></li>
       {% endif %}
       {% if page.url != "/report/" %}
       <li><a class="path" href="{{ base_url }}/report/">
-        <div class="path__main"><h3>써 보고 제보하기</h3><p>Noir를 돌려 보고, 틀리게 나온 부분을 찾아서 알려 줘요.</p></div>
+        <div class="path__main"><h3>써 보고 제보하기</h3><p>Noir로 스캔하고, 빠지거나 틀린 결과를 이슈로 올려요.</p></div>
         <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
       </a></li>
       {% endif %}
@@ -66,7 +66,7 @@
       {% endif %}
       {% if page.url != "/security/" %}
       <li><a class="path" href="{{ base_url }}/security/">
-        <div class="path__main"><h3>취약점 제보하기</h3><p>Noir에서 찾은 보안 문제를 비공개로 알려 줘요.</p></div>
+        <div class="path__main"><h3>취약점 제보하기</h3><p>Noir에서 찾은 보안 문제를 비공개로 제보해요.</p></div>
         <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
       </a></li>
       {% endif %}
@@ -77,11 +77,9 @@
 {# Shown once, when the last step of this guide is ticked. #}
 <dialog class="finale" id="finale" aria-labelledby="finale-title">
   <p class="stamp finale__stamp" aria-hidden="true">사건 종결</p>
-  <h2 id="finale-title">이 사건을 끝냈어요</h2>
-  <p>단계를 모두 마쳤어요. 책상으로 돌아가서 다음 사건을 골라 보세요.</p>
-  <p class="finale__rank" id="finale-rank" hidden></p>
+  <h2 id="finale-title">단계를 모두 끝냈어요</h2>
   <form method="dialog" class="actions">
-    <a class="btn btn--primary" href="{{ base_url }}/">책상으로 돌아가기</a>
+    <a class="btn btn--primary" href="{{ base_url }}/">다음 사건 고르기</a>
     <button class="btn btn--line">계속 읽기</button>
   </form>
 </dialog>

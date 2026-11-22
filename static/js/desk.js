@@ -53,11 +53,11 @@ async function start() {
   // slow network gets the fallback faces after a short wait instead of a
   // blank desk.
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-  const glyphs = data.map((d) => d.lines.join("") + d.tab + d.mark).join("") + "사건종결수사중파일";
+  const glyphs = data.map((d) => d.lines.join("") + d.tab + d.mark + d.cells.join("")).join("") + "사건종결수사중파일";
   await Promise.race([
     Promise.all([
       document.fonts.load("800 64px Hahmlet", glyphs),
-      document.fonts.load('700 24px "Nanum Gothic Coding"', "사건 파일 필요한 것 걸리는 시간 참가자 핸즈온 토 분류 기여" + glyphs),
+      document.fonts.load('700 24px "Nanum Gothic Coding"', "사건 파일 참가자 핸즈온 토 기여" + glyphs),
       document.fonts.load('700 24px "JetBrains Mono"', "owasp-korea-day GET 0123456789"),
       document.fonts.load('500 24px "JetBrains Mono"', "owasp-korea-day GET 0123456789"),
     ]),

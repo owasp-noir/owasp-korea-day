@@ -24,7 +24,7 @@ hwaro serve          # http://localhost:3000
 | `templates/page.html` | 가이드 네 편이 쓰는 틀 |
 | `static/css/style.css` | 스타일. 맨 위 주석에 디자인 규칙이 있습니다 |
 | `static/js/desk.js` | 첫 화면의 3D 책상 (three.js) |
-| `static/js/site.js` | 단계 완료 체크, 진행도와 계급, 복사 버튼, 옆 목차 |
+| `static/js/site.js` | 단계 완료 체크, 진행도, 복사 버튼, 옆 목차 |
 | `static/js/vendor/` | three.js r169 (MIT). CDN 없이 같은 주소에서 받습니다 |
 | `static/images/desk.jpg` | 가이드 페이지 배경. 같은 책상을 위에서 렌더링한 그림입니다 |
 
@@ -39,7 +39,7 @@ hwaro serve          # http://localhost:3000
 
 - WebGL을 못 쓰거나 스크립트가 막힌 브라우저에서는 같은 목록이 폴더 카드 네 장으로 보입니다.
 - "동작 줄이기"를 켠 사람에게는 움직임 없이 그려지고, 폴더를 열면 바로 이동합니다.
-- 단계를 체크한 기록은 그 브라우저의 `localStorage`에만 남습니다. 폴더 표지의 도장과 위쪽의 계급이 이 기록을 읽습니다.
+- 단계를 체크한 기록은 그 브라우저의 `localStorage`에만 남습니다. 폴더 표지의 도장이 이 기록을 읽습니다.
 
 ## 배포
 

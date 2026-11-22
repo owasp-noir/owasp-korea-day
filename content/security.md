@@ -1,11 +1,11 @@
 +++
 title = "취약점 제보하기"
-description = "당신이 해커라면, Noir를 해킹해 주세요. 보안 문제를 찾았다면 공개된 곳 대신 비공개 통로로 알려 주세요."
+description = "당신이 해커라면, Noir를 해킹해 주세요. 찾은 보안 문제는 공개 이슈 말고 비공개로 제보해 주세요."
 
 [extra]
 mascot = "hacker"
 need = "GitHub 계정"
-time = "정해진 시간 없음"
+time = "제한 없음"
 result = "비공개 제보 하나"
 stamp = "비공개"
 +++
