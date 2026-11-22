@@ -21,16 +21,16 @@ hwaro serve          # http://localhost:3000
 | `content/code.md` | 코드로 기여하기 (빌드, 테스트, 시크릿 탐지 룰) |
 | `content/security.md` | 취약점 제보하기 (Security Advisory로 연결) |
 | `templates/index.html` | 첫 화면. 3D 책상, 사건 목록, 시간표, 자주 묻는 것 |
-| `templates/page.html` | 가이드 네 편이 쓰는 틀 |
+| `templates/page.html` | 가이드 네 편이 쓰는 틀. 펼친 폴더(왼쪽에 사진과 목차, 오른쪽에 본문)와 아래쪽의 다른 사건 폴더 |
 | `static/css/style.css` | 스타일. 맨 위 주석에 디자인 규칙이 있습니다 |
 | `static/js/desk.js` | 첫 화면의 3D 책상 (three.js) |
-| `static/js/site.js` | 단계 완료 체크, 진행도, 복사 버튼, 옆 목차 |
+| `static/js/site.js` | 가이드의 단계 띠, 단계별 완료 체크와 도장, 목차, 복사 버튼 |
 | `static/js/vendor/` | three.js r169 (MIT). CDN 없이 같은 주소에서 받습니다 |
 | `static/images/desk.jpg` | 가이드 페이지 배경. 같은 책상을 위에서 렌더링한 그림입니다 |
 
 가이드 본문은 일반 Markdown입니다. 두 가지 약속만 지키면 됩니다.
 
-- 순서가 있는 단계는 `<div class="steps">`와 `</div>` 사이에 `###` 제목으로 씁니다. 번호와 완료 체크가 자동으로 붙습니다.
+- 순서가 있는 단계는 `<div class="steps">`와 `</div>` 사이에 `###` 제목으로 씁니다. 번호, 단계 끝의 완료 체크, 표지 아래의 단계 띠가 자동으로 붙습니다.
 - 인용문(`>`)은 단계 끝의 "확인" 상자로 표시됩니다.
 
 ### 첫 화면의 3D 책상

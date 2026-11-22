@@ -7,18 +7,23 @@
      folder up shows its details in the panel along the bottom; opening it
      goes to that guide. The same four are an ordinary list in the markup,
      and that list is what shows when 3D cannot run.
-   - A guide is the opened file: a manila folder whose index tabs switch
-     between cases, with a paper sheet inside. Everything a person reads sits
-     on the sheet, flat and quiet, so the guide stays easy to follow.
-   - The strip along the top is the HUD: where you are, and on a guide a bar
-     with one segment per step.
+   - A guide is the opened file, lit by the same lamp: a manila folder whose
+     index tabs switch between cases. On a wide screen its left half is the
+     inside of the cover, with Hak's photo and the contents clipped to it;
+     the right half is the sheet. Everything a person reads sits on the
+     sheet, flat and quiet, so the guide stays easy to follow.
+   - A guide's steps are a track of numbered boxes under the cover. It
+     follows the reader down the page, and each step ticked turns red there,
+     on the rail beside the step, and on the folder back on the desk.
+   - The other cases lie on the desk under the open one, as folders.
    - Hak appears as a photo held with a paper clip.
    - Red is stamp ink and nothing else: the primary button, step numbers,
      links, and the stamps. Finishing a step stamps it; finishing them all
      closes the case.
    - Code blocks are black, like photographs filed as evidence.
 
-   Light and texture belong to the desk; the paper stays flat colour. One
+   Light and texture belong to the desk and the folder; the paper stays flat
+   colour, with only the lamp falling off towards its far corner. One
    look for every visitor, so there is no dark variant. Titles are a Korean
    serif, typed details are monospace, everything else is a quiet sans. */
 
@@ -53,6 +58,9 @@
     "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
   --font-type: "JetBrains Mono", "Nanum Gothic Coding", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
+  /* card fibres, laid over the manila */
+  --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.09 0.42' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.3 0 0 0 0 0.1 0.5 0 0 0 -0.19'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+
   --hud-h: 4rem;
   --wrap: 72rem;
   --measure: 43rem;
@@ -61,7 +69,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1.5rem; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 4.75rem; }
 
 body {
   margin: 0;
@@ -119,11 +127,6 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .hud__links a { color: var(--on-desk-mute); font-size: 0.9375rem; text-decoration: none; border-bottom: 1px solid #555; padding-block: 0.45rem 0.3rem; white-space: nowrap; }
 .hud__links a:hover { color: var(--on-desk); border-bottom-color: var(--on-desk); }
 
-/* one segment per step, along the very top of a guide */
-.steps-bar { position: fixed; z-index: 8; inset: 0 0 auto 0; height: 4px; display: flex; gap: 2px; background: #000; }
-.steps-bar span { flex: 1; background: #3a3a3a; transition: background-color 0.25s; }
-.steps-bar span.is-done { background: var(--red); }
-
 .site-footer { color: var(--on-desk-mute); font-size: 0.9375rem; }
 .site-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 2rem; padding-block: 2rem 2.5rem; }
 .site-footer__who { display: inline-flex; align-items: center; gap: 0.6rem; }
@@ -137,16 +140,58 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .tabs::-webkit-scrollbar { display: none; }
 .tab {
   flex: none; padding: 0.6rem 1.35rem 0.55rem; border-radius: 10px 10px 0 0;
-  background: var(--manila-back); color: #4d4429; text-decoration: none;
+  background: var(--manila-back) var(--fibre); color: #4d4429; text-decoration: none;
   font-weight: 650; font-size: 0.9375rem; letter-spacing: -0.005em; white-space: nowrap;
 }
-.tab:hover { color: var(--ink); background: #dccb9a; }
-.tab[aria-current="page"] { background: var(--manila); color: var(--ink); }
+.tab:hover { color: var(--ink); background-color: #dccb9a; }
+.tab[aria-current="page"] { background-color: var(--manila); color: var(--ink); }
 .tab__short { display: none; }
 
-.folder { margin-top: 0.6rem; }
-.folder__body { background: var(--manila); padding: 10px; border-radius: 10px; }
-.sheet { background: var(--paper); border-radius: 3px; }
+.folder { position: relative; margin-top: 0.6rem; }
+.folder__body {
+  position: relative; padding: 10px; border-radius: 10px; background: var(--manila) var(--fibre);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -2px 0 rgba(110, 82, 18, 0.3), 0 34px 60px -30px #000;
+}
+/* the sheet, with the edges of the pages under it showing along the bottom */
+.sheet {
+  position: relative; min-width: 0; background: var(--paper); border-radius: 2px;
+  box-shadow: 0 2px 0 #f3f0e6, 0 3px 0 #c6c0ac, 0 5px 0 #f7f4ec, 0 6px 0 #c6c0ac, 0 0 16px -5px rgba(70, 50, 0, 0.6);
+}
+
+/* The lamp over the desk. It stays put while the page scrolls under it, so
+   the paper is brightest near the top left of the screen. */
+.lamp {
+  position: fixed; inset: 0; z-index: 7; pointer-events: none;
+  background: radial-gradient(ellipse farthest-corner at 24% 14%, rgba(36, 20, 0, 0) 46%, rgba(36, 20, 0, 0.13) 100%);
+}
+
+/* the open file: inside of the cover on the left, the sheet on the right */
+.file { display: grid; grid-template-columns: minmax(0, 1fr); }
+.file__side { display: none; }
+.file__pin { position: sticky; top: 1.75rem; display: grid; gap: 2rem; justify-items: center; }
+.file__side .photo { width: 11.25rem; margin: 0; transform: rotate(-3deg); }
+.slip {
+  width: 100%; padding: 0.85rem 0.9rem 0.9rem; background: var(--paper); border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(90, 68, 14, 0.14), 3px 4px 0 rgba(82, 60, 10, 0.2); font-size: 0.9375rem;
+}
+.slip__title {
+  padding-bottom: 0.5rem; margin-bottom: 0.45rem; border-bottom: 1.5px solid var(--ink);
+  font-family: var(--font-type); font-size: 0.8125rem; font-weight: 700; color: var(--ink); letter-spacing: 0.18em;
+}
+.slip ol { list-style: none; padding: 0; margin: 0; }
+.slip a {
+  display: block; padding: 0.32rem 0 0.32rem 0.7rem; border-left: 2px solid transparent;
+  color: var(--mute); text-decoration: none; line-height: 1.45;
+}
+.slip a:hover { color: var(--ink); }
+.slip a.is-current { color: var(--ink); border-left-color: var(--red); font-weight: 650; }
+
+@media (min-width: 64rem) {
+  .file { grid-template-columns: 15.5rem minmax(0, 1fr); column-gap: 10px; }
+  /* the crease where the cover folds away from the pages */
+  .file__side { display: block; padding: 2.4rem 0.8rem 1.5rem 0.55rem; background: linear-gradient(to right, rgba(84, 60, 8, 0) calc(100% - 1.1rem), rgba(84, 60, 8, 0.2)); }
+  .file .cover__photo { display: none; }
+}
 
 /* ---------- the cover sheet ---------- */
 
@@ -162,11 +207,12 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
   gap: clamp(1.5rem, 5vw, 4.5rem); padding-block: clamp(2rem, 5vw, 3.75rem) clamp(1.75rem, 4vw, 3rem);
 }
-.cover__event { color: var(--red-ink); font-weight: 650; margin-bottom: 1rem; }
 .cover h1 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; font-size: clamp(2.2rem, 6vw, 4.25rem); line-height: 1.17; }
 .cover--page h1 { font-size: clamp(1.95rem, 4.8vw, 3.1rem); line-height: 1.22; }
 .cover__lede { margin-top: 1.4rem; max-width: 35rem; font-size: clamp(1.0625rem, 1.5vw, 1.1875rem); }
 .cover--page .cover__lede { margin-top: 1rem; max-width: 38rem; }
+.cover--page { padding-bottom: clamp(1.6rem, 3.4vw, 2.4rem); }
+.cover--page .stamp--cover { top: -2.7rem; }
 
 .actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 2rem; }
 .btn {
@@ -218,29 +264,6 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .part h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.55rem, 3.2vw, 2.1rem); letter-spacing: -0.02em; }
 .part__lede { margin-top: 0.7rem; color: var(--mute); max-width: var(--measure); }
 
-.paths { list-style: none; padding: 0; margin-top: 2rem; border-top: 1.5px solid var(--ink); }
-.paths li { border-bottom: 1px solid var(--rule); }
-.paths li:last-child { border-bottom: 1.5px solid var(--ink); }
-.path {
-  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) 1.5rem; align-items: center;
-  gap: 1rem 2.5rem; padding-block: 1.8rem; color: inherit; text-decoration: none;
-}
-.path h3 { font-size: 1.4rem; font-weight: 750; letter-spacing: -0.015em; display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem 0.8rem; }
-.path p { margin-top: 0.5rem; color: var(--mute); font-size: 1rem; line-height: 1.7; }
-.path__tag {
-  font-size: 0.8125rem; font-weight: 700; letter-spacing: 0; color: var(--red-ink); border: 1.5px solid var(--red-ink);
-  padding: 0.08rem 0.5rem; border-radius: 4px; white-space: nowrap; transform: rotate(-1.5deg);
-}
-.path__meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem 1.5rem; }
-.path__meta dt { font-size: 0.8125rem; color: var(--mute); }
-.path__meta dd { font-size: 0.9375rem; font-weight: 650; color: var(--ink); line-height: 1.5; margin-top: 0.15rem; }
-.path__go { width: 1.5rem; height: 1.5rem; fill: none; stroke: var(--mute); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.15s ease; }
-.path:hover h3, .path:focus-visible h3 { color: var(--red-ink); }
-.path:hover .path__go { stroke: var(--red-ink); transform: translateX(4px); }
-.paths--compact .path { grid-template-columns: minmax(0, 1fr) 1.5rem; padding-block: 1.3rem; }
-.paths--compact .path h3 { font-size: 1.2rem; }
-.paths--compact .path p { margin-top: 0.3rem; }
-
 /* schedule: a bar drawn to scale, then the log */
 .timebar { display: flex; gap: 3px; height: 14px; margin-top: 2rem; }
 .timebar span { flex: 0 0 0; background: var(--ink); }
@@ -285,28 +308,36 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 
 /* ---------- guide pages ---------- */
 
-.doc {
-  display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem;
-  padding: clamp(2.25rem, 5vw, 3.75rem) var(--pad) clamp(2.75rem, 6vw, 4.5rem); border-top: 1px solid var(--rule);
-}
-.doc__nav { display: none; }
+.doc { padding: clamp(2rem, 4.6vw, 3.25rem) var(--pad) clamp(2.75rem, 6vw, 4.5rem); border-top: 1px solid var(--rule); }
+.track + .doc { border-top: 0; }
 
-@media (min-width: 62rem) {
-  .js .doc { grid-template-columns: 13.5rem minmax(0, var(--measure)); justify-content: space-between; }
-  .js .doc__nav { display: block; position: sticky; top: 1.5rem; align-self: start; font-size: 0.9375rem; }
+/* The track: one numbered box per step. Only the step being read (or the
+   next one to do) shows its name, so the row fits any width. */
+.track {
+  position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 1.25rem;
+  padding: 0.6rem var(--pad); background: var(--paper); border-block: 1px solid var(--rule);
 }
-.doc__nav-title { font-family: var(--font-type); font-size: 0.8125rem; font-weight: 700; color: var(--ink); letter-spacing: 0.18em; margin-bottom: 0.7rem; }
-.doc__nav ol { list-style: none; padding: 0; margin: 0; }
-.doc__nav li a {
-  display: block; padding: 0.3rem 0 0.3rem 0.9rem; border-left: 2px solid var(--rule);
-  color: var(--mute); text-decoration: none; line-height: 1.45;
+.track.is-stuck { border-bottom-color: var(--ink); box-shadow: 0 12px 14px -14px rgba(0, 0, 0, 0.55); }
+.track ol { flex: 1; min-width: 0; display: flex; align-items: center; list-style: none; padding: 0; margin: 0; }
+.track li { display: flex; align-items: center; min-width: 0; flex: 0 1 auto; }
+.track li + li { flex: 1 1 auto; }
+.track li + li::before { content: ""; flex: 1 1 0.5rem; min-width: 0.35rem; height: 2px; margin-inline: 0.4rem; background: var(--rule); }
+.track li.is-done + li::before { background: var(--red); }
+.track a {
+  display: inline-flex; align-items: center; gap: 0.5rem; min-width: 0; padding-block: 0.3rem;
+  color: var(--mute); text-decoration: none; font-size: 0.9375rem; line-height: 1.3; white-space: nowrap;
 }
-.doc__nav li a:hover { color: var(--ink); }
-.doc__nav li a.is-current { color: var(--ink); border-left-color: var(--red); font-weight: 650; }
-.doc__nav ol ol a { padding-left: 1.9rem; font-size: 0.875rem; }
-.doc__nav ol ol a.is-done { text-decoration: line-through; text-decoration-color: var(--red); }
-.doc__progress { margin-top: 1.1rem; padding-top: 0.9rem; border-top: 1px solid var(--rule); color: var(--mute); font-family: var(--font-type); font-size: 0.8125rem; }
-.stamp--closed { margin: 1.4rem 0 0 0.3rem; font-size: 1.35rem; }
+.track__n {
+  flex: none; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border: 1.5px solid currentColor; border-radius: 3px;
+  font-family: var(--font-type); font-size: 0.8125rem; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.track a:hover { color: var(--ink); }
+.track li.is-done .track__n { background: var(--red-ink); border-color: var(--red-ink); color: #fff; }
+.track li.is-current a { color: var(--ink); font-weight: 650; }
+/* kept for a screen reader, shown only for the current step */
+.track__name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.track li.is-current .track__name { position: static; width: auto; height: auto; clip-path: none; text-overflow: ellipsis; }
+.track__count { flex: none; font-family: var(--font-type); font-size: 0.8125rem; color: var(--mute); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 .prose { max-width: var(--measure); }
 .prose > * + * { margin-top: 1.15rem; }
@@ -374,33 +405,64 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 }
 .prose blockquote p { margin: 0; }
 
-/* steps: a real sequence, so they are numbered */
-.steps { counter-reset: step; margin-top: 2rem; }
-.steps > * + * { margin-top: 1.15rem; }
-.steps > h3 {
-  counter-increment: step; position: relative;
-  margin-top: 2.75rem; padding-top: 2.4rem; border-top: 1px solid var(--rule);
+/* Steps: a real sequence, so they are numbered. With script each step is
+   its own section: a rail runs down the left from one number to the next,
+   the tick sits at the end, and a finished step turns its rail red. */
+.steps { counter-reset: step; margin-top: 2rem; border-top: 1.5px solid var(--ink); }
+.steps > * + *, .step > * + * { margin-top: 1.15rem; }
+.steps h3 {
+  counter-increment: step; margin-top: 0;
   font-size: 1.45rem; font-weight: 750; letter-spacing: -0.015em;
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.9rem;
 }
-.steps > h3:first-child { margin-top: 0; border-top: 1.5px solid var(--ink); }
-.steps > h3::before {
+.steps h3::before {
   content: counter(step); flex: none;
   font-family: var(--font-display); font-weight: 800; font-size: 2.4rem; line-height: 1; color: var(--red-ink);
   font-variant-numeric: lining-nums;
 }
-.steps > h3 .step-title { flex: 1 1 9rem; min-width: 0; }
-.step-check { flex: none; margin-left: auto; display: inline-flex; align-items: center; gap: 0.75rem; }
-.step-done {
-  display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 500; letter-spacing: 0;
-  color: var(--mute); cursor: pointer; white-space: nowrap; min-height: 2.5rem; padding-left: 0.2rem;
+.steps h3 .step-title { flex: 1 1 9rem; min-width: 0; }
+/* without script the headings simply follow one another */
+.steps > h3 { margin-top: 2.75rem; padding-top: 2.4rem; border-top: 1px solid var(--rule); }
+.steps > h3:first-child { margin-top: 0; border-top: 0; }
+
+.steps > .step { position: relative; margin-top: 0; padding-block: 2.4rem 2.6rem; }
+.step + .step { border-top: 1px solid var(--rule); }
+@media (min-width: 40.01rem) {
+  .steps > .step { padding-left: 4.25rem; }
+  .step + .step { border-top: 0; }
+  .step > h3::before { position: absolute; left: 0; top: 2.15rem; width: 2.6rem; text-align: center; }
+  .step::before {
+    content: ""; position: absolute; left: calc(1.3rem - 1px); top: 5.3rem; bottom: -1.65rem; width: 2px; background: var(--rule);
+    transition: background-color 0.25s;
+  }
+  .step:last-child::before { bottom: 2.6rem; }
+  .step.is-done::before { background: var(--red); }
 }
-.step-done input { width: 1.05rem; height: 1.05rem; margin: 0; accent-color: var(--red); }
+
+/* the tick at the end of a step */
+.step__end { margin-top: 1.5rem; }
+.step-done {
+  display: inline-flex; align-items: center; gap: 0.65rem; min-height: 3rem; padding: 0.5rem 1.25rem 0.5rem 0.95rem;
+  border: 1.5px solid var(--ink); border-radius: 6px; color: var(--ink); font-weight: 650; cursor: pointer; user-select: none;
+}
+.step-done:hover { background: var(--ink); color: var(--paper); }
+.step-done:has(input:focus-visible) { outline: 2px solid var(--red); outline-offset: 3px; }
+.step-done input {
+  appearance: none; flex: none; display: grid; place-content: center; width: 1.2rem; height: 1.2rem; margin: 0;
+  border: 1.5px solid currentColor; border-radius: 2px; outline: 0; cursor: pointer;
+}
+.step-done input:checked { background: var(--red); border-color: var(--red); }
+.step-done input:checked::after {
+  content: ""; width: 0.62rem; height: 0.32rem; border-left: 2.5px solid #fff; border-bottom: 2.5px solid #fff;
+  transform: translateY(-1px) rotate(-48deg);
+}
+.step.is-done .step-done { border-color: var(--rule); color: var(--mute); font-weight: 500; }
+.step.is-done .step-done:hover { background: none; color: var(--ink); border-color: var(--ink); }
 
 /* finishing a step stamps it */
-.step-stamp { display: none; font-size: 0.95rem; }
-.steps > h3.is-done .step-stamp { display: inline-block; }
-.steps > h3.is-done .step-stamp.is-fresh { animation: stamp 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+.step-stamp { display: none; flex: none; margin-left: auto; font-size: 0.95rem; }
+.step.is-done .step-stamp { display: inline-block; }
+.step.is-done .step-stamp.is-fresh { animation: stamp 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
 @keyframes stamp {
   from { transform: rotate(-8deg) scale(1.9); opacity: 0; }
   to   { transform: rotate(-8deg) scale(1); opacity: 1; }
@@ -409,9 +471,6 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 /* ---------- narrow screens ---------- */
 
 @media (max-width: 52rem) {
-  .path { grid-template-columns: minmax(0, 1fr) 1.5rem; }
-  .path__meta { grid-column: 1 / 2; grid-row: 2; }
-  .path__go { grid-column: 2; grid-row: 1 / 3; }
   .split { grid-template-columns: minmax(0, 1fr); }
   .schedule li { grid-template-columns: 3.5rem minmax(0, 1fr) auto; }
   .schedule__what { grid-column: 2 / 4; color: var(--mute); font-size: 0.9375rem; }
@@ -426,7 +485,6 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 @media (max-width: 40rem) {
   body { font-size: 1rem; }
   .wrap { padding-inline: max(0.5rem, env(safe-area-inset-left, 0px)) max(0.5rem, env(safe-area-inset-right, 0px)); }
-  .desk__in { padding-inline: 0.5rem; padding-block: 0.9rem 1.2rem; }
   .site-footer__in { padding-inline: 0.5rem; }
   .tabs { padding-left: 0.5rem; gap: 4px; }
   .tab { padding: 0.75rem 0.75rem 0.7rem; font-size: 0.9375rem; }
@@ -434,21 +492,32 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   .tab__short { display: inline; }
   .folder__body { padding: 6px; }
   .cover__body { grid-template-columns: minmax(0, 1fr); }
-  .photo, .cover--page .photo { order: -1; width: 8.5rem; margin: 0.9rem 0 0 0.4rem; }
+  .cover__body > .photo, .cover__photo { order: -1; }
+  .cover__body .photo { width: 8.5rem; margin: 0.9rem 0 0 0.4rem; }
   .cover--page .photo { width: 7rem; }
-  .path__meta { grid-template-columns: minmax(0, 1fr); gap: 0.35rem; }
-  .path__meta > div { display: grid; grid-template-columns: 6rem minmax(0, 1fr); align-items: baseline; }
   .btn { width: 100%; }
   .record { margin-top: 1.1rem; }
   .stamp--cover { right: 0.5rem; top: -1.35rem; font-size: 1rem; }
-  /* A three-column table keeps its shape and scrolls sideways in its own box. */
-  .prose table { min-width: 34rem; }
-  .steps > h3::before { font-size: 2rem; }
+  /* A table becomes a list: each row is a block, headed by its first cell,
+     and the other cells carry their column's name. */
+  .prose table, .prose tbody, .prose tr, .prose td { display: block; }
+  .prose thead { display: none; }
+  .prose tr { padding-block: 0.9rem; border-bottom: 1px solid var(--rule); }
+  .prose tr:last-child { border-bottom: 0; }
+  .prose td { padding: 0; border: 0; }
+  .prose td + td { margin-top: 0.55rem; }
+  .prose td[data-label]::before { content: attr(data-label); display: block; font-size: 0.8125rem; color: var(--mute); }
+  .steps h3::before { font-size: 2rem; }
+  .track { padding-block: 0.5rem; }
+  .track a { gap: 0.4rem; font-size: 0.875rem; }
+  .track__n { width: 1.5rem; height: 1.5rem; }
+  .track__count { display: none; }
+  .track li + li::before { margin-inline: 0.2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .path__go { transition: none; }
-  .steps > h3.is-done .step-stamp.is-fresh { animation: none; }
+  .step.is-done .step-stamp.is-fresh { animation: none; }
+  .step::before, .cases--row .case__link { transition: none; }
 }
 
 /* ---------- the desk (first screen) ---------- */
@@ -468,7 +537,7 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .cases { list-style: none; padding: 0; margin: 2.5rem 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.2rem 1.25rem; }
 .case__link {
   position: relative; height: 100%; display: grid; align-content: start; gap: 1.1rem;
-  padding: 1.5rem 1.5rem 1.4rem; border-radius: 0 10px 10px 10px; background: var(--manila); color: var(--text); text-decoration: none;
+  padding: 1.5rem 1.5rem 1.4rem; border-radius: 0 10px 10px 10px; background: var(--manila) var(--fibre); color: var(--text); text-decoration: none;
 }
 .case__link::before {
   content: ""; position: absolute; left: 0; bottom: 100%; width: 8.5rem; height: 0.95rem;
@@ -492,6 +561,20 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   border-radius: 6px; background: var(--red-ink); color: #fff; font-weight: 700; white-space: nowrap;
 }
 .case__link:hover .case__open { background: #a91812; }
+
+/* the other folders on the desk, under an open guide */
+.others { margin-top: clamp(2.75rem, 6vw, 4.5rem); }
+.others h2 { color: #fff; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 2.6vw, 1.75rem); letter-spacing: -0.02em; }
+.cases--row { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 3rem; }
+.cases--row .case__link {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 22px 30px -22px #000;
+  transition: transform 0.18s ease;
+}
+.cases--row .case__link:hover, .cases--row .case__link:focus-visible { transform: translateY(-5px) rotate(-0.5deg); }
+.cases--row .case__main { padding-right: 5.4rem; }
+.cases--row .case__name { font-size: 1.3rem; }
+.case .photo { position: absolute; right: 1.1rem; top: -1.7rem; width: 5.2rem; margin: 0; }
+.case__state { position: absolute; right: 1.3rem; bottom: 1.7rem; font-size: 0.95rem; }
 
 /* difficulty: three pips */
 .level { display: inline-block; width: 2.5rem; height: 0.5rem; margin-right: 0.55rem; --on: var(--red); --off: rgba(127, 127, 127, 0.45);
@@ -601,6 +684,12 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 }
 
 @view-transition { navigation: auto; }
+/* The white sheet the desk dives into is the sheet the guide opens on, so the
+   browser draws the one settling into the other; between guides the sheet
+   stays put and only what is written on it changes. */
+.lobby__paper.is-on, .file > .sheet { view-transition-name: sheet; }
+/* paper under the whole box, because the two pictures of it differ in height */
+::view-transition-group(sheet) { animation-duration: 0.45s; animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1); background: #fdfcf8; }
 
 /* ---------- the desk on narrow or short screens ---------- */
 
@@ -639,5 +728,5 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   @view-transition { navigation: none; }
   .finale[open], .finale[open] .finale__stamp { animation: none; }
-  .js .lobby:not(.is-flat) .lobby__canvas, .js .lobby:not(.is-flat) .lobby__paper, .steps-bar span { transition: none; }
+  .js .lobby:not(.is-flat) .lobby__canvas, .js .lobby:not(.is-flat) .lobby__paper { transition: none; }
 }

@@ -1,79 +1,109 @@
 {% include "header.html" %}
 {% include "partials/folder-open.html" %}
-<main id="main">
-
-  <header class="cover cover--page">
-    <div class="cover__head">
-      <span>사건 파일</span>
-      <span>분류 owasp-korea-day</span>
-    </div>
-
-    <div class="cover__body">
-      <div class="cover__copy">
-        <h1>{{ page.title | e }}</h1>
-        {% if page.description is present %}<p class="cover__lede">{{ page.description | e }}</p>{% endif %}
-      </div>
+{# The open file. On a wide screen the left is the inside of the folder's
+   cover, with Hak's photo and the contents clipped to it, and the right is
+   the sheet. On a narrow one only the sheet shows, with the photo on it. #}
+<div class="file">
+  <aside class="file__side" aria-label="목차">
+    <div class="file__pin">
       {% if page.extra.mascot is present %}
       {% set photo_pose = page.extra.mascot %}
       {% include "partials/photo.html" %}
       {% endif %}
+      <div class="slip" id="page-toc" hidden>
+        <p class="slip__title">목차</p>
+        <nav id="page-nav"></nav>
+      </div>
     </div>
+  </aside>
 
-    {% if page.extra.need is present %}
-    <div class="record">
-      <dl class="form form--three">
-        <div><dt>준비물</dt><dd>{{ page.extra.need | e }}</dd></div>
-        <div><dt>소요 시간</dt><dd>{{ page.extra.time | e }}</dd></div>
-        <div><dt>결과물</dt><dd>{{ page.extra.result | e }}</dd></div>
-      </dl>
-      {% if page.extra.stamp is present %}<span class="stamp stamp--cover" aria-hidden="true">{{ page.extra.stamp | e }}</span>{% endif %}
-    </div>
-    {% endif %}
-  </header>
+  <div class="sheet">
+    <main id="main">
 
-  <div class="doc">
-    <aside class="doc__nav" aria-label="목차">
-      <p class="doc__nav-title">목차</p>
-      <nav id="page-nav"></nav>
-      <p class="doc__progress" id="step-progress" hidden></p>
-      <span class="stamp stamp--closed" id="case-closed" hidden>사건 종결</span>
-    </aside>
-    <article class="prose">
-      {{ content }}
-    </article>
+      <header class="cover cover--page">
+        <div class="cover__head">
+          <span>사건 파일</span>
+          <span>분류 owasp-korea-day</span>
+        </div>
+
+        <div class="cover__body">
+          <div class="cover__copy">
+            <h1>{{ page.title | e }}</h1>
+            {% if page.description is present %}<p class="cover__lede">{{ page.description | e }}</p>{% endif %}
+          </div>
+          {% if page.extra.mascot is present %}
+          <div class="cover__photo">
+            {% set photo_pose = page.extra.mascot %}
+            {% include "partials/photo.html" %}
+          </div>
+          {% endif %}
+        </div>
+
+        {% if page.extra.need is present %}
+        <div class="record">
+          <dl class="form form--three">
+            <div><dt>준비물</dt><dd>{{ page.extra.need | e }}</dd></div>
+            <div><dt>소요 시간</dt><dd>{{ page.extra.time | e }}</dd></div>
+            <div><dt>결과물</dt><dd>{{ page.extra.result | e }}</dd></div>
+          </dl>
+          {# A fixed mark if the page has one; otherwise the script stamps how
+             far this case has got. #}
+          {% if page.extra.stamp is present %}
+          <span class="stamp stamp--cover" aria-hidden="true">{{ page.extra.stamp | e }}</span>
+          {% else %}
+          <span class="stamp stamp--cover" id="case-state" aria-hidden="true" hidden></span>
+          {% endif %}
+        </div>
+        {% endif %}
+      </header>
+
+      {# The script puts the step track here, between the cover and the text. #}
+      <div class="doc">
+        <article class="prose">
+          {{ content }}
+        </article>
+      </div>
+
+    </main>
   </div>
+</div>
+{% include "partials/folder-close.html" %}
 
-  <section class="part">
-    <h2>다른 사건</h2>
-    <ul class="paths paths--compact">
-      {% if page.url != "/web/" %}
-      <li><a class="path" href="{{ base_url }}/web/">
-        <div class="path__main"><h3>브라우저로 기여하기</h3><p>태그 룰에 국내 서비스 키워드를 추가해요. 설치할 게 없어요.</p></div>
-        <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-      </a></li>
-      {% endif %}
-      {% if page.url != "/report/" %}
-      <li><a class="path" href="{{ base_url }}/report/">
-        <div class="path__main"><h3>써 보고 제보하기</h3><p>Noir로 스캔하고, 빠지거나 틀린 결과를 이슈로 올려요.</p></div>
-        <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-      </a></li>
-      {% endif %}
-      {% if page.url != "/code/" %}
-      <li><a class="path" href="{{ base_url }}/code/">
-        <div class="path__main"><h3>코드로 기여하기</h3><p>Noir 코드를 직접 고쳐요.</p></div>
-        <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-      </a></li>
-      {% endif %}
-      {% if page.url != "/security/" %}
-      <li><a class="path" href="{{ base_url }}/security/">
-        <div class="path__main"><h3>취약점 제보하기</h3><p>Noir에서 찾은 보안 문제를 비공개로 제보해요.</p></div>
-        <svg class="path__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-      </a></li>
-      {% endif %}
-    </ul>
-  </section>
+{# The other folders, lying on the desk under the open one. #}
+<section class="wrap others" aria-labelledby="others-title">
+  <h2 id="others-title">다른 사건</h2>
+  <ul class="cases cases--row">
+    {% if page.url != "/web/" %}
+    <li class="case" data-case="web"><a class="case__link" href="{{ base_url }}/web/">
+      {% set photo_pose = "inspect" %}{% include "partials/photo.html" %}
+      <div class="case__main"><h3 class="case__name">브라우저로 기여하기</h3><p class="case__what">태그 룰에 국내 서비스 키워드를 추가해요. 설치할 게 없어요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    {% endif %}
+    {% if page.url != "/report/" %}
+    <li class="case" data-case="report"><a class="case__link" href="{{ base_url }}/report/">
+      {% set photo_pose = "binoculars" %}{% include "partials/photo.html" %}
+      <div class="case__main"><h3 class="case__name">써 보고 제보하기</h3><p class="case__what">Noir로 스캔하고, 빠지거나 틀린 결과를 이슈로 올려요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    {% endif %}
+    {% if page.url != "/code/" %}
+    <li class="case" data-case="code"><a class="case__link" href="{{ base_url }}/code/">
+      {% set photo_pose = "dev" %}{% include "partials/photo.html" %}
+      <div class="case__main"><h3 class="case__name">코드로 기여하기</h3><p class="case__what">Noir 코드를 직접 고쳐요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    {% endif %}
+    {% if page.url != "/security/" %}
+    <li class="case" data-case="security"><a class="case__link" href="{{ base_url }}/security/">
+      {% set photo_pose = "hacker" %}{% include "partials/photo.html" %}
+      <div class="case__main"><h3 class="case__name">취약점 제보하기</h3><p class="case__what">Noir에서 찾은 보안 문제를 비공개로 제보해요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    {% endif %}
+  </ul>
+</section>
 
-</main>
 {# Shown once, when the last step of this guide is ticked. #}
 <dialog class="finale" id="finale" aria-labelledby="finale-title">
   <p class="stamp finale__stamp" aria-hidden="true">사건 종결</p>
@@ -83,5 +113,4 @@
     <button class="btn btn--line">계속 읽기</button>
   </form>
 </dialog>
-{% include "partials/folder-close.html" %}
 {% include "footer.html" %}
