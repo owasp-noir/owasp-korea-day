@@ -1,19 +1,17 @@
 {% include "header.html" %}
 {% include "partials/folder-open.html" %}
 {# The open file. On a wide screen the left is the inside of the folder's
-   cover, with Hak's photo and the contents clipped to it, and the right is
-   the sheet. On a narrow one only the sheet shows, with the photo on it. #}
+   cover, with Hak's photo and the contents on it, and the right is the
+   sheet. On a narrow one only the sheet shows, with the photo on it. #}
 <div class="file">
   <aside class="file__side" aria-label="목차">
-    <div class="file__pin">
-      {% if page.extra.mascot is present %}
-      {% set photo_pose = page.extra.mascot %}
-      {% include "partials/photo.html" %}
-      {% endif %}
-      <div class="slip" id="page-toc" hidden>
-        <p class="slip__title">목차</p>
-        <nav id="page-nav"></nav>
-      </div>
+    {% if page.extra.mascot is present %}
+    {% set photo_pose = page.extra.mascot %}
+    {% include "partials/photo.html" %}
+    {% endif %}
+    <div class="slip" id="page-toc" hidden>
+      <p class="slip__title">목차</p>
+      <nav id="page-nav"></nav>
     </div>
   </aside>
 
@@ -21,11 +19,6 @@
     <main id="main">
 
       <header class="cover cover--page">
-        <div class="cover__head">
-          <span>사건 파일</span>
-          <span>분류 owasp-korea-day</span>
-        </div>
-
         <div class="cover__body">
           <div class="cover__copy">
             <h1>{{ page.title | e }}</h1>
@@ -46,13 +39,7 @@
             <div><dt>소요 시간</dt><dd>{{ page.extra.time | e }}</dd></div>
             <div><dt>결과물</dt><dd>{{ page.extra.result | e }}</dd></div>
           </dl>
-          {# A fixed mark if the page has one; otherwise the script stamps how
-             far this case has got. #}
-          {% if page.extra.stamp is present %}
-          <span class="stamp stamp--cover" aria-hidden="true">{{ page.extra.stamp | e }}</span>
-          {% else %}
-          <span class="stamp stamp--cover" id="case-state" aria-hidden="true" hidden></span>
-          {% endif %}
+          {% if page.extra.stamp is present %}<span class="stamp stamp--cover" aria-hidden="true">{{ page.extra.stamp | e }}</span>{% endif %}
         </div>
         {% endif %}
       </header>

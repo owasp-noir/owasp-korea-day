@@ -36,7 +36,7 @@
     var stamp = document.createElement("span");
     stamp.className = "stamp case__state";
     stamp.setAttribute("aria-hidden", "true");
-    stamp.textContent = closed ? "사건 종결" : "수사 중 " + p[0] + "/" + p[1];
+    stamp.textContent = closed ? "사건 종결" : "진행 중 " + p[0] + "/" + p[1];
     li.querySelector(".case__link").appendChild(stamp);
   });
 
@@ -125,7 +125,6 @@
   // The track: one numbered box per step, between the cover and the text.
   // It stays at the top of the screen while the page scrolls under it.
   var track = null;
-  var count = null;
   if (steps.length) {
     track = el("nav", "track");
     track.setAttribute("aria-label", "단계");
@@ -133,13 +132,13 @@
     steps.forEach(function (step, i) {
       var a = el("a");
       a.href = "#" + step.head.id;
+      a.title = step.head.textContent;
       a.appendChild(el("span", "track__n", String(i + 1)));
       a.appendChild(el("span", "track__name", step.head.textContent));
       step.item = row.appendChild(el("li"));
       step.item.appendChild(a);
     });
     track.appendChild(row);
-    count = track.appendChild(el("p", "track__count"));
 
     var doc = document.querySelector(".doc");
     var edge = el("div", "track__edge");
@@ -192,7 +191,6 @@
     }
   }
 
-  var state = document.getElementById("case-state");
   function render() {
     var done = countDone();
     steps.forEach(function (step, i) {
@@ -202,12 +200,6 @@
     });
     if (!steps.length) return;
 
-    count.textContent = done + " / " + steps.length;
-    // The cover carries the same stamp as this folder does on the desk.
-    if (state) {
-      state.hidden = !done;
-      state.textContent = done === steps.length ? "사건 종결" : "수사 중 " + done + "/" + steps.length;
-    }
     var sum = read(SUMMARY);
     sum[caseId] = [done, steps.length];
     write(SUMMARY, sum);
@@ -225,13 +217,11 @@
     while (h.firstChild) title.appendChild(h.firstChild);
     h.appendChild(title);
 
-    // The stamp only animates when the person has just ticked the box, not
-    // when a remembered tick is restored on load.
-    var stamp = h.appendChild(el("span", "stamp step-stamp", "완료"));
-    stamp.setAttribute("aria-hidden", "true");
-
-    // The tick sits at the end of the step, where the work is finished.
+    // The tick sits at the end of the step, where the work is finished, and
+    // the stamp lands beside it.
     var label = el("label", "step-done");
+    var stamp = el("span", "stamp step-stamp", "완료");
+    stamp.setAttribute("aria-hidden", "true");
     var box = el("input");
     box.type = "checkbox";
     box.id = "step-done-" + (i + 1);
@@ -240,6 +230,8 @@
       var wasAll = countDone() === steps.length;
       saved[i] = box.checked;
       write(storeKey, saved);
+      // The stamp only lands when the box has just been ticked, not when a
+      // remembered tick is restored on load.
       stamp.classList.toggle("is-fresh", box.checked);
       render();
       currentStep = -2;
@@ -248,7 +240,9 @@
     });
     label.appendChild(box);
     label.appendChild(document.createTextNode((i + 1) + "단계 끝냈어요"));
-    step.box.appendChild(el("p", "step__end")).appendChild(label);
+    var end = step.box.appendChild(el("p", "step__end"));
+    end.appendChild(label);
+    end.appendChild(stamp);
   });
 
   render();

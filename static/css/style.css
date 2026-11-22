@@ -7,23 +7,25 @@
      folder up shows its details in the panel along the bottom; opening it
      goes to that guide. The same four are an ordinary list in the markup,
      and that list is what shows when 3D cannot run.
-   - A guide is the opened file, lit by the same lamp: a manila folder whose
-     index tabs switch between cases. On a wide screen its left half is the
-     inside of the cover, with Hak's photo and the contents clipped to it;
-     the right half is the sheet. Everything a person reads sits on the
+   - A guide is the opened file: a manila folder whose index tabs switch
+     between cases. On a wide screen its left half is the inside of the
+     cover, with Hak's photo and the contents on it; the right half is the
+     sheet. Everything a person reads sits on the
      sheet, flat and quiet, so the guide stays easy to follow.
    - A guide's steps are a track of numbered boxes under the cover. It
-     follows the reader down the page, and each step ticked turns red there,
-     on the rail beside the step, and on the folder back on the desk.
+     follows the reader down the page. The tick at the end of a step turns
+     into a stamp, and that step turns red on the track and on its rail.
+     Progress is shown in those places and nowhere else on the guide.
    - The other cases lie on the desk under the open one, as folders.
    - Hak appears as a photo held with a paper clip.
    - Red is stamp ink and nothing else: the primary button, step numbers,
      links, and the stamps. Finishing a step stamps it; finishing them all
      closes the case.
+   - A label is only there if it tells the reader something.
    - Code blocks are black, like photographs filed as evidence.
 
    Light and texture belong to the desk and the folder; the paper stays flat
-   colour, with only the lamp falling off towards its far corner. One
+   colour. One
    look for every visitor, so there is no dark variant. Titles are a Korean
    serif, typed details are monospace, everything else is a quiet sans. */
 
@@ -53,10 +55,12 @@
   --del: #ffa29b;
   --del-bg: rgba(238, 42, 34, 0.2);
 
+  /* The first name in each list is served from this site (css/fonts.css).
+     Hangul in typed text falls through the monospace names to the body font. */
   --font-display: "Hahmlet", "Noto Serif KR", "Apple SD Gothic Neo", serif;
-  --font-body: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+  --font-body: "Handson Sans", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
-  --font-type: "JetBrains Mono", "Nanum Gothic Coding", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-type: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Handson Sans", monospace;
 
   /* card fibres, laid over the manila */
   --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.09 0.42' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.3 0 0 0 0 0.1 0.5 0 0 0 -0.19'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
@@ -158,26 +162,15 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   box-shadow: 0 2px 0 #f3f0e6, 0 3px 0 #c6c0ac, 0 5px 0 #f7f4ec, 0 6px 0 #c6c0ac, 0 0 16px -5px rgba(70, 50, 0, 0.6);
 }
 
-/* The lamp over the desk. It stays put while the page scrolls under it, so
-   the paper is brightest near the top left of the screen. */
-.lamp {
-  position: fixed; inset: 0; z-index: 7; pointer-events: none;
-  background: radial-gradient(ellipse farthest-corner at 24% 14%, rgba(36, 20, 0, 0) 46%, rgba(36, 20, 0, 0.13) 100%);
-}
-
 /* the open file: inside of the cover on the left, the sheet on the right */
 .file { display: grid; grid-template-columns: minmax(0, 1fr); }
 .file__side { display: none; }
-.file__pin { position: sticky; top: 1.75rem; display: grid; gap: 2rem; justify-items: center; }
-.file__side .photo { width: 11.25rem; margin: 0; transform: rotate(-3deg); }
+.file__side .photo { width: 10.5rem; margin: 0 auto 1.9rem; transform: rotate(-3deg); }
 .slip {
-  width: 100%; padding: 0.85rem 0.9rem 0.9rem; background: var(--paper); border-radius: 2px;
+  position: sticky; top: 1.25rem; padding: 0.85rem 0.9rem 0.9rem; background: var(--paper); border-radius: 2px;
   box-shadow: 0 0 0 1px rgba(90, 68, 14, 0.14), 3px 4px 0 rgba(82, 60, 10, 0.2); font-size: 0.9375rem;
 }
-.slip__title {
-  padding-bottom: 0.5rem; margin-bottom: 0.45rem; border-bottom: 1.5px solid var(--ink);
-  font-family: var(--font-type); font-size: 0.8125rem; font-weight: 700; color: var(--ink); letter-spacing: 0.18em;
-}
+.slip__title { padding-bottom: 0.5rem; margin-bottom: 0.45rem; border-bottom: 1.5px solid var(--ink); font-weight: 700; color: var(--ink); }
 .slip ol { list-style: none; padding: 0; margin: 0; }
 .slip a {
   display: block; padding: 0.32rem 0 0.32rem 0.7rem; border-left: 2px solid transparent;
@@ -196,23 +189,19 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 /* ---------- the cover sheet ---------- */
 
 .cover { padding: clamp(1.1rem, 2.6vw, 1.6rem) var(--pad) var(--pad); }
-.cover__head {
-  display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 0.7rem;
-  border-bottom: 3px double var(--ink);
-  font-family: var(--font-type); font-size: 0.8125rem; color: var(--mute);
-}
-.cover__head span:first-child { color: var(--ink); font-weight: 700; letter-spacing: 0.18em; }
+.cover__head { padding-bottom: 0.7rem; border-bottom: 3px double var(--ink); font-size: 1rem; font-weight: 700; }
 
 .cover__body {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
   gap: clamp(1.5rem, 5vw, 4.5rem); padding-block: clamp(2rem, 5vw, 3.75rem) clamp(1.75rem, 4vw, 3rem);
 }
 .cover h1 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; font-size: clamp(2.2rem, 6vw, 4.25rem); line-height: 1.17; }
-.cover--page h1 { font-size: clamp(1.95rem, 4.8vw, 3.1rem); line-height: 1.22; }
+.cover--page h1 { font-size: clamp(1.9rem, 4.2vw, 2.6rem); line-height: 1.22; }
 .cover__lede { margin-top: 1.4rem; max-width: 35rem; font-size: clamp(1.0625rem, 1.5vw, 1.1875rem); }
-.cover--page .cover__lede { margin-top: 1rem; max-width: 38rem; }
-.cover--page { padding-bottom: clamp(1.6rem, 3.4vw, 2.4rem); }
-.cover--page .stamp--cover { top: -2.7rem; }
+.cover--page .cover__lede { margin-top: 0.7rem; max-width: none; font-size: 1.0625rem; }
+.cover--page { padding-block: clamp(1.4rem, 2.8vw, 2rem) clamp(1.3rem, 2.6vw, 1.75rem); }
+.cover--page .form > div { padding-block: 0.5rem 0.55rem; }
+.cover--page .stamp--cover { top: -2.4rem; }
 
 .actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 2rem; }
 .btn {
@@ -230,7 +219,7 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 /* a photo held by a paper clip */
 .photo { position: relative; width: clamp(10.5rem, 25vw, 18rem); transform: rotate(2.5deg); margin-right: 0.5rem; }
 .cover--page .photo { width: clamp(7.5rem, 14vw, 10rem); }
-.cover--page .cover__body { padding-block: clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.25rem, 3vw, 2rem); }
+.cover--page .cover__body { padding-block: 0 clamp(1.1rem, 2.4vw, 1.5rem); }
 .photo__print {
   background: #fff; padding: 6%; padding-bottom: 6%;
   border: 1px solid var(--rule); box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.13);
@@ -337,7 +326,6 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 /* kept for a screen reader, shown only for the current step */
 .track__name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .track li.is-current .track__name { position: static; width: auto; height: auto; clip-path: none; text-overflow: ellipsis; }
-.track__count { flex: none; font-family: var(--font-type); font-size: 0.8125rem; color: var(--mute); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 .prose { max-width: var(--measure); }
 .prose > * + * { margin-top: 1.15rem; }
@@ -440,13 +428,18 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 }
 
 /* the tick at the end of a step */
-.step__end { margin-top: 1.5rem; }
+.step__end { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.5rem; margin-top: 1.5rem; }
 .step-done {
   display: inline-flex; align-items: center; gap: 0.65rem; min-height: 3rem; padding: 0.5rem 1.25rem 0.5rem 0.95rem;
   border: 1.5px solid var(--ink); border-radius: 6px; color: var(--ink); font-weight: 650; cursor: pointer; user-select: none;
 }
 .step-done:hover { background: var(--ink); color: var(--paper); }
-.step-done:has(input:focus-visible) { outline: 2px solid var(--red); outline-offset: 3px; }
+.step-done:focus-within { outline: 2px solid var(--red); outline-offset: 3px; }
+/* where the browser can tell, the ring is for the keyboard only */
+@supports selector(:has(*)) {
+  .step-done:focus-within { outline: 0; }
+  .step-done:has(input:focus-visible) { outline: 2px solid var(--red); outline-offset: 3px; }
+}
 .step-done input {
   appearance: none; flex: none; display: grid; place-content: center; width: 1.2rem; height: 1.2rem; margin: 0;
   border: 1.5px solid currentColor; border-radius: 2px; outline: 0; cursor: pointer;
@@ -459,8 +452,8 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
 .step.is-done .step-done { border-color: var(--rule); color: var(--mute); font-weight: 500; }
 .step.is-done .step-done:hover { background: none; color: var(--ink); border-color: var(--ink); }
 
-/* finishing a step stamps it */
-.step-stamp { display: none; flex: none; margin-left: auto; font-size: 0.95rem; }
+/* finishing a step stamps it, beside the tick */
+.step-stamp { display: none; font-size: 1.1rem; }
 .step.is-done .step-stamp { display: inline-block; }
 .step.is-done .step-stamp.is-fresh { animation: stamp 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
 @keyframes stamp {
@@ -511,7 +504,6 @@ p, ul, ol, dl, dd, pre, table, blockquote, figure { margin: 0; }
   .track { padding-block: 0.5rem; }
   .track a { gap: 0.4rem; font-size: 0.875rem; }
   .track__n { width: 1.5rem; height: 1.5rem; }
-  .track__count { display: none; }
   .track li + li::before { margin-inline: 0.2rem; }
 }
 

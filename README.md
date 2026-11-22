@@ -27,6 +27,8 @@ hwaro serve          # http://localhost:3000
 | `static/js/site.js` | 가이드의 단계 띠, 단계별 완료 체크와 도장, 목차, 복사 버튼 |
 | `static/js/vendor/` | three.js r169 (MIT). CDN 없이 같은 주소에서 받습니다 |
 | `static/images/desk.jpg` | 가이드 페이지 배경. 같은 책상을 위에서 렌더링한 그림입니다 |
+| `static/fonts/`, `static/css/fonts.css` | 글꼴. 외부 CDN 없이 같은 주소에서 받습니다 |
+| `scripts/subset-fonts.py` | 위 글꼴 파일과 `fonts.css`를 만드는 스크립트 |
 
 가이드 본문은 일반 Markdown입니다. 두 가지 약속만 지키면 됩니다.
 
@@ -40,6 +42,14 @@ hwaro serve          # http://localhost:3000
 - WebGL을 못 쓰거나 스크립트가 막힌 브라우저에서는 같은 목록이 폴더 카드 네 장으로 보입니다.
 - "동작 줄이기"를 켠 사람에게는 움직임 없이 그려지고, 폴더를 열면 바로 이동합니다.
 - 단계를 체크한 기록은 그 브라우저의 `localStorage`에만 남습니다. 폴더 표지의 도장이 이 기록을 읽습니다.
+
+### 글꼴
+
+글꼴은 Hahmlet(제목), Pretendard(본문), JetBrains Mono(코드)이고 모두 SIL Open Font License 1.1입니다. 라이선스 전문은 `static/fonts/OFL-*.txt`에 있습니다.
+
+- 한글 글꼴은 파일이 둘입니다. `*-site.woff2`는 지금 사이트에 쓰인 글자만 담아 항상 받고, `*-rest.woff2`는 나머지 한글(KS X 1001)을 담아 새 글자가 나올 때만 받습니다. 그래서 문구를 고쳐도 글꼴은 그대로 동작합니다.
+- 문구를 많이 바꿨다면 `hwaro build` 뒤에 `scripts/subset-fonts.py`를 다시 돌려 첫 파일을 맞춰 주세요. 사용법은 스크립트 맨 위에 있습니다.
+- Pretendard는 이름이 보호된 글꼴(Reserved Font Name)이라, 글자를 추려 낸 파일은 `Handson Sans`라는 이름으로 씁니다.
 
 ## 배포
 

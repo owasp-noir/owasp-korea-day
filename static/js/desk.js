@@ -30,7 +30,7 @@ async function start() {
 
   const W = 2.3, H = 3.1;
   const INK = "#1b1a15";
-  const MONO = '"JetBrains Mono", "Nanum Gothic Coding", ui-monospace, monospace';
+  const MONO = '"JetBrains Mono", ui-monospace, Menlo, Consolas, "Handson Sans", monospace';
   const SERIF = 'Hahmlet, "Noto Serif KR", serif';
 
   const data = items.map(function (li) {
@@ -53,11 +53,11 @@ async function start() {
   // slow network gets the fallback faces after a short wait instead of a
   // blank desk.
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-  const glyphs = data.map((d) => d.lines.join("") + d.tab + d.mark + d.cells.join("")).join("") + "사건종결수사중파일";
+  const glyphs = data.map((d) => d.lines.join("") + d.tab + d.mark + d.cells.join("")).join("") + "사건종결진행중파일";
   await Promise.race([
     Promise.all([
       document.fonts.load("800 64px Hahmlet", glyphs),
-      document.fonts.load('700 24px "Nanum Gothic Coding"', "사건 파일 참가자 핸즈온 토 기여" + glyphs),
+      document.fonts.load('700 24px "Handson Sans"', "사건 파일 참가자 핸즈온 토 기여" + glyphs),
       document.fonts.load('700 24px "JetBrains Mono"', "owasp-korea-day GET 0123456789"),
       document.fonts.load('500 24px "JetBrains Mono"', "owasp-korea-day GET 0123456789"),
     ]),
@@ -169,7 +169,7 @@ async function start() {
 
     if (state.closed) stamp(g, "사건 종결", w * 0.62, h * 0.925, 70, -0.14, manila);
     else if (state.done) {
-      stamp(g, "수사 중 " + state.done + "/" + state.total, w * 0.64, h * 0.935, 52, -0.1, manila);
+      stamp(g, "진행 중 " + state.done + "/" + state.total, w * 0.64, h * 0.935, 52, -0.1, manila);
     } else if (d.mark) stamp(g, d.mark, w * 0.7, h * 0.935, 58, -0.12, manila);
   }
 
