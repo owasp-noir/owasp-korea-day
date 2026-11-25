@@ -106,9 +106,13 @@ def main():
 
     for family, file, (lo, hi), new_name, korean in FONTS:
         slug = family.lower().replace(" ", "-")
-        parts = [("site", used)]
-        if korean:
-            parts.append(("rest", everyday - used))
+        # The rest file's rule is written first. Before any file of a family
+        # has arrived, Chrome starts fetching the family's last-declared face
+        # to measure text with, whatever its range; with "site" last that is
+        # the small file the page needs anyway. The other way round it pulled
+        # the large file on about six loads in ten.
+        parts = [("rest", everyday - used)] if korean else []
+        parts.append(("site", used))
         for part, chars in parts:
             font = TTFont(src / file)
             instancer.instantiateVariableFont(font, {"wght": (lo, hi)}, inplace=True)
