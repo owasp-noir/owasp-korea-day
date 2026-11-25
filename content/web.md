@@ -77,15 +77,15 @@ examples:
 
 ### 과제 고르기
 
-[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day)에서 하나를 골라 "제가 할게요"라고 댓글을 남겨요. 이미 댓글이 달린 과제는 다른 분이 하고 있으니 다른 걸 골라 주세요.
+[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22)에 과제가 세 개 있어요. 하나를 열어 추가할 단어를 정하고, "`naverpay` 제가 할게요"처럼 댓글을 남겨요. 과제 하나를 여러 사람이 같이 쓰니까, 다른 분이 댓글로 이미 맡은 단어는 피해 주세요.
 
 | 과제 | 고칠 파일 | 추가할 것 |
 |---|---|---|
-| 결제 대행사 | `payment.yml` | 국내 결제 대행사 이름, 결제를 승인할 때 보내는 값의 이름 |
-| 웹훅 | `webhook.yml` | 국내 서비스가 웹훅을 보낼 때 붙이는 서명 헤더 이름 |
-| 관리자 화면 | `admin.yml` | 국내 서비스가 관리자 주소에 자주 쓰는 단어 |
+| [결제 서비스](https://github.com/owasp-noir/noir/issues/3843) | `payment.yml` | 국내 결제 서비스 이름, 결제를 승인할 때 보내는 값의 이름 |
+| [웹훅](https://github.com/owasp-noir/noir/issues/3844) | `webhook.yml` | 국내 서비스가 웹훅을 보낼 때 붙이는 서명 헤더 이름 |
+| [관리자 화면](https://github.com/owasp-noir/noir/issues/3845) | `admin.yml` | 국내 서비스가 관리자 주소에 자주 쓰는 단어 |
 
-추가할 이름은 기억에 기대지 말고, 그 서비스의 **공식 문서나 공식 샘플 코드**에서 확인해 주세요. 확인한 주소는 나중에 PR에 붙여요.
+추가할 이름은 기억에 기대지 말고, 그 서비스의 **공식 문서나 공식 샘플 코드**에서 확인해 주세요. 확인한 주소는 댓글에 같이 적고, 나중에 PR에도 붙여요.
 
 > 과제에 내 댓글이 달렸어요. 추가할 단어와, 그 단어를 확인한 주소를 적어 뒀어요.
 
@@ -167,8 +167,10 @@ KakaoPay sends the user back to the merchant's approval URL with `pg_token`. End
 ## Reference
 https://developers.kakaopay.com/docs/payment/online/single-payment
 
-Closes #이슈번호
+Refs #이슈번호
 ```
+
+마지막 줄의 `Refs` 뒤에는 고른 과제의 번호를 적어요. 여러 사람이 같은 과제를 쓰기 때문에 `Closes`라고 적으면 안 돼요. 첫 PR이 반영될 때 과제가 닫혀 버려요.
 
 다 적었으면 <kbd>Create pull request</kbd>를 한 번 더 눌러요.
 

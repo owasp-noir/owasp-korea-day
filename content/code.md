@@ -107,14 +107,17 @@ just test
 
 ### 과제 맡기
 
-[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day)에서 골라도 되고, [써 보고 제보하기](@/report.md)에서 직접 찾은 문제를 고쳐도 돼요. 맡을 이슈에 댓글을 남겨 주세요.
+[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%9B%A0%EF%B8%8F+needs-build%22)에서 하나를 골라 댓글을 남겨요. 과제마다 문제가 생기는 짧은 코드, 지금 나오는 결과, 나와야 하는 결과가 적혀 있어요.
 
-| 할 일 | 고칠 곳 | 어려운 정도 |
+| 과제 | 고칠 곳 | 어려운 정도 |
 |---|---|---|
-| 빠뜨리거나 잘못 잡는 엔드포인트 고치기 | `src/analyzer/analyzers/언어/프레임워크.cr`와 그 테스트 | 보통 |
-| 태그 붙이는 규칙을 코드로 만들기 | `src/tagger/` | 보통 |
-| 새 출력 형식 만들기 | `src/output_builder/` | 보통 |
-| 새 프레임워크 지원하기 | 여러 곳 | 어려움 |
+| [PHP: `php://input`으로 읽는 JSON 본문 찾기](https://github.com/owasp-noir/noir/issues/3847) | `src/analyzer/analyzers/php/php.cr` | 보통 |
+| [JSP: `getInputStream()`으로 읽는 JSON 본문 찾기](https://github.com/owasp-noir/noir/issues/3848) | `src/analyzer/analyzers/java/jsp.cr` | 보통 |
+| [`bin/main`에 남은 소스 사본 건너뛰기](https://github.com/owasp-noir/noir/issues/3849) | `src/detector/detector.cr` | 보통 |
+| [국내 서비스의 시크릿 키 규칙 추가하기](https://github.com/owasp-noir/noir/issues/3846) | [noir-passive-rules](https://github.com/owasp-noir/noir-passive-rules) 저장소 | 보통 |
+| [PHP: `switch`로 나눈 경로 찾기](https://github.com/owasp-noir/noir/issues/3850) | `src/analyzer/analyzers/php/php.cr` | 어려움 |
+
+목록에 없는 일도 환영해요. [써 보고 제보하기](@/report.md)에서 직접 찾은 문제를 고쳐도 되고, 새 출력 형식이나 새 프레임워크 지원처럼 직접 정한 일이라면 먼저 이슈를 열어 무엇을 할지 적어 주세요.
 
 엔드포인트를 찾는 부분을 고칠 때는 순서가 있어요.
 
