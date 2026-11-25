@@ -77,13 +77,18 @@ examples:
 
 ### 과제 고르기
 
-[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22)에 과제가 세 개 있어요. 하나를 열어 추가할 단어를 정하고, "`naverpay` 제가 할게요"처럼 댓글을 남겨요. 과제 하나를 여러 사람이 같이 쓰니까, 다른 분이 댓글로 이미 맡은 단어는 피해 주세요.
+[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22)에서 하나를 골라 열어요. 과제는 크게 세 가지예요.
 
-| 과제 | 고칠 파일 | 추가할 것 |
+| 종류 | 어떤 과제 | 이 가이드와 다른 점 |
 |---|---|---|
-| [결제 서비스](https://github.com/owasp-noir/noir/issues/3843) | `payment.yml` | 국내 결제 서비스 이름, 결제를 승인할 때 보내는 값의 이름 |
-| [웹훅](https://github.com/owasp-noir/noir/issues/3844) | `webhook.yml` | 국내 서비스가 웹훅을 보낼 때 붙이는 서명 헤더 이름 |
-| [관리자 화면](https://github.com/owasp-noir/noir/issues/3845) | `admin.yml` | 국내 서비스가 관리자 주소에 자주 쓰는 단어 |
+| 있는 룰에 단어 추가하기 | [결제](https://github.com/owasp-noir/noir/issues/3843), [웹훅](https://github.com/owasp-noir/noir/issues/3844), [관리자 화면](https://github.com/owasp-noir/noir/issues/3845), [국내 표준 암호](https://github.com/owasp-noir/noir/issues/3861), [SOAP](https://github.com/owasp-noir/noir/issues/3862) | 없어요. 아래 순서 그대로 하면 돼요. |
+| [새 룰 파일 만들기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+label%3A%22%F0%9F%8F%B7%EF%B8%8F+tagger%22) | 로그인, 내보내기, 쿠폰, 본인인증처럼 아직 없는 태그 | 2단계에서 파일을 새로 만들어요. |
+| [문서 고치기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+label%3A%22%F0%9F%93%91+documentation%22) | 문서에 빠진 설정 설명 | 룰이 아니라 문서 파일을 고쳐요. 무엇을 어디에 적을지는 과제에 있어요. |
+
+골랐으면 과제에 댓글을 남겨요.
+
+- 과제에 "여러 사람이 이 이슈 하나를 같이 씁니다"라고 적혀 있으면, 추가할 단어를 정해 "`naverpay` 제가 할게요"처럼 적어요. 다른 분이 이미 맡은 단어는 피해 주세요.
+- 그런 말이 없으면 한 사람이 맡는 과제예요. "제가 할게요"라고 적어요. 이미 댓글이 달려 있으면 다른 과제를 골라 주세요.
 
 추가할 이름은 기억에 기대지 말고, 그 서비스의 **공식 문서나 공식 샘플 코드**에서 확인해 주세요. 확인한 주소는 댓글에 같이 적고, 나중에 PR에도 붙여요.
 
@@ -94,6 +99,28 @@ examples:
 고칠 파일을 GitHub에서 열어요. 결제 룰이라면 [payment.yml](https://github.com/owasp-noir/noir/blob/main/src/tagger/rules/payment.yml)이에요. 파일 오른쪽 위에 있는 연필 아이콘을 눌러요.
 
 이 저장소를 직접 고칠 권한은 없어서, GitHub가 내 계정에 복사본을 만들자고 해요. 이걸 **포크**라고 해요. <kbd>Fork this repository</kbd>를 누르면 복사본이 생기고, 거기서 고치게 돼요.
+
+새 룰 파일을 만드는 과제라면 [새 파일 만들기](https://github.com/owasp-noir/noir/new/main/src/tagger/rules)를 열어요. 맨 위 이름 칸에 과제에 적힌 파일 이름(`login.yml` 같은 것)을 넣고, 아래 틀을 붙여 넣은 다음 내 과제에 맞게 바꿔요. 그다음 5단계로 넘어가요.
+
+```yaml
+key: login                  # 파일 이름과 같아야 해요
+name: Login Tagger
+summary: Identifies sign-in and sign-up endpoints
+order: 180                  # 과제에 적힌 숫자를 써요
+tag:
+  tagger: Login
+  description: Sign-in endpoint; review for brute force.
+match:
+  any:
+    - path_segment: [login, signin]
+examples:
+  match:                    # 태그가 붙어야 하는 예
+    - { url: /login }
+    - { method: POST, url: /api/signin }
+  no_match:                 # 태그가 붙으면 안 되는 예
+    - { url: /blog/posts }
+    - { url: /catalog }
+```
 
 > 파일을 고칠 수 있는 화면이 열렸어요. 주소창을 보면 `owasp-noir` 자리에 내 아이디가 있어요.
 
@@ -170,7 +197,7 @@ https://developers.kakaopay.com/docs/payment/online/single-payment
 Refs #이슈번호
 ```
 
-마지막 줄의 `Refs` 뒤에는 고른 과제의 번호를 적어요. 여러 사람이 같은 과제를 쓰기 때문에 `Closes`라고 적으면 안 돼요. 첫 PR이 반영될 때 과제가 닫혀 버려요.
+마지막 줄에는 고른 과제의 번호를 적어요. 여러 사람이 같이 쓰는 과제라면 `Refs #번호`, 혼자 맡은 과제라면 `Closes #번호`라고 적어요. 같이 쓰는 과제에 `Closes`를 쓰면 첫 PR이 반영될 때 과제가 닫혀 버려요.
 
 다 적었으면 <kbd>Create pull request</kbd>를 한 번 더 눌러요.
 
@@ -182,7 +209,7 @@ PR 화면 아래쪽에 자동 검사 목록이 생겨요. 이 저장소에 처�
 
 먼저 볼 검사는 `Tag rule examples`예요. 내 룰의 예시를 하나씩 돌려 보는 검사이고, 1분 안에 끝나요. 빨간 X가 뜨면 Details를 눌러 기록을 열어 보세요. `FAIL` 뒤에 어느 파일의 무엇이 틀렸는지 한 줄로 나와요.
 
-`tests (1.22.0)`이라는 검사도 같이 돌아요. Noir의 다른 테스트까지 전부 돌리는 검사라 5~8분쯤 걸려요. 이건 기다리지 않아도 돼요. 회색으로 Skipped라고 나오는 검사들은 룰 파일과 상관없어서 건너뛴 거예요.
+`tests (1.22.0)`이라는 검사도 같이 돌아요. Noir의 다른 테스트까지 전부 돌리는 검사라 5~8분쯤 걸려요. 이건 기다리지 않아도 돼요. 회색으로 Skipped라고 나오는 검사들은 룰 파일과 상관없어서 건너뛴 거예요. 문서를 고친 PR에서는 `Tag rule examples`도 건너뛰어요. 그때는 빨간 X가 없는지만 보면 돼요.
 
 고칠 게 있으면 PR 화면의 Files changed 탭으로 가요. 파일 오른쪽의 <kbd>…</kbd>를 누르고 Edit file을 고르면 다시 고칠 수 있어요. 저장하면 같은 PR에 반영되고 검사도 다시 돌아가요. PR을 새로 올릴 필요는 없어요.
 

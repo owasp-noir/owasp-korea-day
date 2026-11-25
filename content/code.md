@@ -114,6 +114,7 @@ just test
 | [PHP: `php://input`으로 읽는 JSON 본문 찾기](https://github.com/owasp-noir/noir/issues/3847) | `src/analyzer/analyzers/php/php.cr` | 보통 |
 | [JSP: `getInputStream()`으로 읽는 JSON 본문 찾기](https://github.com/owasp-noir/noir/issues/3848) | `src/analyzer/analyzers/java/jsp.cr` | 보통 |
 | [`bin/main`에 남은 소스 사본 건너뛰기](https://github.com/owasp-noir/noir/issues/3849) | `src/detector/detector.cr` | 보통 |
+| [주민등록번호를 개인정보로 알아보기](https://github.com/owasp-noir/noir/issues/3870) | `src/tagger/taggers/pii.cr` | 보통 |
 | [국내 서비스의 시크릿 키 규칙 추가하기](https://github.com/owasp-noir/noir/issues/3846) | [noir-passive-rules](https://github.com/owasp-noir/noir-passive-rules) 저장소 | 보통 |
 | [PHP: `switch`로 나눈 경로 찾기](https://github.com/owasp-noir/noir/issues/3850) | `src/analyzer/analyzers/php/php.cr` | 어려움 |
 
