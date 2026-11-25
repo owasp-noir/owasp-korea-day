@@ -130,7 +130,7 @@ noir scan . -T
 
 먼저 [이슈 목록](https://github.com/owasp-noir/noir/issues)에서 프레임워크 이름으로 검색해 봐요. 같은 문제가 이미 올라와 있을 수 있어요. 없다면 [새 이슈](https://github.com/owasp-noir/noir/issues/new/choose)에서 Bug report를 골라요.
 
-제목은 영어로, 프레임워크 이름과 문제를 한 줄로 적어요. 이런 식이에요.
+제목에는 프레임워크 이름과 문제를 한 줄로 적어요. 한국어로 써도 돼요. 영어로 쓴다면 이런 식이에요.
 
 ```text
 express: routes mounted with router.use() lose their path prefix

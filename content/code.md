@@ -4,7 +4,7 @@ description = "Noir 코드를 직접 고쳐요. 오늘은 빌드하고 과제를
 
 [extra]
 mascot = "dev"
-need = "GitHub Codespaces, 또는 Crystal 1.19 이상"
+need = "브라우저(Codespaces), 또는 Crystal 1.19 이상"
 time = "행사 뒤까지"
 result = "Noir가 빌드되는 환경, 맡은 과제 하나"
 +++
@@ -147,7 +147,7 @@ just test
 git push origin fix/express-router-prefix
 ```
 
-GitHub에서 내 복사본 화면으로 가면 <kbd>Compare &amp; pull request</kbd> 버튼이 보여요. 눌러서 PR을 올려요. 제목은 영어로 적고, 내용에는 뭘 왜 고쳤는지와 관련 이슈 번호를 적어요.
+GitHub에서 내 복사본 화면으로 가면 <kbd>Compare &amp; pull request</kbd> 버튼이 보여요. 눌러서 PR을 올려요. 내용에는 뭘 왜 고쳤는지와 관련 이슈 번호를 적어요. 한국어로 써도 돼요.
 
 > PR이 올라갔고 자동 검사가 시작됐어요. 처음 기여하는 계정은 관리자가 허락한 뒤에 검사가 돌아가요.
 
