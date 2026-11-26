@@ -1,6 +1,6 @@
 +++
 title = "써 보고 제보하기"
-description = "아는 프로젝트에 Noir를 돌려 보고, 빠뜨렸거나 틀리게 나온 부분을 찾아서 알려 줘요. 코드를 고치지 않아도 큰 도움이 돼요."
+description = "아는 프로젝트를 Noir로 스캔하고, 빠지거나 틀린 결과를 이슈로 올려요. 코드는 고치지 않아요."
 
 [extra]
 mascot = "binoculars"
@@ -15,7 +15,7 @@ Noir는 코드를 실행하지 않고 읽기만 해서 엔드포인트를 찾아
 
 읽기만 해서 찾으려면 사람들이 코드를 어떻게 쓰는지 미리 알고 있어야 해요. 그런데 프레임워크도 많고 쓰는 방식도 제각각이라, 만드는 사람들이 전부 써 볼 수는 없어요.
 
-그래서 "이런 코드는 Noir가 못 읽어요" 하고 알려 주는 제보가 큰 도움이 돼요. 코드를 고칠 필요는 없어요. 어떤 코드에서 뭐가 틀렸는지만 정확히 알려 주세요.
+그래서 "이런 코드는 Noir가 못 읽어요"라는 제보가 있어야 고칠 수 있어요. 코드를 고칠 필요는 없고, 어떤 코드에서 뭐가 틀렸는지만 정확히 적으면 돼요.
 
 ## 따라 하기
 
@@ -35,10 +35,12 @@ Node.js 20 이상이 깔려 있다면 npm으로도 설치할 수 있어요.
 npm install -g @owasp-noir/noir
 ```
 
-설치하고 싶지 않다면 Docker로 바로 실행해도 돼요. 이때는 아래 단계에 나오는 `noir scan .` 대신 이 명령을 써요.
+Windows에서는 위 두 방법을 쓸 수 없어요. [릴리스 화면](https://github.com/owasp-noir/noir/releases/latest)에서 `noir-v1.5.0-windows-x86_64.exe`처럼 `windows`가 들어간 파일을 받아 `noir.exe`로 이름을 바꿔 쓰거나, 아래 Docker 방법을 써요.
+
+설치하고 싶지 않다면 Docker로 바로 실행해도 돼요. 아래 단계에 나오는 명령 앞에 `docker run --rm -v "${PWD}:/tmp" -w /tmp ghcr.io/owasp-noir/noir:latest`를 붙이면 돼요. 예를 들어 `noir scan .`은 이렇게 실행해요.
 
 ```sh
-docker run --rm -v "$PWD:/tmp" ghcr.io/owasp-noir/noir:latest noir scan /tmp
+docker run --rm -v "${PWD}:/tmp" -w /tmp ghcr.io/owasp-noir/noir:latest noir scan .
 ```
 
 다른 방법은 [설치 문서](https://owasp-noir.github.io/noir/ko/get_started/installation/)에 있어요.
@@ -49,7 +51,7 @@ docker run --rm -v "$PWD:/tmp" ghcr.io/owasp-noir/noir:latest noir scan /tmp
 
 내가 만들었거나 잘 아는 프로젝트가 제일 좋아요. 어떤 엔드포인트가 있는지 이미 알고 있으니, Noir가 틀린 곳이 바로 보이거든요.
 
-마땅한 게 없다면 아래 공개 저장소로 시작해 보세요. 셋 다 몇 초면 스캔이 끝나요.
+마땅한 게 없다면 아래 공개 저장소로 시작해 보세요. 셋 다 몇 초면 스캔이 끝나요. 다만 여기서 보이는 문제 몇 가지는 이미 [과제](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day)로 올라가 있어요. 새 문제를 찾으려면 내가 아는 프로젝트가 더 좋아요.
 
 | 저장소 | 내용 |
 |---|---|
@@ -69,10 +71,10 @@ cd tosspayments-sample
 ### 스캔하기
 
 ```sh
-noir scan . -T
+noir scan . -T --include path
 ```
 
-`-T`는 태그도 붙여 달라는 옵션이에요. 먼저 Noir가 알아본 프레임워크가 나오고, 이어서 엔드포인트가 하나씩 나와요.
+`-T`는 태그도 붙여 달라는 옵션이에요. `--include path`를 붙이면 엔드포인트마다 어느 파일에서 찾았는지 `file:` 줄이 같이 나와요. 먼저 Noir가 알아본 프레임워크가 나오고, 이어서 엔드포인트가 하나씩 나와요.
 
 ```text
 ✔ Detected 1 technologies.
@@ -92,7 +94,7 @@ noir scan . -T -f json -o endpoints.json
 
 ### 결과와 코드 비교하기
 
-주소를 정해 둔 코드 파일을 열어 놓고, Noir가 낸 결과와 하나씩 비교해요. 찾을 건 세 가지예요.
+주소를 정해 둔 코드 파일을 열어 놓고, Noir가 낸 결과와 하나씩 비교해요. 결과의 `file:` 줄을 보면 어느 파일과 비교할지 알 수 있어요. `GET /logo.png`처럼 이미지나 HTML 파일이 주소로 나오는 건 틀린 게 아니에요. 서버가 그 파일을 그대로 내보내는 주소예요. 찾을 건 세 가지예요.
 
 | 종류 | 뜻 | 예 |
 |---|---|---|
@@ -103,16 +105,26 @@ noir scan . -T -f json -o endpoints.json
 결과가 아예 없다면, Noir가 그 프레임워크를 지원하는지부터 확인해요.
 
 ```sh
-noir list techs
+noir list techs | grep -i express
 ```
 
-목록에 없다면 오류가 아니라 "이것도 지원해 주세요"라는 요청이 돼요. 이런 요청도 환영해요.
+목록이 아주 길어서 이름으로 걸러 봐요. `express` 자리에 찾는 프레임워크 이름을 넣어요. Windows 명령 프롬프트에서는 `grep -i` 대신 `findstr /i`를 써요. 목록에 없다면 오류가 아니라 "이것도 지원해 주세요"라는 요청이 돼요. 이런 요청도 환영해요.
+
+설치한 Noir는 최신 코드보다 조금 뒤에 있어요. 그사이에 이미 고쳐진 문제일 수 있으니, 제보하기 전에 최신 버전으로 한 번 더 돌려 보세요. Docker가 있다면 이렇게 해요. 여기서도 같은 문제가 나오면 제보할 거리가 맞아요.
+
+```sh
+docker run --rm -v "${PWD}:/tmp" -w /tmp ghcr.io/owasp-noir/noir:main noir scan . -T --include path
+```
+
+Docker가 없다면 건너뛰고, 이슈에 버전을 꼭 적어 주세요.
 
 > 틀린 곳을 하나 찾았어요. 그 주소가 코드 어디에 있는지도 알아요.
 
 ### 짧은 예제 만들기
 
 다른 사람이 같은 문제를 그대로 볼 수 있어야 고칠 수 있어요. 빈 폴더를 하나 만들고, 문제가 생기는 부분만 옮겨 적은 파일을 넣어요. 파일 한두 개, 스무 줄 정도면 충분해요.
+
+이 예제는 한 번 쓰고 버리는 게 아니에요. 문제를 고칠 때 Noir의 테스트로 그대로 들어가서, 같은 문제가 다시 생기면 바로 알려 줘요. Noir 저장소에는 이렇게 모인 예제 폴더가 1,500개쯤 있어요.
 
 ```sh
 mkdir repro && cd repro
@@ -128,9 +140,9 @@ noir scan . -T
 
 ### 이슈 올리기
 
-먼저 [이슈 목록](https://github.com/owasp-noir/noir/issues)에서 프레임워크 이름으로 검색해 봐요. 같은 문제가 이미 올라와 있을 수 있어요. 없다면 [새 이슈](https://github.com/owasp-noir/noir/issues/new/choose)에서 Bug report를 골라요.
+먼저 [이슈 목록](https://github.com/owasp-noir/noir/issues)에서 프레임워크 이름으로 검색해 봐요. 같은 문제가 이미 올라와 있을 수 있어요. 있다면 새로 올리지 말고 그 이슈에 "저도 같은 문제를 봤어요"라고 내 예제를 댓글로 남겨요. 그것도 도움이 돼요. 없다면 [새 이슈](https://github.com/owasp-noir/noir/issues/new/choose)에서 Bug report를 골라요.
 
-제목은 영어로, 프레임워크 이름과 문제를 한 줄로 적어요. 이런 식이에요.
+제목에는 프레임워크 이름과 문제를 한 줄로 적어요. 한국어로 써도 돼요. 영어로 쓴다면 이런 식이에요.
 
 ```text
 express: routes mounted with router.use() lose their path prefix

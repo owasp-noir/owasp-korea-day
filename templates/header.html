@@ -18,36 +18,24 @@
   <link rel="icon" href="{{ base_url }}/logos/favicon-96x96.png" type="image/png" sizes="96x96">
   <link rel="apple-touch-icon" href="{{ base_url }}/logos/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@700;800&family=JetBrains+Mono:wght@400;500;700&family=Nanum+Gothic+Coding:wght@400;700&display=swap">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preload" href="{{ base_url }}/fonts/handson-sans-site.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ base_url }}/fonts/hahmlet-site.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ base_url }}/css/fonts.css">
   <link rel="stylesheet" href="{{ base_url }}/css/style.css">
 </head>
 <body>
   <a class="skip" href="#main">본문으로 바로 가기</a>
 
-  {# The desk: a black strip the folder lies on. #}
-  <header class="desk">
-    <div class="wrap desk__in">
+  {# The HUD: the strip along the top of every screen. #}
+  <header class="hud">
+    <div class="wrap hud__in">
       <a class="brand" href="{{ base_url }}/">
         <img src="{{ base_url }}/images/logo-s.png" alt="" width="26" height="26">
         <span>Noir 기여 핸즈온</span>
       </a>
-      <a class="desk__out" href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day">과제 목록</a>
+      <nav class="hud__links" aria-label="바로 가기">
+        {% if page.url == "/" %}<a href="#briefing">시간표</a>{% else %}<a href="{{ base_url }}/">첫 화면</a>{% endif %}
+        <a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day">과제 목록</a>
+      </nav>
     </div>
   </header>
-
-  {# The folder: its index tabs are the site navigation. The current tab is the
-     same colour as the folder body, so it reads as the folder that is open. #}
-  <div class="wrap folder">
-    <nav class="tabs" aria-label="주요 메뉴">
-      <a class="tab" href="{{ base_url }}/"{% if page.url == "/" %} aria-current="page"{% endif %}>개요</a>
-      <a class="tab" href="{{ base_url }}/web/"{% if page.url == "/web/" %} aria-current="page"{% endif %}><span class="tab__long">브라우저로 기여</span><span class="tab__short">브라우저</span></a>
-      <a class="tab" href="{{ base_url }}/report/"{% if page.url == "/report/" %} aria-current="page"{% endif %}><span class="tab__long">써 보고 제보</span><span class="tab__short">제보</span></a>
-      <a class="tab" href="{{ base_url }}/code/"{% if page.url == "/code/" %} aria-current="page"{% endif %}><span class="tab__long">코드로 기여</span><span class="tab__short">코드</span></a>
-      <a class="tab" href="{{ base_url }}/security/"{% if page.url == "/security/" %} aria-current="page"{% endif %}><span class="tab__long">취약점 제보</span><span class="tab__short">취약점</span></a>
-    </nav>
-    <div class="folder__body">
-      <div class="sheet">

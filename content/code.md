@@ -1,26 +1,26 @@
 +++
 title = "코드로 기여하기"
-description = "Noir 코드를 직접 고쳐요. 준비에 시간이 걸려서, 오늘은 Noir를 직접 빌드해 보고 할 일을 정하는 데까지 해요. 고치는 건 행사 뒤에 이어서 하면 돼요."
+description = "Noir 코드를 직접 고쳐요. 오늘은 빌드하고 실패하는 테스트를 만드는 데까지를 목표로 하고, 수정은 행사 뒤에 이어서 해도 돼요."
 
 [extra]
 mascot = "dev"
-need = "GitHub Codespaces, 또는 Crystal 1.19 이상"
+need = "브라우저(Codespaces), 또는 Crystal 1.19 이상"
 time = "행사 뒤까지"
-result = "Noir가 빌드되는 환경, 맡은 과제 하나"
+result = "Noir가 빌드되는 환경, 맡은 과제의 실패하는 테스트"
 +++
 
 ## 시작하기 전에
 
-Noir는 Crystal이라는 언어로 만들었어요. Crystal을 처음 써 봐도 괜찮아요. 아래 순서대로 하면 Noir를 직접 빌드하고 테스트까지 돌려 볼 수 있어요.
+Noir는 Crystal로 만들었어요. Crystal을 몰라도 아래 순서대로 하면 빌드와 테스트까지 돌릴 수 있어요.
 
 준비하는 방법은 두 가지예요.
 
 | 방법 | 이런 분께 | 준비에 걸리는 시간 |
 |---|---|---|
-| 브라우저에서 열기 (Codespaces) | 아무것도 설치하고 싶지 않은 분, Windows를 쓰는 분 | 열리는 데 2~3분 |
+| 브라우저에서 열기 (Codespaces) | 아무것도 설치하고 싶지 않은 분, Windows를 쓰는 분 | 처음 열 때 몇 분 |
 | 내 컴퓨터에 설치하기 | 평소 쓰는 편집기로 작업하고 싶은 분 | 설치 환경에 따라 달라요 |
 
-어느 쪽이든 빌드와 테스트는 처음 한 번이 제일 오래 걸려요. 첫 빌드는 2~3분, 첫 테스트는 5분쯤 걸려요. 기다리기 지루하거나 더 가벼운 일부터 해 보고 싶다면, 아래의 [시크릿 탐지 룰](#시크릿-탐지-룰)로 시작해도 좋아요.
+어느 쪽이든 빌드와 테스트는 처음 한 번이 제일 오래 걸려요. 첫 빌드는 2~3분, 첫 테스트는 5분쯤 걸려요. 내 컴퓨터에 Crystal을 설치했고 더 가벼운 일부터 해 보고 싶다면, 아래의 [시크릿 탐지 룰](#시크릿-탐지-룰)로 시작해도 좋아요.
 
 ## 설치 없이 시작하기
 
@@ -28,7 +28,7 @@ GitHub Codespaces를 쓰면 브라우저 안에서 편집기와 터미널이 열
 
 1. [Noir 저장소](https://github.com/owasp-noir/noir)에서 오른쪽 위의 <kbd>Fork</kbd>를 눌러 내 계정에 복사본을 만들어요.
 2. 내 복사본 화면에서 초록색 <kbd>Code</kbd> 버튼을 누르고, Codespaces 탭에서 <kbd>Create codespace on main</kbd>을 눌러요.
-3. 2~3분 기다리면 편집기가 열려요. 아래쪽 터미널에서 명령을 실행할 수 있어요.
+3. 몇 분 기다리면 편집기가 열려요. 처음에는 환경을 새로 만드느라 더 걸릴 수 있어요. 아래쪽 터미널에서 명령을 실행할 수 있어요.
 
 이렇게 열었다면 아래 따라 하기의 1, 2단계는 건너뛰고 **3단계 빌드하기**부터 하면 돼요.
 
@@ -101,26 +101,59 @@ just test
 ./bin/noir_spec -e hono
 ```
 
-`-e` 뒤에 이름 일부를 적으면 그 이름이 들어간 테스트만 돌아가요. 코드를 고친 뒤에는 `just spec-build`로 다시 만들고 같은 방법으로 돌려요.
+`-e` 뒤에 이름 일부를 적으면 그 이름이 들어간 테스트만 돌아가요. `0 examples`라고 나오면 통과한 게 아니라 맞는 이름이 없었다는 뜻이에요.
+
+예제 코드 폴더 하나만 검사하고 싶을 때는 이름이 조금 달라요. 폴더 경로를 대괄호로 감싸면 엔드포인트 개수 검사가 돌고, `::` 뒤에 주소를 적으면 그 주소의 검사가 돌아요.
+
+```sh
+./bin/noir_spec -e "[fixtures/php/php/]"
+./bin/noir_spec -e "::/get.php"
+```
+
+예제 코드와 기대 결과(`.yml`)만 고쳤다면 다시 만들 필요가 없어요. 실행할 때 읽어 오거든요. Noir 코드(`src/`)를 고친 뒤에만 `just spec-build`로 다시 만들어요. 한 번에 몇 분씩 걸려요.
 
 > 실패 없이 끝났어요. 고치기 전에 다 통과하는 걸 확인해 둬야, 나중에 실패했을 때 내가 고친 것 때문인지 알 수 있어요.
 
 ### 과제 맡기
 
-[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day)에서 골라도 되고, [써 보고 제보하기](@/report.md)에서 직접 찾은 문제를 고쳐도 돼요. 맡을 이슈에 댓글을 남겨 주세요.
+[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%9B%A0%EF%B8%8F+needs-build%22)에서 하나를 골라 "제가 할게요"라고 댓글을 남겨요. 이미 댓글이 달려 있으면 다른 과제를 골라 주세요. 과제마다 문제가 생기는 짧은 코드, 지금 나오는 결과, 나와야 하는 결과가 적혀 있어요. 과제에 나오는 `noir scan .`은 방금 빌드한 `bin/noir`로 실행하면 돼요.
 
-| 할 일 | 고칠 곳 | 어려운 정도 |
+| 과제 | 고칠 곳 | 어려운 정도 |
 |---|---|---|
-| 빠뜨리거나 잘못 잡는 엔드포인트 고치기 | `src/analyzer/analyzers/언어/프레임워크.cr`와 그 테스트 | 보통 |
-| 태그 붙이는 규칙을 코드로 만들기 | `src/tagger/` | 보통 |
-| 새 출력 형식 만들기 | `src/output_builder/` | 보통 |
-| 새 프레임워크 지원하기 | 여러 곳 | 어려움 |
+| [PHP: `php://input`으로 읽는 JSON 본문 찾기](https://github.com/owasp-noir/noir/issues/3847) | `src/analyzer/analyzers/php/php.cr` | 보통 |
+| [JSP: `getInputStream()`으로 읽는 JSON 본문 찾기](https://github.com/owasp-noir/noir/issues/3848) | `src/analyzer/analyzers/java/jsp.cr` | 보통 |
+| [`bin/main`에 남은 소스 사본 건너뛰기](https://github.com/owasp-noir/noir/issues/3849) | `src/detector/detector.cr` | 보통 |
+| [주민등록번호를 개인정보로 알아보기](https://github.com/owasp-noir/noir/issues/3870) | `src/tagger/taggers/pii.cr` | 보통. 이 중 가장 짧아요. |
+| [국내 서비스의 시크릿 키 규칙 추가하기](https://github.com/owasp-noir/noir/issues/3846) | [noir-passive-rules](https://github.com/owasp-noir/noir-passive-rules) 저장소 | 보통 |
+| [PHP: `switch`로 나눈 경로 찾기](https://github.com/owasp-noir/noir/issues/3850) | `src/analyzer/analyzers/php/php.cr` | 어려움 |
+
+목록에 없는 일도 환영해요. [써 보고 제보하기](@/report.md)에서 직접 찾은 문제를 고쳐도 되고, 새 출력 형식이나 새 프레임워크 지원처럼 직접 정한 일이라면 먼저 이슈를 열어 무엇을 할지 적어 주세요.
 
 엔드포인트를 찾는 부분을 고칠 때는 순서가 있어요.
 
-1. 문제가 드러나는 예제 코드를 `spec/functional_test/fixtures/` 아래에 넣어요.
-2. 나와야 하는 엔드포인트를 `spec/functional_test/testers/`의 테스트에 적어요. 이때는 테스트가 실패하는 게 맞아요.
-3. 코드를 고쳐서 테스트를 통과시켜요.
+1. 문제가 드러나는 예제 코드를 `spec/functional_test/fixtures/` 아래에 넣어요. 과제에 적힌 폴더에 파일을 추가하면 돼요.
+2. 나와야 하는 엔드포인트를 `spec/functional_test/testers/`의 `.yml` 파일에 적어요. 파일 맨 위 `counts`의 `endpoints` 숫자도 늘어난 만큼 고쳐요.
+3. 테스트를 돌려서 실패하는 걸 확인해요. 이때는 실패하는 게 맞아요.
+4. 코드를 고쳐서 테스트를 통과시켜요.
+
+PHP 과제라면 2번에서 이렇게 적어요. `type`에는 `query`, `form`, `json`, `header`, `cookie`, `path` 중 하나가 와요.
+
+```yaml
+  - url: "/confirm.php"
+    method: "POST"
+    params:
+      - {name: "orderId", type: "json"}
+      - {name: "amount", type: "json"}
+      - {name: "coupon", type: "form"}
+```
+
+3번에서는 이런 줄이 나와요. 무엇이 빠졌는지 그대로 알려 줘요.
+
+```text
+MISSING PARAM [orderId] on [POST::/confirm.php] in tester: fixtures/php/php/
+```
+
+오늘은 3번까지만 해도 충분해요. 실패하는 테스트가 있으면 행사 뒤에 이어서 고치기 쉬워요.
 
 저장소가 어떻게 생겼는지, 새 기능은 어디에 넣는지는 [AGENTS.md](https://github.com/owasp-noir/noir/blob/main/AGENTS.md)에 정리돼 있어요. 코드를 읽기 전에 이 문서부터 읽어 보세요.
 
@@ -128,10 +161,10 @@ just test
 
 ### 고치고 PR 올리기
 
-작업할 브랜치를 하나 만들어서 고쳐요.
+작업할 브랜치를 하나 만들어서 고쳐요. 브랜치 이름은 내 과제에 맞게 지어요.
 
 ```sh
-git checkout -b fix/express-router-prefix
+git checkout -b fix/php-input-json-body
 ```
 
 다 고쳤으면 코드 모양을 검사하고 테스트를 다시 돌려요.
@@ -141,19 +174,23 @@ just check
 just test
 ```
 
-`just check`가 알려 준 것 중 자동으로 고칠 수 있는 건 `just fix`가 고쳐 줘요. 다 통과하면 올려요.
+둘 다 처음에는 몇 분씩 걸려요. `just check`가 알려 준 것 중 자동으로 고칠 수 있는 건 `just fix`가 고쳐 줘요. 다 통과하면 저장하고 올려요.
 
 ```sh
-git push origin fix/express-router-prefix
+git add -A
+git commit -m "fix(php): read JSON body keys from php://input"
+git push origin fix/php-input-json-body
 ```
 
-GitHub에서 내 복사본 화면으로 가면 <kbd>Compare &amp; pull request</kbd> 버튼이 보여요. 눌러서 PR을 올려요. 제목은 영어로 적고, 내용에는 뭘 왜 고쳤는지와 관련 이슈 번호를 적어요.
+GitHub에서 내 복사본 화면으로 가면 <kbd>Compare &amp; pull request</kbd> 버튼이 보여요. 눌러서 PR을 올려요. 내용에는 뭘 왜 고쳤는지 적고, 마지막 줄에 `Closes #3847`처럼 맡은 과제 번호를 적어요. 한국어로 써도 돼요.
 
 > PR이 올라갔고 자동 검사가 시작됐어요. 처음 기여하는 계정은 관리자가 허락한 뒤에 검사가 돌아가요.
 
 </div>
 
 ## 시크릿 탐지 룰
+
+이 과제는 내 컴퓨터에 Crystal을 설치한 분께 권해요. Noir용 Codespaces 안에서는 다른 저장소로 올리는 게 막혀 있을 수 있어요.
 
 Noir는 엔드포인트를 찾으면서, 코드에 실수로 적어 둔 API 키나 토큰도 같이 찾아요. 이걸 찾는 규칙은 [noir-passive-rules](https://github.com/owasp-noir/noir-passive-rules)라는 다른 저장소에 들어 있어요. 국내 서비스의 키 모양은 아직 거의 없어요.
 
