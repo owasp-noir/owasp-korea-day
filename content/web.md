@@ -82,7 +82,7 @@ examples:
 
 | 종류 | 어떤 과제 | 이 가이드와 다른 점 |
 |---|---|---|
-| 있는 룰에 단어 추가하기 | [결제](https://github.com/owasp-noir/noir/issues/3843), [웹훅](https://github.com/owasp-noir/noir/issues/3844), [관리자 화면](https://github.com/owasp-noir/noir/issues/3845), [국내 표준 암호](https://github.com/owasp-noir/noir/issues/3861), [SOAP](https://github.com/owasp-noir/noir/issues/3862) | 없어요. 아래 순서 그대로 하면 돼요. |
+| [있는 룰에 단어 추가하기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+yml+in%3Atitle) | 결제, 웹훅, 관리자 화면처럼 이미 있는 태그에 국내 서비스의 단어를 넣어요. | 없어요. 아래 순서 그대로 하면 돼요. |
 | [새 룰 파일 만들기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+%22tagger+for%22+in%3Atitle) | 로그인, 내보내기, 쿠폰, 본인인증처럼 아직 없는 태그 | 2단계에서 파일을 새로 만들어요. |
 | [문서 고치기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+label%3A%22%F0%9F%93%91+documentation%22) | 문서에 빠진 설정 설명 | 파일 두 개를 고쳐요. PR을 한 번 올려 본 다음에 하기를 권해요. 방법은 아래 [문서를 고치는 과제라면](#문서를-고치는-과제라면)에 있어요. |
 
@@ -205,7 +205,7 @@ https://developers.kakaopay.com/docs/payment/online/single-payment
 Refs #이슈번호
 ```
 
-마지막 줄에는 고른 과제의 번호를 적어요. 번호는 과제 화면의 제목 옆에 `#3843`처럼 적혀 있어요. 여러 사람이 같이 쓰는 과제라면 `Refs #번호`, 혼자 맡은 과제라면 `Closes #번호`라고 적어요. 같이 쓰는 과제에 `Closes`를 쓰면 첫 PR이 반영될 때 과제가 닫혀 버려요.
+마지막 줄에는 고른 과제의 번호를 적어요. 번호는 과제 화면의 제목 옆에 `#1234`처럼 적혀 있어요. 여러 사람이 같이 쓰는 과제라면 `Refs #번호`, 혼자 맡은 과제라면 `Closes #번호`라고 적어요. 같이 쓰는 과제에 `Closes`를 쓰면 첫 PR이 반영될 때 과제가 닫혀 버려요.
 
 다 적었으면 <kbd>Create pull request</kbd>를 눌러요. 내용을 빠뜨리고 올렸어도 괜찮아요. PR 화면에서 내용 오른쪽 위의 <kbd>…</kbd>를 누르고 Edit을 고르면 고칠 수 있어요.
 

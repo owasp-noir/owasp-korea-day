@@ -118,14 +118,12 @@ just test
 
 [과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%9B%A0%EF%B8%8F+needs-build%22)에서 하나를 골라 "제가 할게요"라고 댓글을 남겨요. 이미 댓글이 달려 있으면 다른 과제를 골라 주세요. 과제마다 문제가 생기는 짧은 코드, 지금 나오는 결과, 나와야 하는 결과가 적혀 있어요. 과제에 나오는 `noir scan .`은 방금 빌드한 `bin/noir`로 실행하면 돼요.
 
-| 과제 | 고칠 곳 | 어려운 정도 |
-|---|---|---|
-| [PHP: `php://input`으로 읽는 JSON 본문 찾기](https://github.com/owasp-noir/noir/issues/3847) | `src/analyzer/analyzers/php/php.cr` | 보통 |
-| [JSP: `getInputStream()`으로 읽는 JSON 본문 찾기](https://github.com/owasp-noir/noir/issues/3848) | `src/analyzer/analyzers/java/jsp.cr` | 보통 |
-| [`bin/main`에 남은 소스 사본 건너뛰기](https://github.com/owasp-noir/noir/issues/3849) | `src/detector/detector.cr` | 보통 |
-| [주민등록번호를 개인정보로 알아보기](https://github.com/owasp-noir/noir/issues/3870) | `src/tagger/taggers/pii.cr` | 보통. 이 중 가장 짧아요. |
-| [국내 서비스의 시크릿 키 규칙 추가하기](https://github.com/owasp-noir/noir/issues/3846) | [noir-passive-rules](https://github.com/owasp-noir/noir-passive-rules) 저장소 | 보통 |
-| [PHP: `switch`로 나눈 경로 찾기](https://github.com/owasp-noir/noir/issues/3850) | `src/analyzer/analyzers/php/php.cr` | 어려움 |
+과제에 붙은 라벨을 보고 골라요. 어디를 고치는지는 과제의 "고칠 곳"에 적혀 있어요.
+
+| 라벨 | 뜻 |
+|---|---|
+| `🟡 medium` | 오늘 실패하는 테스트까지 만들 수 있어요. 빠르면 수정까지 가요. |
+| `🔴 hard` | 어떻게 풀지부터 이야기해야 하는 과제예요. 행사 뒤까지 이어져요. |
 
 목록에 없는 일도 환영해요. [써 보고 제보하기](@/report.md)에서 직접 찾은 문제를 고쳐도 되고, 새 출력 형식이나 새 프레임워크 지원처럼 직접 정한 일이라면 먼저 이슈를 열어 무엇을 할지 적어 주세요.
 
@@ -182,7 +180,7 @@ git commit -m "fix(php): read JSON body keys from php://input"
 git push origin fix/php-input-json-body
 ```
 
-GitHub에서 내 복사본 화면으로 가면 <kbd>Compare &amp; pull request</kbd> 버튼이 보여요. 눌러서 PR을 올려요. 내용에는 뭘 왜 고쳤는지 적고, 마지막 줄에 `Closes #3847`처럼 맡은 과제 번호를 적어요. 한국어로 써도 돼요.
+GitHub에서 내 복사본 화면으로 가면 <kbd>Compare &amp; pull request</kbd> 버튼이 보여요. 눌러서 PR을 올려요. 내용에는 뭘 왜 고쳤는지 적고, 마지막 줄에 `Closes #1234`처럼 맡은 과제 번호를 적어요. 한국어로 써도 돼요.
 
 > PR이 올라갔고 자동 검사가 시작됐어요. 처음 기여하는 계정은 관리자가 허락한 뒤에 검사가 돌아가요.
 
