@@ -40,7 +40,7 @@ OUT = ROOT / "static" / "fonts"
 
 # family, source file, weight range kept, new name (or None), Korean?
 FONTS = [
-    ("Hahmlet", "Hahmlet[wght].ttf", (700, 800), None, True),
+    ("Hahmlet", "Hahmlet[wght].ttf", (800, 800), None, True),
     ("Handson Sans", "PretendardVariable.ttf", (400, 800), "Handson Sans", True),
     ("JetBrains Mono", "JetBrainsMono[wght].ttf", (400, 700), None, False),
 ]
@@ -115,7 +115,8 @@ def main():
         parts.append(("site", used))
         for part, chars in parts:
             font = TTFont(src / file)
-            instancer.instantiateVariableFont(font, {"wght": (lo, hi)}, inplace=True)
+            # One weight makes a static font, about 40% smaller than a range.
+            instancer.instantiateVariableFont(font, {"wght": lo if lo == hi else (lo, hi)}, inplace=True)
             if new_name:
                 rename(font, new_name)
             # The subsetter wants the narrowed font read back from bytes.
@@ -127,9 +128,9 @@ def main():
             size = cut(font, have, OUT / name)
             print("%-28s %5d characters %7.1f KB" % (name, len(have), size / 1024))
             css.append(
-                '@font-face { font-family: "%s"; font-style: normal; font-weight: %d %d; font-display: swap; '
+                '@font-face { font-family: "%s"; font-style: normal; font-weight: %s; font-display: swap; '
                 'src: url("../fonts/%s") format("woff2"); unicode-range: %s; }'
-                % (family, lo, hi, name, ranges(have))
+                % (family, lo if lo == hi else "%d %d" % (lo, hi), name, ranges(have))
             )
 
     (ROOT / "static/css/fonts.css").write_text("\n".join(css) + "\n", encoding="utf-8")
