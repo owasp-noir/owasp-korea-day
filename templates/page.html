@@ -59,6 +59,7 @@
 {# The other folders, lying on the desk under the open one. #}
 <section class="wrap others" aria-labelledby="others-title">
   <h2 id="others-title">다른 사건</h2>
+  {% set photo_lazy = true %}
   <ul class="cases cases--row">
     {% if page.url != "/web/" %}
     <li class="case" data-case="web"><a class="case__link" href="{{ base_url }}/web/">

@@ -1,9 +1,10 @@
 {# A photo held to the sheet with a paper clip. Set `photo_pose` (and optionally
-   `photo_caption`) before including. #}
+   `photo_caption`) before including. Set `photo_lazy` for photos far down the
+   page, so they are fetched when scrolled to. #}
 <figure class="photo">
   <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
   <div class="photo__print">
-    <img src="{{ base_url }}/images/mascot/hak-{{ photo_pose | e }}.webp" alt="{{ photo_alt | default('') | e }}" width="512" height="512">
+    <img src="{{ base_url }}/images/mascot/hak-{{ photo_pose | e }}.webp" alt="{{ photo_alt | default('') | e }}" width="512" height="512" decoding="async"{% if photo_lazy is present %} loading="lazy"{% endif %}>
   </div>
   {% if photo_caption is present %}<figcaption>{{ photo_caption | e }}</figcaption>{% endif %}
 </figure>

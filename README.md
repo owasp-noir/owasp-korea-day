@@ -26,7 +26,7 @@ hwaro serve          # http://localhost:3000
 | `static/js/desk.js` | 첫 화면의 3D 책상 (three.js) |
 | `static/js/site.js` | 가이드의 단계 띠, 단계별 완료 체크와 도장, 목차, 복사 버튼 |
 | `static/js/vendor/` | three.js r169 (MIT). CDN 없이 같은 주소에서 받습니다 |
-| `static/images/desk.jpg` | 가이드 페이지 배경. 같은 책상을 위에서 렌더링한 그림입니다 |
+| `static/images/desk.webp` | 가이드 페이지 배경. 같은 책상을 위에서 렌더링한 그림입니다 |
 | `static/fonts/`, `static/css/fonts.css` | 글꼴. 외부 CDN 없이 같은 주소에서 받습니다 |
 | `scripts/subset-fonts.py` | 위 글꼴 파일과 `fonts.css`를 만드는 스크립트 |
 
