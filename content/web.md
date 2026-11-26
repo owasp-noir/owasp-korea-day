@@ -59,12 +59,13 @@ examples:
     - { url: /api/orders }
 ```
 
-세 가지만 알면 돼요.
+네 가지만 알면 돼요.
 
 | 이름 | 하는 일 | 예 |
 |---|---|---|
 | `path_segment` | 주소를 `/` `-` `_` `.`에서 잘라 조각으로 나눈 다음, 그 조각이 목록에 있는지 봐요. 대문자와 소문자는 구분하지 않아요. | `/kakao-pay/ready`는 `kakao`, `pay`, `ready`로 나뉘어요. `/kakaopay/ready`는 `kakaopay`, `ready`로 나뉘어요. |
 | `param`의 `name` | 요청에 담겨 오는 값의 이름을 봐요. 대문자와 소문자, `-`, `_`는 따지지 않아요. | `pg_token`, `pgToken`, `pg-token`을 모두 같은 이름으로 봐요. 하나만 적으면 돼요. |
+| `url_contains` | 주소를 조각으로 나누지 않고, 이 글자가 주소 어딘가에 들어 있는지 봐요. 소문자로 적어요. | `sign-in`처럼 `-`나 `_`가 들어간 말은 `path_segment`로 찾을 수 없어서 이걸 써요. |
 | `examples` | 룰이 제대로 동작하는지 확인하는 예시예요. PR을 올리면 자동 검사가 하나씩 돌려 봐요. | 테스트 코드를 따로 쓸 필요가 없어요. |
 
 더 많은 조건은 [룰 폴더의 README](https://github.com/owasp-noir/noir/blob/main/src/tagger/rules/README.md)에 있어요.
@@ -82,31 +83,31 @@ examples:
 | 종류 | 어떤 과제 | 이 가이드와 다른 점 |
 |---|---|---|
 | 있는 룰에 단어 추가하기 | [결제](https://github.com/owasp-noir/noir/issues/3843), [웹훅](https://github.com/owasp-noir/noir/issues/3844), [관리자 화면](https://github.com/owasp-noir/noir/issues/3845), [국내 표준 암호](https://github.com/owasp-noir/noir/issues/3861), [SOAP](https://github.com/owasp-noir/noir/issues/3862) | 없어요. 아래 순서 그대로 하면 돼요. |
-| [새 룰 파일 만들기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+label%3A%22%F0%9F%8F%B7%EF%B8%8F+tagger%22) | 로그인, 내보내기, 쿠폰, 본인인증처럼 아직 없는 태그 | 2단계에서 파일을 새로 만들어요. |
-| [문서 고치기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+label%3A%22%F0%9F%93%91+documentation%22) | 문서에 빠진 설정 설명 | 룰이 아니라 문서 파일을 고쳐요. 무엇을 어디에 적을지는 과제에 있어요. |
+| [새 룰 파일 만들기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+%22tagger+for%22+in%3Atitle) | 로그인, 내보내기, 쿠폰, 본인인증처럼 아직 없는 태그 | 2단계에서 파일을 새로 만들어요. |
+| [문서 고치기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+label%3A%22%F0%9F%93%91+documentation%22) | 문서에 빠진 설정 설명 | 파일 두 개를 고쳐요. PR을 한 번 올려 본 다음에 하기를 권해요. 방법은 아래 [문서를 고치는 과제라면](#문서를-고치는-과제라면)에 있어요. |
 
-골랐으면 과제에 댓글을 남겨요.
+골랐으면 과제에 댓글을 남겨요. 댓글 칸은 과제 화면 맨 아래에 있어요.
 
 - 과제에 "여러 사람이 이 이슈 하나를 같이 씁니다"라고 적혀 있으면, 추가할 단어를 정해 "`naverpay` 제가 할게요"처럼 적어요. 다른 분이 이미 맡은 단어는 피해 주세요.
 - 그런 말이 없으면 한 사람이 맡는 과제예요. "제가 할게요"라고 적어요. 이미 댓글이 달려 있으면 다른 과제를 골라 주세요.
 
 추가할 이름은 기억에 기대지 말고, 그 서비스의 **공식 문서나 공식 샘플 코드**에서 확인해 주세요. 확인한 주소는 댓글에 같이 적고, 나중에 PR에도 붙여요.
 
-> 과제에 내 댓글이 달렸어요. 추가할 단어와, 그 단어를 확인한 주소를 적어 뒀어요.
+> 과제에 내 댓글이 달렸어요. 단어를 추가하는 과제라면 단어와, 그 단어를 확인한 주소도 적어 뒀어요.
 
 ### 고칠 파일 열기
 
-고칠 파일을 GitHub에서 열어요. 결제 룰이라면 [payment.yml](https://github.com/owasp-noir/noir/blob/main/src/tagger/rules/payment.yml)이에요. 파일 오른쪽 위에 있는 연필 아이콘을 눌러요.
+고칠 파일을 GitHub에서 열어요. 결제 룰이라면 [payment.yml](https://github.com/owasp-noir/noir/blob/main/src/tagger/rules/payment.yml)이에요. 다른 파일이라면 주소창에 `https://github.com/owasp-noir/noir/blob/main/`을 적고, 그 뒤에 과제에 적힌 경로(`src/tagger/rules/webhook.yml` 같은 것)를 붙여서 열어요. 파일이 열리면 오른쪽 위에 있는 연필 아이콘을 눌러요.
 
 이 저장소를 직접 고칠 권한은 없어서, GitHub가 내 계정에 복사본을 만들자고 해요. 이걸 **포크**라고 해요. <kbd>Fork this repository</kbd>를 누르면 복사본이 생기고, 거기서 고치게 돼요.
 
 새 룰 파일을 만드는 과제라면 [새 파일 만들기](https://github.com/owasp-noir/noir/new/main/src/tagger/rules)를 열어요. 맨 위 이름 칸에 과제에 적힌 파일 이름(`login.yml` 같은 것)을 넣고, 아래 틀을 붙여 넣은 다음 내 과제에 맞게 바꿔요. 그다음 5단계로 넘어가요.
 
 ```yaml
-key: login                  # 파일 이름과 같아야 해요
+key: login
 name: Login Tagger
 summary: Identifies sign-in and sign-up endpoints
-order: 180                  # 과제에 적힌 숫자를 써요
+order: 180
 tag:
   tagger: Login
   description: Sign-in endpoint; review for brute force.
@@ -114,15 +115,20 @@ match:
   any:
     - path_segment: [login, signin]
 examples:
-  match:                    # 태그가 붙어야 하는 예
+  match:
     - { url: /login }
     - { method: POST, url: /api/signin }
-  no_match:                 # 태그가 붙으면 안 되는 예
+  no_match:
     - { url: /blog/posts }
     - { url: /catalog }
 ```
 
-> 파일을 고칠 수 있는 화면이 열렸어요. 주소창을 보면 `owasp-noir` 자리에 내 아이디가 있어요.
+- `key`는 파일 이름과 같아야 해요. `login.yml`이면 `login`이에요.
+- `order`에는 과제에 적힌 숫자를 써요.
+- `name`, `summary`, `tag` 아래 두 줄은 영어로 짧게 적어요. `description`에는 이 태그가 붙은 주소에서 무엇을 점검해야 하는지 적어요.
+- `match`에는 조건을, `examples`에는 태그가 붙어야 하는 예(`match`)와 붙으면 안 되는 예(`no_match`)를 적어요.
+
+> 파일 내용을 고칠 수 있는 편집 화면이 열렸어요.
 
 ### 단어 추가하기
 
@@ -136,6 +142,8 @@ examples:
 +               iban, routing_number, sort_code, pg_token]
 ```
 
+- 위 상자에서 `-`로 시작하는 줄이 고치기 전, `+`로 시작하는 줄이 고친 뒤예요. 맨 앞의 `+`, `-` 기호와 `...`은 줄인 표시라서 입력하지 않아요.
+- 같은 이름의 목록이 두 개 있으면 **위쪽 목록**에 넣어요. 아래쪽 목록은 `all:` 안에 있어서, 다른 조건도 같이 맞아야 태그가 붙어요.
 - 띄어쓰기는 **스페이스**로 하고, 윗줄과 줄을 맞춰요. 탭 키는 쓰지 않아요.
 - 단어는 쉼표로 이어서 `]` 앞에 넣어요. `]`는 맨 끝에 하나만 있어야 해요.
 - 이름은 한 가지 모양으로만 적어요. `pg_token`을 넣으면 `pgToken`도 같이 잡혀요.
@@ -174,7 +182,7 @@ params: [{ name: X-Example-Signature, type: header }]
 
 이제 고친 내용을 반영해 달라고 요청할 차례예요. 이 요청을 **PR**(풀 리퀘스트)이라고 해요.
 
-화면 오른쪽 위의 <kbd>Commit changes…</kbd>를 눌러요. 창이 뜨면 무엇을 고쳤는지 한 줄 적고 <kbd>Propose changes</kbd>를 눌러요. 바뀐 내용을 보여 주는 화면으로 넘어가면 <kbd>Create pull request</kbd>를 눌러요. 그러면 제목과 내용을 적는 화면이 나와요.
+화면 오른쪽 위의 <kbd>Commit changes…</kbd>를 눌러요. 창이 뜨면 무엇을 고쳤는지 한 줄 적고 <kbd>Propose changes</kbd>를 눌러요. 바뀐 내용을 보여 주는 화면으로 넘어가요. 제목과 내용을 적는 칸이 바로 보이면 거기에 적으면 되고, 안 보이면 <kbd>Create pull request</kbd>를 한 번 눌러 칸을 열어요.
 
 제목에는 무엇을 바꿨는지 한 줄로 적어요. 제목과 내용 모두 한국어로 써도 돼요. 영어로 쓴다면 아래 예시를 조금 바꾸면 돼요.
 
@@ -197,9 +205,9 @@ https://developers.kakaopay.com/docs/payment/online/single-payment
 Refs #이슈번호
 ```
 
-마지막 줄에는 고른 과제의 번호를 적어요. 여러 사람이 같이 쓰는 과제라면 `Refs #번호`, 혼자 맡은 과제라면 `Closes #번호`라고 적어요. 같이 쓰는 과제에 `Closes`를 쓰면 첫 PR이 반영될 때 과제가 닫혀 버려요.
+마지막 줄에는 고른 과제의 번호를 적어요. 번호는 과제 화면의 제목 옆에 `#3843`처럼 적혀 있어요. 여러 사람이 같이 쓰는 과제라면 `Refs #번호`, 혼자 맡은 과제라면 `Closes #번호`라고 적어요. 같이 쓰는 과제에 `Closes`를 쓰면 첫 PR이 반영될 때 과제가 닫혀 버려요.
 
-다 적었으면 <kbd>Create pull request</kbd>를 한 번 더 눌러요.
+다 적었으면 <kbd>Create pull request</kbd>를 눌러요. 내용을 빠뜨리고 올렸어도 괜찮아요. PR 화면에서 내용 오른쪽 위의 <kbd>…</kbd>를 누르고 Edit을 고르면 고칠 수 있어요.
 
 > 주소가 `github.com/owasp-noir/noir/pull/숫자`로 바뀌었고, 초록색 Open 표시가 보여요. PR이 올라갔어요.
 
@@ -207,24 +215,37 @@ Refs #이슈번호
 
 PR 화면 아래쪽에 자동 검사 목록이 생겨요. 이 저장소에 처음 기여하는 계정은 관리자가 허락해야 검사가 시작돼요. 그래서 처음에는 기다리는 중이라고만 나올 수 있어요. 진행자가 차례로 허락할게요.
 
-먼저 볼 검사는 `Tag rule examples`예요. 내 룰의 예시를 하나씩 돌려 보는 검사이고, 1분 안에 끝나요. 빨간 X가 뜨면 Details를 눌러 기록을 열어 보세요. `FAIL` 뒤에 어느 파일의 무엇이 틀렸는지 한 줄로 나와요.
+먼저 볼 검사는 `Tag rule examples`예요. 내 룰의 예시를 하나씩 돌려 보는 검사이고, 1분 안에 끝나요. 빨간 X가 뜨면 그 검사의 이름(또는 옆의 Details)을 눌러 기록을 열어 보세요. `FAIL` 뒤에 어느 파일의 무엇이 틀렸는지 한 줄로 나와요.
 
 `tests (1.22.0)`이라는 검사도 같이 돌아요. Noir의 다른 테스트까지 전부 돌리는 검사라 5~8분쯤 걸려요. 이건 기다리지 않아도 돼요. 회색으로 Skipped라고 나오는 검사들은 룰 파일과 상관없어서 건너뛴 거예요. 문서를 고친 PR에서는 `Tag rule examples`도 건너뛰어요. 그때는 빨간 X가 없는지만 보면 돼요.
 
-고칠 게 있으면 PR 화면의 Files changed 탭으로 가요. 파일 오른쪽의 <kbd>…</kbd>를 누르고 Edit file을 고르면 다시 고칠 수 있어요. 저장하면 같은 PR에 반영되고 검사도 다시 돌아가요. PR을 새로 올릴 필요는 없어요.
+고칠 게 있으면 PR 화면의 Files changed 탭으로 가요. 파일 오른쪽의 <kbd>…</kbd>를 누르고 Edit file을 고르면 다시 고칠 수 있어요. <kbd>Commit changes…</kbd>로 저장하면 같은 PR에 반영되고 검사도 다시 돌아가요. PR을 새로 올릴 필요는 없어요.
 
 > `Tag rule examples` 옆에 초록색 체크가 떴어요. `tests`는 아직 돌고 있어도 괜찮아요.
 
 </div>
+
+## 문서를 고치는 과제라면
+
+문서 과제는 영어 파일과 한국어 파일을 **한 PR에서** 같이 고쳐요. 위 순서와 다른 곳만 적을게요.
+
+1. **영어 파일부터 열어요.** 과제의 "고칠 곳"에 적힌 경로를 `https://github.com/owasp-noir/noir/blob/main/` 뒤에 붙여서 열고, 연필 아이콘을 눌러요. `index.md`가 영어, `index.ko.md`가 한국어예요.
+2. **과제에 적힌 내용을 넣어요.** 3, 4단계는 룰 파일 이야기라 건너뛰어요. 영어 파일에는 영어로 적어요. 바로 위아래에 있는 항목과 같은 모양으로 쓰면 돼요.
+3. **5단계대로 PR을 올려요.** 제목은 `docs: document NOIR_MAX_FILE_SIZE`처럼 적어요.
+4. **한국어 파일을 같은 PR에 넣어요.** PR 화면의 제목 아래에 `내아이디:patch-1`처럼 생긴 이름이 있어요. 이걸 누르면 내 복사본이 열려요. 거기서 같은 폴더의 `index.ko.md`를 찾아 연필 아이콘으로 고치고 <kbd>Commit changes…</kbd>를 눌러요. 창에서 "Commit directly to the `patch-1` branch"가 골라져 있는지 보고 저장해요.
+5. **PR 화면으로 돌아가요.** Files changed 탭에 파일이 두 개 보이면 된 거예요.
+
+문서를 고친 PR에서는 `Tag rule examples` 검사가 돌지 않아요. 빨간 X가 없는지만 보면 돼요.
 
 ## 막혔을 때
 
 | 이런 게 보이면 | 이유 | 이렇게 해요 |
 |---|---|---|
 | `path_segment 'kakao_pay' contains a separator (/ - _ .) and can never match a single segment` | `path_segment`에 `-`, `_`, `.`, `/`가 들어간 단어를 넣었어요. | 그 글자를 빼고 한 단어로 적어요. 주소가 `/kakao-pay`처럼 생겼다면 `kakao`와 `pay`로 나뉘니까, 둘 중 어느 걸 볼지 다시 정해요. |
-| `not tagged: POST /events (http) query:X-Example-Signature=` | `match`에 적은 예시에 태그가 안 붙었어요. | 넣은 단어와 예시의 철자가 같은지 봐요. 웹훅 룰이라면 예시의 값에 `type: header`가 있는지 봐요. |
+| `not tagged: POST /events (http) query:X-Example-Signature=` | `match`에 적은 예시에 태그가 안 붙었어요. | 넣은 단어와 예시의 철자가 같은지 봐요. 단어를 `all:` 안에 있는 아래쪽 목록에 넣었다면 위쪽 목록으로 옮겨요. 웹훅 룰이라면 예시의 값에 `type: header`가 있는지 봐요. |
 | `tagged but listed under no_match: GET /kakaopay/login (http)` | `no_match`에 적은 예시에 태그가 붙어 버렸어요. | 예시를 잘못 적었다면 예시를 고쳐요. 예시가 맞다면 넣은 단어가 너무 흔한 거예요. 더 구체적인 단어로 바꿔요. |
 | 기록에 YAML 오류와 줄 번호가 나와요 | 줄이 안 맞거나, 탭이 섞였거나, `]`나 `,`가 빠졌어요. | 그 줄과 바로 윗줄을 위 예시와 한 글자씩 비교해 봐요. |
+| `typos`라는 검사에 빨간 X가 떠요 | 넣은 단어를 영어 오타로 본 거예요. `hight`, `ordr`처럼 실제로 쓰는 이름도 걸려요. | 오타가 맞으면 고쳐요. 실제 이름이라면 진행자에게 PR 번호를 알려 주세요. |
 | 검사가 시작되지 않고 기다리는 중이라고만 나와요 | 처음 기여하는 계정은 관리자가 허락해야 검사가 돌아가요. | 기다리면 돼요. 진행자에게 PR 번호를 알려 주세요. |
 | 연필 아이콘이 안 눌려요 | GitHub에 로그인이 안 되어 있어요. | 로그인하고 화면을 새로 고쳐요. |
 
