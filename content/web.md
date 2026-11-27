@@ -78,13 +78,12 @@ examples:
 
 ### 과제 고르기
 
-[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22)에서 하나를 골라 열어요. 과제는 크게 세 가지예요.
+[과제 목록](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22)에서 하나를 골라 열어요. 과제는 크게 두 가지예요.
 
 | 종류 | 어떤 과제 | 이 가이드와 다른 점 |
 |---|---|---|
-| [있는 룰에 단어 추가하기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+yml+in%3Atitle) | 결제, 웹훅, 관리자 화면처럼 이미 있는 태그에 국내 서비스의 단어를 넣어요. | 없어요. 아래 순서 그대로 하면 돼요. |
-| [새 룰 파일 만들기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+%22tagger+for%22+in%3Atitle) | 로그인, 내보내기, 쿠폰, 본인인증처럼 아직 없는 태그 | 2단계에서 파일을 새로 만들어요. |
-| [문서 고치기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+label%3A%22%F0%9F%93%91+documentation%22) | 문서에 빠진 설정 설명 | 파일 두 개를 고쳐요. PR을 한 번 올려 본 다음에 하기를 권해요. 방법은 아래 [문서를 고치는 과제라면](#문서를-고치는-과제라면)에 있어요. |
+| [있는 룰에 단어 추가하기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+yml+in%3Atitle) | 결제, 로그인, 본인인증처럼 이미 있는 태그에 국내 서비스의 단어를 넣어요. | 없어요. 아래 순서 그대로 하면 돼요. |
+| [새 룰 파일 만들기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+%22tagger+for%22+in%3Atitle) | 검색, 주문, 프로필, 게시판처럼 아직 없는 태그를 만들어요. | 2단계에서 파일을 새로 만들어요. |
 
 골랐으면 과제에 댓글을 남겨요. 댓글 칸은 과제 화면 맨 아래에 있어요.
 
@@ -101,32 +100,34 @@ examples:
 
 이 저장소를 직접 고칠 권한은 없어서, GitHub가 내 계정에 복사본을 만들자고 해요. 이걸 **포크**라고 해요. <kbd>Fork this repository</kbd>를 누르면 복사본이 생기고, 거기서 고치게 돼요.
 
-새 룰 파일을 만드는 과제라면 [새 파일 만들기](https://github.com/owasp-noir/noir/new/main/src/tagger/rules)를 열어요. 맨 위 이름 칸에 과제에 적힌 파일 이름(`login.yml` 같은 것)을 넣고, 아래 틀을 붙여 넣은 다음 내 과제에 맞게 바꿔요. 그다음 5단계로 넘어가요.
+새 룰 파일을 만드는 과제라면 [새 파일 만들기](https://github.com/owasp-noir/noir/new/main/src/tagger/rules)를 열어요. 맨 위 이름 칸에 과제에 적힌 파일 이름(`search.yml` 같은 것)을 넣고, 아래 틀을 붙여 넣은 다음 내 과제에 맞게 바꿔요. 틀은 알림 태그를 예로 든 거예요.
 
 ```yaml
-key: login
-name: Login Tagger
-summary: Identifies sign-in and sign-up endpoints
-order: 180
+key: notification
+name: Notification Tagger
+summary: Identifies notification endpoints
+order: 400
 tag:
-  tagger: Login
-  description: Sign-in endpoint; review for brute force.
+  tagger: Notification
+  description: Notification endpoint; review access.
 match:
   any:
-    - path_segment: [login, signin]
+    - path_segment: [notification, notifications]
 examples:
   match:
-    - { url: /login }
-    - { method: POST, url: /api/signin }
+    - { url: /notifications }
+    - { method: POST, url: /api/notification/read }
   no_match:
     - { url: /blog/posts }
     - { url: /catalog }
 ```
 
-- `key`는 파일 이름과 같아야 해요. `login.yml`이면 `login`이에요.
+- `key`는 파일 이름과 같아야 해요. `search.yml`이면 `search`예요.
 - `order`에는 과제에 적힌 숫자를 써요.
 - `name`, `summary`, `tag` 아래 두 줄은 영어로 짧게 적어요. `description`에는 이 태그가 붙은 주소에서 무엇을 점검해야 하는지 적어요.
 - `match`에는 조건을, `examples`에는 태그가 붙어야 하는 예(`match`)와 붙으면 안 되는 예(`no_match`)를 적어요.
+
+틀을 바꾸기 전에 3단계와 4단계의 설명을 읽어 보세요. 단어를 고르는 법과 `no_match`를 쓰는 법은 새 파일에서도 같아요. 다 바꿨으면 5단계로 넘어가요.
 
 > 파일 내용을 고칠 수 있는 편집 화면이 열렸어요.
 
@@ -170,12 +171,6 @@ examples:
 
 예를 하나 들게요. 전자정부 표준프레임워크에는 `/sym/cal/EgovAdministDayCalendar.do`라는 주소가 있어요. 여기서 Administ는 "관리자"가 아니라 "행정"이에요. `admin`이라는 글자가 들어 있다고 관리자 태그를 붙이면 틀려요. 이런 건 그 서비스를 써 본 사람이 제일 잘 알아요.
 
-웹훅 과제라면 예시의 값에 `type: header`를 꼭 붙여요. 웹훅 룰은 헤더만 보기 때문에, 빼면 `match` 예시가 검사에서 걸려요.
-
-```yaml
-params: [{ name: X-Example-Signature, type: header }]
-```
-
 > 추가한 단어마다 `match` 예시를 하나씩 넣었어요. `no_match` 예시도 하나 이상 넣었어요. 원래 있던 예시는 지우지 않았어요.
 
 ### PR 올리기
@@ -217,25 +212,13 @@ PR 화면 아래쪽에 자동 검사 목록이 생겨요. 이 저장소에 처�
 
 먼저 볼 검사는 `Tag rule examples`예요. 내 룰의 예시를 하나씩 돌려 보는 검사이고, 1분 안에 끝나요. 빨간 X가 뜨면 그 검사의 이름(또는 옆의 Details)을 눌러 기록을 열어 보세요. `FAIL` 뒤에 어느 파일의 무엇이 틀렸는지 한 줄로 나와요.
 
-`tests (1.22.0)`이라는 검사도 같이 돌아요. Noir의 다른 테스트까지 전부 돌리는 검사라 5~8분쯤 걸려요. 이건 기다리지 않아도 돼요. 회색으로 Skipped라고 나오는 검사들은 룰 파일과 상관없어서 건너뛴 거예요. 문서를 고친 PR에서는 `Tag rule examples`도 건너뛰어요. 그때는 빨간 X가 없는지만 보면 돼요.
+`tests (1.22.0)`이라는 검사도 같이 돌아요. Noir의 다른 테스트까지 전부 돌리는 검사라 5~8분쯤 걸려요. 이건 기다리지 않아도 돼요. 회색으로 Skipped라고 나오는 검사들은 룰 파일과 상관없어서 건너뛴 거예요. 룰 파일 말고 다른 파일을 고친 PR에서는 `Tag rule examples`도 건너뛰어요. 그때는 빨간 X가 없는지만 보면 돼요.
 
 고칠 게 있으면 PR 화면의 Files changed 탭으로 가요. 파일 오른쪽의 <kbd>…</kbd>를 누르고 Edit file을 고르면 다시 고칠 수 있어요. <kbd>Commit changes…</kbd>로 저장하면 같은 PR에 반영되고 검사도 다시 돌아가요. PR을 새로 올릴 필요는 없어요.
 
 > `Tag rule examples` 옆에 초록색 체크가 떴어요. `tests`는 아직 돌고 있어도 괜찮아요.
 
 </div>
-
-## 문서를 고치는 과제라면
-
-문서 과제는 영어 파일과 한국어 파일을 **한 PR에서** 같이 고쳐요. 위 순서와 다른 곳만 적을게요.
-
-1. **영어 파일부터 열어요.** 과제의 "고칠 곳"에 적힌 경로를 `https://github.com/owasp-noir/noir/blob/main/` 뒤에 붙여서 열고, 연필 아이콘을 눌러요. `index.md`가 영어, `index.ko.md`가 한국어예요.
-2. **과제에 적힌 내용을 넣어요.** 3, 4단계는 룰 파일 이야기라 건너뛰어요. 영어 파일에는 영어로 적어요. 바로 위아래에 있는 항목과 같은 모양으로 쓰면 돼요.
-3. **5단계대로 PR을 올려요.** 제목은 `docs: document NOIR_MAX_FILE_SIZE`처럼 적어요.
-4. **한국어 파일을 같은 PR에 넣어요.** PR 화면의 제목 아래에 `내아이디:patch-1`처럼 생긴 이름이 있어요. 이걸 누르면 내 복사본이 열려요. 거기서 같은 폴더의 `index.ko.md`를 찾아 연필 아이콘으로 고치고 <kbd>Commit changes…</kbd>를 눌러요. 창에서 "Commit directly to the `patch-1` branch"가 골라져 있는지 보고 저장해요.
-5. **PR 화면으로 돌아가요.** Files changed 탭에 파일이 두 개 보이면 된 거예요.
-
-문서를 고친 PR에서는 `Tag rule examples` 검사가 돌지 않아요. 빨간 X가 없는지만 보면 돼요.
 
 ## 막혔을 때
 
@@ -256,7 +239,7 @@ PR 화면 아래쪽에 자동 검사 목록이 생겨요. 이 저장소에 처�
 | 할 일 | 설명 |
 |---|---|
 | 단어 하나 더 | 다른 서비스 이름으로 PR을 하나 더 올려요. 같은 여섯 단계를 반복하면 되고, 두 번째는 훨씬 빨리 끝나요. |
-| 새 룰 파일 만들기 | 기존 룰에 넣을 자리가 없으면 [새 파일](https://github.com/owasp-noir/noir/new/main/src/tagger/rules)을 만들어요. 파일 이름은 `key`와 같아야 하고, `match`와 `no_match` 예시가 둘 다 있어야 해요. 전자정부 표준프레임워크가 좋은 후보예요. 공통컴포넌트를 스캔하면 엔드포인트가 1,219개 나오는데, 무슨 일을 하는 주소인지 알려 주는 태그는 25개에만 붙어요. 로그인(`/uat/uia/actionLogin.do`)이나 권한 관리(`/sec/ram/EgovAuthorRoleInsert.do`) 같은 주소에도 그런 태그가 없어요. |
+| 새 룰 파일 만들기 | 과제 목록에서 [새 룰 파일 만들기](https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+%22tagger+for%22+in%3Atitle) 과제를 하나 골라요. 2단계의 틀에서 시작하면 돼요. |
 | 써 보고 제보하기 | Noir를 설치해서 직접 돌려 보고, 틀린 곳을 찾아 알려 줘요. [써 보고 제보하기 가이드](@/report.md) |
 | 코드로 기여하기 | Noir 코드를 직접 고쳐요. [코드로 기여하기 가이드](@/code.md) |
 
