@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="OWASP Korea Day 2026에서 OWASP Noir에 첫 기여를 남기는 두 시간. 브라우저만으로 PR을 올리는 방법부터 코드를 고치는 방법까지 안내해요.">
+  
+  
+  <title>Noir 기여 핸즈온</title>
+  <meta name="theme-color" content="#000000">
+  
+  <script>document.documentElement.className = "js";</script>
+  <meta property="og:title" content="Noir 기여 핸즈온">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://owasp-noir.github.io/owasp-korea-day/">
+  <meta property="og:description" content="OWASP Korea Day 2026에서 OWASP Noir에 첫 기여를 남기는 두 시간. 브라우저만으로 PR을 올리는 방법부터 코드를 고치는 방법까지 안내해요.">
+  <meta property="og:image" content="https://owasp-noir.github.io/owasp-korea-day/images/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Noir 기여 핸즈온">
+  <meta name="twitter:description" content="OWASP Korea Day 2026에서 OWASP Noir에 첫 기여를 남기는 두 시간. 브라우저만으로 PR을 올리는 방법부터 코드를 고치는 방법까지 안내해요.">
+  <meta name="twitter:image" content="https://owasp-noir.github.io/owasp-korea-day/images/og.jpg">
+  <link rel="canonical" href="https://owasp-noir.github.io/owasp-korea-day/">
+
+  <link rel="icon" href="https://owasp-noir.github.io/owasp-korea-day/logos/favicon.ico" sizes="any">
+  <link rel="icon" href="https://owasp-noir.github.io/owasp-korea-day/logos/favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="https://owasp-noir.github.io/owasp-korea-day/logos/apple-touch-icon.png">
+
+  <link rel="preload" href="https://owasp-noir.github.io/owasp-korea-day/fonts/handson-sans-site.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://owasp-noir.github.io/owasp-korea-day/fonts/hahmlet-site.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="https://owasp-noir.github.io/owasp-korea-day/css/fonts.css">
+  <link rel="stylesheet" href="https://owasp-noir.github.io/owasp-korea-day/css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 바로 가기</a>
+
+  
+  <header class="hud">
+    <div class="wrap hud__in">
+      <a class="brand" href="https://owasp-noir.github.io/owasp-korea-day/">
+        <img src="https://owasp-noir.github.io/owasp-korea-day/images/logo-s.png" alt="" width="26" height="26">
+        <span>Noir 기여 핸즈온</span>
+      </a>
+      <nav class="hud__links" aria-label="바로 가기">
+        <a href="#briefing">시간표</a>
+        <a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day">과제 목록</a>
+        <a href="https://owasp-noir.github.io/owasp-korea-day/slides/contributing-to-owasp-noir.pdf" download="Contributing to OWASP Noir.pdf">발표자료</a>
+      </nav>
+    </div>
+  </header>
+<main id="main">
+
+  
+  <section class="lobby" id="lobby" aria-label="사건 고르기">
+    <canvas class="lobby__canvas" aria-hidden="true"></canvas>
+    <div class="lobby__fx" aria-hidden="true"></div>
+
+    <div class="wrap lobby__in">
+      <div class="lobby__title">
+        <p class="lobby__event">OWASP Korea Day 2026 핸즈온</p>
+        <h1>두 시간 안에 <br>Noir에 첫 PR 올리기</h1>
+        <p class="lobby__lede">Noir는 소스 코드에서 서비스의 주소(엔드포인트)를 찾아내는 오픈소스 도구예요. 폴더를 하나 골라 시작하세요.</p>
+      </div>
+
+      <div class="lobby__stage" id="stage" aria-hidden="true"></div>
+
+      <div class="dock">
+        <ol class="cases">
+          <li class="case is-selected" data-case="web" data-pose="inspect" data-tab="브라우저" data-mark="여기부터">
+            <a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/web/">
+              <div class="case__main">
+                <h2 class="case__name">브라우저로 기여하기 <span class="case__tag">처음이라면 여기부터</span></h2>
+                <p class="case__what">태그 룰에 국내 서비스 키워드를 추가해요. 설치 없이 GitHub 화면에서 파일 하나만 고쳐요.</p>
+              </div>
+              <dl class="case__meta">
+                <div><dt>준비물</dt><dd>GitHub 계정</dd></div>
+                <div><dt>소요 시간</dt><dd>40분</dd></div>
+                <div><dt>난이도</dt><dd><span class="level" data-level="1" aria-hidden="true"></span>쉬움</dd></div>
+              </dl>
+              <span class="case__open">사건 열기</span>
+            </a>
+          </li>
+          <li class="case" data-case="report" data-pose="binoculars" data-tab="제보">
+            <a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/report/">
+              <div class="case__main">
+                <h2 class="case__name">써 보고 제보하기</h2>
+                <p class="case__what">아는 프로젝트를 Noir로 스캔하고, 빠지거나 틀린 결과를 이슈로 올려요.</p>
+              </div>
+              <dl class="case__meta">
+                <div><dt>준비물</dt><dd>Noir 설치</dd></div>
+                <div><dt>소요 시간</dt><dd>30분</dd></div>
+                <div><dt>난이도</dt><dd><span class="level" data-level="2" aria-hidden="true"></span>보통</dd></div>
+              </dl>
+              <span class="case__open">사건 열기</span>
+            </a>
+          </li>
+          <li class="case" data-case="code" data-pose="dev" data-tab="코드">
+            <a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/code/">
+              <div class="case__main">
+                <h2 class="case__name">코드로 기여하기</h2>
+                <p class="case__what">Noir 코드를 직접 고쳐요. 오늘은 실패하는 테스트를 만드는 데까지 해요.</p>
+              </div>
+              <dl class="case__meta">
+                <div><dt>준비물</dt><dd>브라우저, 또는 Crystal 설치</dd></div>
+                <div><dt>소요 시간</dt><dd>행사 뒤까지</dd></div>
+                <div><dt>난이도</dt><dd><span class="level" data-level="3" aria-hidden="true"></span>어려움</dd></div>
+              </dl>
+              <span class="case__open">사건 열기</span>
+            </a>
+          </li>
+          <li class="case" data-case="security" data-pose="hacker" data-tab="취약점" data-mark="비공개">
+            <a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/security/">
+              <div class="case__main">
+                <h2 class="case__name">취약점 제보하기</h2>
+                <p class="case__what">당신이 해커라면, Noir를 해킹해 주세요. 찾은 문제는 비공개로 제보해요.</p>
+              </div>
+              <dl class="case__meta">
+                <div><dt>준비물</dt><dd>GitHub 계정</dd></div>
+                <div><dt>소요 시간</dt><dd>제한 없음</dd></div>
+                <div><dt>난이도</dt><dd><span class="level" data-level="3" aria-hidden="true"></span>어려움</dd></div>
+              </dl>
+              <span class="case__open">사건 열기</span>
+            </a>
+          </li>
+        </ol>
+
+        
+        <div class="dock__ctl" id="dock-ctl" hidden>
+          <div class="pager">
+            <button type="button" class="pager__btn" id="case-prev" aria-label="이전 사건"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <span class="pager__at" id="case-at" aria-live="polite">1 / 4</span>
+            <button type="button" class="pager__btn" id="case-next" aria-label="다음 사건"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <p class="keys"><kbd>←</kbd><kbd>→</kbd> 고르기 <kbd>Enter</kbd> 열기</p>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="lobby__paper" id="lobby-paper" aria-hidden="true"></div>
+  </section>
+
+  <div class="below">
+  <div class="wrap briefing" id="briefing">
+    <div class="folder__body">
+      <div class="sheet">
+
+        <section class="cover">
+          <h2 class="cover__head">행사 안내</h2>
+          
+          <p class="briefing__about">Noir는 소스 코드에서 서비스의 주소(엔드포인트)를 찾아내는 오픈소스 도구예요.</p>
+          <div class="record record--top">
+            <dl class="form">
+              <div><dt>날짜</dt><dd>2026년 11월 28일 (토)</dd></div>
+              <div><dt>시간</dt><dd>2시간</dd></div>
+              <div><dt>준비물</dt><dd>GitHub 계정, 노트북</dd></div>
+              <div><dt>오늘의 목표</dt><dd>내 이름으로 올린 PR 하나</dd></div>
+            </dl>
+            <span class="stamp stamp--cover" aria-hidden="true">참가자용</span>
+          </div>
+        </section>
+
+        <section class="part part--first">
+          <h2>시간표</h2>
+          <p class="part__lede">120분 중 실습이 80분이에요. 1부에 올린 PR의 자동 검사 결과를 2부에서 확인해요.</p>
+
+          <div class="timebar" role="img" aria-label="120분 가운데 실습 80분, 소개와 마무리 30분, 쉬는 시간 10분">
+            <span style="flex-grow: 20"></span>
+            <span class="is-work" style="flex-grow: 45"></span>
+            <span class="is-break" style="flex-grow: 10"></span>
+            <span class="is-work" style="flex-grow: 35"></span>
+            <span style="flex-grow: 10"></span>
+          </div>
+
+          <ol class="schedule">
+            <li><span class="schedule__at">0:00</span><strong>Noir 소개</strong><span class="schedule__len">20분</span><span class="schedule__what">Noir가 어떤 도구인지, 오늘 무엇을 하는지 들어요.</span></li>
+            <li class="is-work"><span class="schedule__at">0:20</span><strong>1부 실습</strong><span class="schedule__len">45분</span><span class="schedule__what">과제를 고르고, 가이드를 따라 첫 PR을 올려요.</span></li>
+            <li><span class="schedule__at">1:05</span><strong>쉬는 시간</strong><span class="schedule__len">10분</span><span class="schedule__what">이 사이에 자동 검사가 돌아요.</span></li>
+            <li class="is-work"><span class="schedule__at">1:15</span><strong>2부 실습</strong><span class="schedule__len">35분</span><span class="schedule__what">검사에서 걸린 부분을 고치고 다음 과제로 넘어가요.</span></li>
+            <li><span class="schedule__at">1:50</span><strong>마무리</strong><span class="schedule__len">10분</span><span class="schedule__what">검사를 통과한 PR을 현장에서 반영해요.</span></li>
+          </ol>
+        </section>
+
+        <section class="part split">
+          <div>
+            <h2>오기 전에</h2>
+            <ul class="prep">
+              <li><strong>GitHub 로그인.</strong> 계정이 없으면 미리 만들고, 2단계 인증까지 끝내 두세요.</li>
+              <li><strong>노트북과 충전기.</strong> 휴대폰으로는 실습하기 어려워요.</li>
+              <li><strong>설치는 선택.</strong> 브라우저 실습은 설치할 게 없어요. 써 보고 제보하기나 코드로 기여하기를 할 분만 <a href="https://owasp-noir.github.io/owasp-korea-day/report/">Noir를 미리 설치</a>해 오세요.</li>
+            </ul>
+          </div>
+          <div>
+            <h2>자주 묻는 질문</h2>
+            <div class="faq">
+              <details>
+                <summary>코딩을 못 해도 되나요?</summary>
+                <p>네. 브라우저로 기여하기는 룰 파일에 단어와 예시를 추가하는 작업이라 코드를 짜지 않아요.</p>
+              </details>
+              <details>
+                <summary>영어로 써야 하나요?</summary>
+                <p>아니요. 제목도 내용도 한국어로 써도 돼요. 영어로 쓰고 싶다면 가이드에 있는 예시를 조금 바꾸면 돼요.</p>
+              </details>
+              <details>
+                <summary>시간 안에 못 끝내면 어떻게 되나요?</summary>
+                <p>PR은 행사가 끝나도 열려 있어요. 같은 PR에서 이어서 고치면 돼요.</p>
+              </details>
+              <details>
+                <summary>기여하면 어디에 남나요?</summary>
+                <p>PR이 반영되면 다음 Noir 버전에 들어가고, 저장소 첫 화면의 기여자 목록에 프로필이 올라가요.</p>
+              </details>
+              <details>
+                <summary>둘이 같이 해도 되나요?</summary>
+                <p>네. 막히면 옆 사람에게 먼저 묻고, 안 풀리면 손을 들어 주세요.</p>
+              </details>
+              <details>
+                <summary>용어가 낯설어요.</summary>
+                <dl>
+                  <div><dt>엔드포인트</dt><dd>서버가 요청을 받는 주소. <code>/login</code>, <code>/api/orders</code> 같은 것.</dd></div>
+                  <div><dt>PR (풀 리퀘스트)</dt><dd>고친 내용을 반영해 달라고 보내는 요청.</dd></div>
+                  <div><dt>포크</dt><dd>다른 사람의 저장소를 내 계정으로 복사한 것.</dd></div>
+                  <div><dt>머지</dt><dd>보낸 PR이 원본에 반영되는 것.</dd></div>
+                </dl>
+              </details>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+  </div>
+
+</main>
+<script type="module" src="https://owasp-noir.github.io/owasp-korea-day/js/desk.js"></script>
+  <footer class="site-footer">
+    <div class="wrap site-footer__in">
+      <p class="site-footer__who">
+        <img src="https://owasp-noir.github.io/owasp-korea-day/images/logo-s.png" alt="" width="20" height="20">
+        OWASP Noir, OWASP Korea Day 2026
+      </p>
+      <ul class="site-footer__links">
+        <li><a href="https://www.owaspkr.org/2026/">행사 안내</a></li>
+        <li><a href="https://github.com/owasp-noir/noir">저장소</a></li>
+        <li><a href="https://owasp-noir.github.io/noir/ko/">문서</a></li>
+        <li><a href="https://owasp.org/www-project-noir/">OWASP 프로젝트 페이지</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="https://owasp-noir.github.io/owasp-korea-day/js/site.js" defer></script>
+</body>
+</html>

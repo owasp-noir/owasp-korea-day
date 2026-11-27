@@ -1,0 +1,12 @@
+# Noir 기여 핸즈온
+
+> OWASP Korea Day 2026 Noir 기여 핸즈온 안내. 브라우저만으로 PR을 올리는 방법부터 코드를 고치는 방법까지.
+
+## Pages
+
+- [Noir 기여 핸즈온](https://owasp-noir.github.io/owasp-korea-day/): OWASP Korea Day 2026에서 OWASP Noir에 첫 기여를 남기는 두 시간. 브라우저만으로 PR을 올리는 방법부터 코드를 고치는 방법까지 안내해요.
+- [코드로 기여하기](https://owasp-noir.github.io/owasp-korea-day/code/): Noir 코드를 직접 고쳐요. 오늘은 빌드하고 실패하는 테스트를 만드는 데까지를 목표로 하고, 수정은 행사 뒤에 이어서 해도 돼요.
+- [써 보고 제보하기](https://owasp-noir.github.io/owasp-korea-day/report/): 아는 프로젝트를 Noir로 스캔하고, 빠지거나 틀린 결과를 이슈로 올려요. 코드는 고치지 않아요.
+- [취약점 제보하기](https://owasp-noir.github.io/owasp-korea-day/security/): 당신이 해커라면, Noir를 해킹해 주세요. 찾은 보안 문제는 공개 이슈 말고 비공개로 제보해 주세요.
+- [브라우저로 기여하기](https://owasp-noir.github.io/owasp-korea-day/web/): Noir의 태그 룰에 국내 서비스 키워드를 추가해요. GitHub 화면에서 파일 하나를 고쳐 PR로 보내요.
+

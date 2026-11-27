@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Noir 코드를 직접 고쳐요. 오늘은 빌드하고 실패하는 테스트를 만드는 데까지를 목표로 하고, 수정은 행사 뒤에 이어서 해도 돼요.">
+  
+  
+  <title>코드로 기여하기 - Noir 기여 핸즈온</title>
+  <meta name="theme-color" content="#000000">
+  
+  <script>document.documentElement.className = "js";</script>
+  <meta property="og:title" content="코드로 기여하기">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://owasp-noir.github.io/owasp-korea-day/code/">
+  <meta property="og:description" content="Noir 코드를 직접 고쳐요. 오늘은 빌드하고 실패하는 테스트를 만드는 데까지를 목표로 하고, 수정은 행사 뒤에 이어서 해도 돼요.">
+  <meta property="og:image" content="https://owasp-noir.github.io/owasp-korea-day/images/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="코드로 기여하기">
+  <meta name="twitter:description" content="Noir 코드를 직접 고쳐요. 오늘은 빌드하고 실패하는 테스트를 만드는 데까지를 목표로 하고, 수정은 행사 뒤에 이어서 해도 돼요.">
+  <meta name="twitter:image" content="https://owasp-noir.github.io/owasp-korea-day/images/og.jpg">
+  <link rel="canonical" href="https://owasp-noir.github.io/owasp-korea-day/code/">
+
+  <link rel="icon" href="https://owasp-noir.github.io/owasp-korea-day/logos/favicon.ico" sizes="any">
+  <link rel="icon" href="https://owasp-noir.github.io/owasp-korea-day/logos/favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="https://owasp-noir.github.io/owasp-korea-day/logos/apple-touch-icon.png">
+
+  <link rel="preload" href="https://owasp-noir.github.io/owasp-korea-day/fonts/handson-sans-site.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://owasp-noir.github.io/owasp-korea-day/fonts/hahmlet-site.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="https://owasp-noir.github.io/owasp-korea-day/css/fonts.css">
+  <link rel="stylesheet" href="https://owasp-noir.github.io/owasp-korea-day/css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 바로 가기</a>
+
+  
+  <header class="hud">
+    <div class="wrap hud__in">
+      <a class="brand" href="https://owasp-noir.github.io/owasp-korea-day/">
+        <img src="https://owasp-noir.github.io/owasp-korea-day/images/logo-s.png" alt="" width="26" height="26">
+        <span>Noir 기여 핸즈온</span>
+      </a>
+      <nav class="hud__links" aria-label="바로 가기">
+        <a href="https://owasp-noir.github.io/owasp-korea-day/">첫 화면</a>
+        <a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day">과제 목록</a>
+        <a href="https://owasp-noir.github.io/owasp-korea-day/slides/contributing-to-owasp-noir.pdf" download="Contributing to OWASP Noir.pdf">발표자료</a>
+      </nav>
+    </div>
+  </header>
+
+<div class="wrap folder">
+  <nav class="tabs" aria-label="사건 파일">
+    <a class="tab" href="https://owasp-noir.github.io/owasp-korea-day/web/"><span class="tab__long">브라우저로 기여</span><span class="tab__short">브라우저</span></a>
+    <a class="tab" href="https://owasp-noir.github.io/owasp-korea-day/report/"><span class="tab__long">써 보고 제보</span><span class="tab__short">제보</span></a>
+    <a class="tab" href="https://owasp-noir.github.io/owasp-korea-day/code/" aria-current="page"><span class="tab__long">코드로 기여</span><span class="tab__short">코드</span></a>
+    <a class="tab" href="https://owasp-noir.github.io/owasp-korea-day/security/"><span class="tab__long">취약점 제보</span><span class="tab__short">취약점</span></a>
+  </nav>
+  <div class="folder__body">
+
+<div class="file">
+  <aside class="file__side" aria-label="목차">
+    
+    
+    
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-dev.webp" alt="" width="512" height="512" decoding="async">
+  </div>
+  
+</figure>
+    
+    <div class="slip" id="page-toc" hidden>
+      <p class="slip__title">목차</p>
+      <nav id="page-nav"></nav>
+    </div>
+  </aside>
+
+  <div class="sheet">
+    <main id="main">
+
+      <header class="cover cover--page">
+        <div class="cover__body">
+          <div class="cover__copy">
+            <h1>코드로 기여하기</h1>
+            <p class="cover__lede">Noir 코드를 직접 고쳐요. 오늘은 빌드하고 실패하는 테스트를 만드는 데까지를 목표로 하고, 수정은 행사 뒤에 이어서 해도 돼요.</p>
+          </div>
+          
+          <div class="cover__photo">
+            
+            
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-dev.webp" alt="" width="512" height="512" decoding="async">
+  </div>
+  
+</figure>
+          </div>
+          
+        </div>
+
+        
+        <div class="record">
+          <dl class="form form--three">
+            <div><dt>준비물</dt><dd>브라우저(Codespaces), 또는 Crystal 1.19 이상</dd></div>
+            <div><dt>소요 시간</dt><dd>행사 뒤까지</dd></div>
+            <div><dt>결과물</dt><dd>Noir가 빌드되는 환경, 맡은 과제의 실패하는 테스트</dd></div>
+          </dl>
+          
+        </div>
+        
+      </header>
+
+      
+      <div class="doc">
+        <article class="prose">
+          <h2 id="시작하기-전에">시작하기 전에</h2>
+<p>Noir는 Crystal로 만들었어요. Crystal을 몰라도 아래 순서대로 하면 빌드와 테스트까지 돌릴 수 있어요.</p>
+<p>준비하는 방법은 두 가지예요.</p>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>이런 분께</th>
+<th>준비에 걸리는 시간</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>브라우저에서 열기 (Codespaces)</td>
+<td>아무것도 설치하고 싶지 않은 분, Windows를 쓰는 분</td>
+<td>처음 열 때 몇 분</td>
+</tr>
+<tr>
+<td>내 컴퓨터에 설치하기</td>
+<td>평소 쓰는 편집기로 작업하고 싶은 분</td>
+<td>설치 환경에 따라 달라요</td>
+</tr>
+</tbody>
+</table>
+<p>어느 쪽이든 빌드와 테스트는 처음 한 번이 제일 오래 걸려요. 첫 빌드는 2~3분, 첫 테스트는 5분쯤 걸려요. 내 컴퓨터에 Crystal을 설치했고 더 가벼운 일부터 해 보고 싶다면, 아래의 <a href="#%EC%8B%9C%ED%81%AC%EB%A6%BF-%ED%83%90%EC%A7%80-%EB%A3%B0">시크릿 탐지 룰</a>로 시작해도 좋아요.</p>
+<h2 id="설치-없이-시작하기">설치 없이 시작하기</h2>
+<p>GitHub Codespaces를 쓰면 브라우저 안에서 편집기와 터미널이 열려요. Crystal과 필요한 도구가 이미 들어 있어요. Windows에서는 Crystal을 직접 설치하기가 번거로워서 이 방법을 권해요.</p>
+<ol>
+<li><a href="https://github.com/owasp-noir/noir">Noir 저장소</a>에서 오른쪽 위의 <kbd>Fork</kbd>를 눌러 내 계정에 복사본을 만들어요.</li>
+<li>내 복사본 화면에서 초록색 <kbd>Code</kbd> 버튼을 누르고, Codespaces 탭에서 <kbd>Create codespace on main</kbd>을 눌러요.</li>
+<li>몇 분 기다리면 편집기가 열려요. 처음에는 환경을 새로 만드느라 더 걸릴 수 있어요. 아래쪽 터미널에서 명령을 실행할 수 있어요.</li>
+</ol>
+<p>이렇게 열었다면 아래 따라 하기의 1, 2단계는 건너뛰고 <strong>3단계 빌드하기</strong>부터 하면 돼요.</p>
+<ul>
+<li>컴퓨터 사양은 고르지 않아도 돼요. Noir를 빌드할 수 있는 4코어 머신이 자동으로 잡혀요.</li>
+<li>GitHub 개인 계정에는 매달 무료 사용량이 있어요. 행사 시간 정도는 그 안에서 충분해요.</li>
+<li>다 쓴 뒤에는 <a href="https://github.com/codespaces">codespaces 목록</a>에서 지워 주세요. 켜 두면 무료 사용량이 계속 줄어요.</li>
+</ul>
+<h2 id="따라-하기">따라 하기</h2>
+<div class="steps">
+<h3 id="도구-설치하기">도구 설치하기</h3>
+<p>Codespaces로 열었다면 이 단계와 다음 단계는 건너뛰어요. 이미 다 준비돼 있어요.</p>
+<p>macOS라면 Homebrew로 설치해요.</p>
+<pre><code class="language-sh hljs">brew install crystal just
+</code></pre>
+<p>Ubuntu나 Debian이라면 Crystal 설치 스크립트를 쓰고, 빌드에 필요한 라이브러리도 같이 설치해요.</p>
+<pre><code class="language-sh hljs">curl -fsSL https://crystal-lang.org/install.sh <span class="hljs-punctuation">|</span> sudo bash
+sudo apt install -y libyaml-dev libzstd-dev zlib1g-dev pkg-config just
+</code></pre>
+<p>다른 환경은 <a href="https://crystal-lang.org/install/">Crystal 설치 안내</a>를 참고하세요.</p>
+<blockquote>
+<p><code>crystal --version</code>과 <code>just --version</code>을 실행하면 각각 버전이 나와요.</p>
+</blockquote>
+<h3 id="내-계정으로-복사해서-내려받기">내 계정으로 복사해서 내려받기</h3>
+<p><a href="https://github.com/owasp-noir/noir">Noir 저장소</a>에서 오른쪽 위의 <kbd>Fork</kbd>를 눌러요. 내 계정에 복사본이 생겨요. 이걸 포크라고 해요. 그 복사본을 내 컴퓨터로 내려받아요.</p>
+<pre><code class="language-sh hljs">git clone https://github.com/내아이디/noir
+<span class="hljs-built_in">cd</span> noir
+shards install
+</code></pre>
+<p><code>shards install</code>은 Noir가 쓰는 라이브러리를 받아 오는 명령이에요.</p>
+<blockquote>
+<p><code>lib/</code> 폴더가 생겼고, 오류 없이 끝났어요.</p>
+</blockquote>
+<h3 id="빌드하기">빌드하기</h3>
+<pre><code class="language-sh hljs">just build
+</code></pre>
+<p>처음에는 시간이 좀 더 걸려요. 끝나면 <code>bin/noir</code>가 생겨요. 저장소에 들어 있는 예제 코드를 스캔해서 잘 되는지 확인해요.</p>
+<pre><code class="language-sh hljs">./bin/noir scan spec/functional_test/fixtures/crystal
+</code></pre>
+<blockquote>
+<p>엔드포인트 목록이 나와요. 이제 내가 고친 코드로 Noir를 돌려 볼 수 있어요.</p>
+</blockquote>
+<h3 id="테스트-돌리기">테스트 돌리기</h3>
+<pre><code class="language-sh hljs">just <span class="hljs-built_in">test</span>
+</code></pre>
+<p>테스트 전체를 실행 파일 하나(<code>bin/noir_spec</code>)로 만든 다음 실행해요. 만드는 데 시간이 제일 많이 들어요. 그래서 한 번 만든 뒤에는 필요한 테스트만 골라서 돌려요.</p>
+<pre><code class="language-sh hljs">./bin/noir_spec -e hono
+</code></pre>
+<p><code>-e</code> 뒤에 이름 일부를 적으면 그 이름이 들어간 테스트만 돌아가요. <code>0 examples</code>라고 나오면 통과한 게 아니라 맞는 이름이 없었다는 뜻이에요.</p>
+<p>예제 코드 폴더 하나만 검사하고 싶을 때는 이름이 조금 달라요. 폴더 경로를 대괄호로 감싸면 엔드포인트 개수 검사가 돌고, <code>::</code> 뒤에 주소를 적으면 그 주소의 검사가 돌아요.</p>
+<pre><code class="language-sh hljs">./bin/noir_spec -e <span class="hljs-string">&quot;[fixtures/php/php/]&quot;</span>
+./bin/noir_spec -e <span class="hljs-string">&quot;::/get.php&quot;</span>
+</code></pre>
+<p>예제 코드와 기대 결과(<code>.yml</code>)만 고쳤다면 다시 만들 필요가 없어요. 실행할 때 읽어 오거든요. Noir 코드(<code>src/</code>)를 고친 뒤에만 <code>just spec-build</code>로 다시 만들어요. 한 번에 몇 분씩 걸려요.</p>
+<blockquote>
+<p>실패 없이 끝났어요. 고치기 전에 다 통과하는 걸 확인해 둬야, 나중에 실패했을 때 내가 고친 것 때문인지 알 수 있어요.</p>
+</blockquote>
+<h3 id="과제-맡기">과제 맡기</h3>
+<p><a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%9B%A0%EF%B8%8F+needs-build%22">과제 목록</a>에서 하나를 골라 &quot;제가 할게요&quot;라고 댓글을 남겨요. 이미 댓글이 달려 있으면 다른 과제를 골라 주세요. 과제마다 문제가 생기는 짧은 코드, 지금 나오는 결과, 나와야 하는 결과가 적혀 있어요. 과제에 나오는 <code>noir scan .</code>은 방금 빌드한 <code>bin/noir</code>로 실행하면 돼요.</p>
+<p>과제에 붙은 라벨을 보고 골라요. 어디를 고치는지는 과제의 &quot;고칠 곳&quot;에 적혀 있어요.</p>
+<table>
+<thead>
+<tr>
+<th>라벨</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>🟡 medium</code></td>
+<td>오늘 실패하는 테스트까지 만들 수 있어요. 빠르면 수정까지 가요.</td>
+</tr>
+<tr>
+<td><code>🔴 hard</code></td>
+<td>어떻게 풀지부터 이야기해야 하는 과제예요. 행사 뒤까지 이어져요.</td>
+</tr>
+</tbody>
+</table>
+<p>목록에 없는 일도 환영해요. <a href="/owasp-korea-day/report/">써 보고 제보하기</a>에서 직접 찾은 문제를 고쳐도 되고, 새 출력 형식이나 새 프레임워크 지원처럼 직접 정한 일이라면 먼저 이슈를 열어 무엇을 할지 적어 주세요.</p>
+<p>엔드포인트를 찾는 부분을 고칠 때는 순서가 있어요.</p>
+<ol>
+<li>문제가 드러나는 예제 코드를 <code>spec/functional_test/fixtures/</code> 아래에 넣어요. 과제에 적힌 폴더에 파일을 추가하면 돼요.</li>
+<li>나와야 하는 엔드포인트를 <code>spec/functional_test/testers/</code>의 <code>.yml</code> 파일에 적어요. 파일 맨 위 <code>counts</code>의 <code>endpoints</code> 숫자도 늘어난 만큼 고쳐요.</li>
+<li>테스트를 돌려서 실패하는 걸 확인해요. 이때는 실패하는 게 맞아요.</li>
+<li>코드를 고쳐서 테스트를 통과시켜요.</li>
+</ol>
+<p>PHP 과제라면 2번에서 이렇게 적어요. <code>type</code>에는 <code>query</code>, <code>form</code>, <code>json</code>, <code>header</code>, <code>cookie</code>, <code>path</code> 중 하나가 와요.</p>
+<pre><code class="language-yaml hljs">  - <span class="hljs-name">url</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/confirm.php&quot;</span>
+    <span class="hljs-name">method</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;POST&quot;</span>
+    <span class="hljs-name">params</span><span class="hljs-punctuation">:</span>
+      - {<span class="hljs-name">name</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;orderId&quot;</span><span class="hljs-name">, type</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;json&quot;</span>}
+      - {<span class="hljs-name">name</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;amount&quot;</span><span class="hljs-name">, type</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;json&quot;</span>}
+      - {<span class="hljs-name">name</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;coupon&quot;</span><span class="hljs-name">, type</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;form&quot;</span>}
+</code></pre>
+<p>3번에서는 이런 줄이 나와요. 무엇이 빠졌는지 그대로 알려 줘요.</p>
+<pre><code class="language-text hljs">MISSING PARAM [orderId] on [POST::/confirm.php] in tester: fixtures/php/php/
+</code></pre>
+<p>오늘은 3번까지만 해도 충분해요. 실패하는 테스트가 있으면 행사 뒤에 이어서 고치기 쉬워요.</p>
+<p>저장소가 어떻게 생겼는지, 새 기능은 어디에 넣는지는 <a href="https://github.com/owasp-noir/noir/blob/main/AGENTS.md">AGENTS.md</a>에 정리돼 있어요. 코드를 읽기 전에 이 문서부터 읽어 보세요.</p>
+<blockquote>
+<p>맡은 이슈에 내 댓글이 달렸어요. 고칠 파일이 어디 있는지도 찾았어요.</p>
+</blockquote>
+<h3 id="고치고-pr-올리기">고치고 PR 올리기</h3>
+<p>작업할 브랜치를 하나 만들어서 고쳐요. 브랜치 이름은 내 과제에 맞게 지어요.</p>
+<pre><code class="language-sh hljs">git checkout -b fix/php-input-json-body
+</code></pre>
+<p>다 고쳤으면 코드 모양을 검사하고 테스트를 다시 돌려요.</p>
+<pre><code class="language-sh hljs">just check
+just <span class="hljs-built_in">test</span>
+</code></pre>
+<p>둘 다 처음에는 몇 분씩 걸려요. <code>just check</code>가 알려 준 것 중 자동으로 고칠 수 있는 건 <code>just fix</code>가 고쳐 줘요. 다 통과하면 저장하고 올려요.</p>
+<pre><code class="language-sh hljs">git add -A
+git commit -m <span class="hljs-string">&quot;fix(php): read JSON body keys from php://input&quot;</span>
+git push origin fix/php-input-json-body
+</code></pre>
+<p>GitHub에서 내 복사본 화면으로 가면 <kbd>Compare &amp; pull request</kbd> 버튼이 보여요. 눌러서 PR을 올려요. 내용에는 뭘 왜 고쳤는지 적고, 마지막 줄에 <code>Closes #1234</code>처럼 맡은 과제 번호를 적어요. 한국어로 써도 돼요.</p>
+<blockquote>
+<p>PR이 올라갔고 자동 검사가 시작됐어요. 처음 기여하는 계정은 관리자가 허락한 뒤에 검사가 돌아가요.</p>
+</blockquote>
+</div>
+<h2 id="시크릿-탐지-룰">시크릿 탐지 룰</h2>
+<p>이 과제는 내 컴퓨터에 Crystal을 설치한 분께 권해요. Noir용 Codespaces 안에서는 다른 저장소로 올리는 게 막혀 있을 수 있어요.</p>
+<p>Noir는 엔드포인트를 찾으면서, 코드에 실수로 적어 둔 API 키나 토큰도 같이 찾아요. 이걸 찾는 규칙은 <a href="https://github.com/owasp-noir/noir-passive-rules">noir-passive-rules</a>라는 다른 저장소에 들어 있어요. 국내 서비스의 키 모양은 아직 거의 없어요.</p>
+<p>규칙 하나는 이렇게 생겼어요.</p>
+<pre><code class="language-yaml hljs"><span class="hljs-name">id</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">stripe-webhook-secret</span>
+<span class="hljs-name">info</span><span class="hljs-punctuation">:</span>
+  <span class="hljs-name">name</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">Detect Stripe Webhook Secret</span>
+  <span class="hljs-name">author</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-literal">owasp noir team]</span>
+  <span class="hljs-name">severity</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">high</span>
+  <span class="hljs-name">description</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">Detects Stripe webhook signing secrets, which allow forging webhook events</span>
+  <span class="hljs-name">reference</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&#39;https://docs.stripe.com/webhooks#verify-events&#39;</span><span class="hljs-punctuation">]</span>
+<span class="hljs-name">matchers-condition</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">or</span>
+<span class="hljs-name">matchers</span><span class="hljs-punctuation">:</span>
+  - <span class="hljs-name">type</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">regex</span>
+    <span class="hljs-name">patterns</span><span class="hljs-punctuation">:</span>
+      - <span class="hljs-string">&#39;\bwhsec_[A-Za-z0-9]{32,}&#39;</span>
+    <span class="hljs-name">condition</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">or</span>
+<span class="hljs-name">category</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">secret</span>
+<span class="hljs-name">techs</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&#39;*&#39;</span><span class="hljs-punctuation">]</span>
+</code></pre>
+<p>기여는 세 단계예요.</p>
+<ol>
+<li><code>secrets/</code> 폴더에 규칙 파일을 추가해요. 키가 어떻게 생겼는지는 그 서비스의 공식 문서에서 확인해요.</li>
+<li><code>spec/secrets_spec.cr</code>에 테스트를 추가해요. 잡혀야 하는 글자와 잡히면 안 되는 글자를 각각 적어요.</li>
+<li><code>crystal spec/secrets_spec.cr</code>로 테스트를 돌리고 PR을 올려요.</li>
+</ol>
+<p>테스트에 넣는 가짜 키는 한 번에 쓰지 말고 <code>&quot;whs&quot; + &quot;ec_&quot; + &quot;A&quot; * 32</code>처럼 쪼개서 이어 붙여야 해요. 통째로 쓰면 GitHub가 진짜 키로 착각해서 올리지 못하게 막아요. 자세한 방법은 그 저장소의 <a href="https://github.com/owasp-noir/noir-passive-rules/blob/main/AGENTS.md">AGENTS.md</a>에 순서대로 나와 있어요.</p>
+<h2 id="ai-도구를-쓴다면">AI 도구를 쓴다면</h2>
+<p>두 저장소 모두 AI 도구가 읽는 안내 파일(<code>AGENTS.md</code>)이 있어서, Claude Code나 Codex 같은 도구로 작업하기 좋아요. 다만 PR을 올리는 사람은 여러분이에요. AI가 고친 것이라도 뭘 왜 바꿨는지 설명할 수 있어야 하고, 테스트가 통과하는지 직접 확인한 다음에 올려 주세요.</p>
+
+        </article>
+      </div>
+
+    </main>
+  </div>
+</div>
+  </div>
+</div>
+
+
+<section class="wrap others" aria-labelledby="others-title">
+  <h2 id="others-title">다른 사건</h2>
+  
+  <ul class="cases cases--row">
+    
+    <li class="case" data-case="web"><a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/web/">
+      
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-inspect.webp" alt="" width="512" height="512" decoding="async" loading="lazy">
+  </div>
+  
+</figure>
+      <div class="case__main"><h3 class="case__name">브라우저로 기여하기</h3><p class="case__what">태그 룰에 국내 서비스 키워드를 추가해요. 설치할 게 없어요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    
+    
+    <li class="case" data-case="report"><a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/report/">
+      
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-binoculars.webp" alt="" width="512" height="512" decoding="async" loading="lazy">
+  </div>
+  
+</figure>
+      <div class="case__main"><h3 class="case__name">써 보고 제보하기</h3><p class="case__what">Noir로 스캔하고, 빠지거나 틀린 결과를 이슈로 올려요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    
+    
+    
+    <li class="case" data-case="security"><a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/security/">
+      
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-hacker.webp" alt="" width="512" height="512" decoding="async" loading="lazy">
+  </div>
+  
+</figure>
+      <div class="case__main"><h3 class="case__name">취약점 제보하기</h3><p class="case__what">Noir에서 찾은 보안 문제를 비공개로 제보해요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    
+  </ul>
+</section>
+
+
+<dialog class="finale" id="finale" aria-labelledby="finale-title">
+  <p class="stamp finale__stamp" aria-hidden="true">사건 종결</p>
+  <h2 id="finale-title">단계를 모두 끝냈어요</h2>
+  <form method="dialog" class="actions">
+    <a class="btn btn--primary" href="https://owasp-noir.github.io/owasp-korea-day/">다음 사건 고르기</a>
+    <button class="btn btn--line">계속 읽기</button>
+  </form>
+</dialog>
+  <footer class="site-footer">
+    <div class="wrap site-footer__in">
+      <p class="site-footer__who">
+        <img src="https://owasp-noir.github.io/owasp-korea-day/images/logo-s.png" alt="" width="20" height="20">
+        OWASP Noir, OWASP Korea Day 2026
+      </p>
+      <ul class="site-footer__links">
+        <li><a href="https://www.owaspkr.org/2026/">행사 안내</a></li>
+        <li><a href="https://github.com/owasp-noir/noir">저장소</a></li>
+        <li><a href="https://owasp-noir.github.io/noir/ko/">문서</a></li>
+        <li><a href="https://owasp.org/www-project-noir/">OWASP 프로젝트 페이지</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="https://owasp-noir.github.io/owasp-korea-day/js/site.js" defer></script>
+</body>
+</html>

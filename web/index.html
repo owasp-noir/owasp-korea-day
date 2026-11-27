@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Noir의 태그 룰에 국내 서비스 키워드를 추가해요. GitHub 화면에서 파일 하나를 고쳐 PR로 보내요.">
+  
+  
+  <title>브라우저로 기여하기 - Noir 기여 핸즈온</title>
+  <meta name="theme-color" content="#000000">
+  
+  <script>document.documentElement.className = "js";</script>
+  <meta property="og:title" content="브라우저로 기여하기">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://owasp-noir.github.io/owasp-korea-day/web/">
+  <meta property="og:description" content="Noir의 태그 룰에 국내 서비스 키워드를 추가해요. GitHub 화면에서 파일 하나를 고쳐 PR로 보내요.">
+  <meta property="og:image" content="https://owasp-noir.github.io/owasp-korea-day/images/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="브라우저로 기여하기">
+  <meta name="twitter:description" content="Noir의 태그 룰에 국내 서비스 키워드를 추가해요. GitHub 화면에서 파일 하나를 고쳐 PR로 보내요.">
+  <meta name="twitter:image" content="https://owasp-noir.github.io/owasp-korea-day/images/og.jpg">
+  <link rel="canonical" href="https://owasp-noir.github.io/owasp-korea-day/web/">
+
+  <link rel="icon" href="https://owasp-noir.github.io/owasp-korea-day/logos/favicon.ico" sizes="any">
+  <link rel="icon" href="https://owasp-noir.github.io/owasp-korea-day/logos/favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="https://owasp-noir.github.io/owasp-korea-day/logos/apple-touch-icon.png">
+
+  <link rel="preload" href="https://owasp-noir.github.io/owasp-korea-day/fonts/handson-sans-site.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://owasp-noir.github.io/owasp-korea-day/fonts/hahmlet-site.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="https://owasp-noir.github.io/owasp-korea-day/css/fonts.css">
+  <link rel="stylesheet" href="https://owasp-noir.github.io/owasp-korea-day/css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 바로 가기</a>
+
+  
+  <header class="hud">
+    <div class="wrap hud__in">
+      <a class="brand" href="https://owasp-noir.github.io/owasp-korea-day/">
+        <img src="https://owasp-noir.github.io/owasp-korea-day/images/logo-s.png" alt="" width="26" height="26">
+        <span>Noir 기여 핸즈온</span>
+      </a>
+      <nav class="hud__links" aria-label="바로 가기">
+        <a href="https://owasp-noir.github.io/owasp-korea-day/">첫 화면</a>
+        <a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day">과제 목록</a>
+        <a href="https://owasp-noir.github.io/owasp-korea-day/slides/contributing-to-owasp-noir.pdf" download="Contributing to OWASP Noir.pdf">발표자료</a>
+      </nav>
+    </div>
+  </header>
+
+<div class="wrap folder">
+  <nav class="tabs" aria-label="사건 파일">
+    <a class="tab" href="https://owasp-noir.github.io/owasp-korea-day/web/" aria-current="page"><span class="tab__long">브라우저로 기여</span><span class="tab__short">브라우저</span></a>
+    <a class="tab" href="https://owasp-noir.github.io/owasp-korea-day/report/"><span class="tab__long">써 보고 제보</span><span class="tab__short">제보</span></a>
+    <a class="tab" href="https://owasp-noir.github.io/owasp-korea-day/code/"><span class="tab__long">코드로 기여</span><span class="tab__short">코드</span></a>
+    <a class="tab" href="https://owasp-noir.github.io/owasp-korea-day/security/"><span class="tab__long">취약점 제보</span><span class="tab__short">취약점</span></a>
+  </nav>
+  <div class="folder__body">
+
+<div class="file">
+  <aside class="file__side" aria-label="목차">
+    
+    
+    
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-inspect.webp" alt="" width="512" height="512" decoding="async">
+  </div>
+  
+</figure>
+    
+    <div class="slip" id="page-toc" hidden>
+      <p class="slip__title">목차</p>
+      <nav id="page-nav"></nav>
+    </div>
+  </aside>
+
+  <div class="sheet">
+    <main id="main">
+
+      <header class="cover cover--page">
+        <div class="cover__body">
+          <div class="cover__copy">
+            <h1>브라우저로 기여하기</h1>
+            <p class="cover__lede">Noir의 태그 룰에 국내 서비스 키워드를 추가해요. GitHub 화면에서 파일 하나를 고쳐 PR로 보내요.</p>
+          </div>
+          
+          <div class="cover__photo">
+            
+            
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-inspect.webp" alt="" width="512" height="512" decoding="async">
+  </div>
+  
+</figure>
+          </div>
+          
+        </div>
+
+        
+        <div class="record">
+          <dl class="form form--three">
+            <div><dt>준비물</dt><dd>GitHub 계정, 브라우저</dd></div>
+            <div><dt>소요 시간</dt><dd>40분</dd></div>
+            <div><dt>결과물</dt><dd>내 이름으로 올린 PR 하나</dd></div>
+          </dl>
+          
+        </div>
+        
+      </header>
+
+      
+      <div class="doc">
+        <article class="prose">
+          <h2 id="무엇을-고치나요">무엇을 고치나요</h2>
+<p>Noir는 소스 코드를 읽고, 그 서비스에 어떤 주소가 열려 있는지 찾아 줘요. 이런 주소를 <strong>엔드포인트</strong>라고 불러요. <code>/login</code>, <code>/api/orders</code> 같은 것들이에요.</p>
+<p>찾은 엔드포인트에는 &quot;여기는 결제&quot;, &quot;여기는 웹훅&quot; 같은 <strong>태그</strong>를 붙여요. 보안 점검하는 사람이 어디부터 볼지 고르기 쉬워지거든요.</p>
+<p>그런데 가끔 태그를 빠뜨려요. 카카오페이로 예를 들어 볼게요. 카카오페이는 결제가 끝나면 <code>pg_token</code>이라는 값을 붙여서 우리 서버로 돌려보내요. 그래서 카카오페이를 붙인 서버에는 보통 이런 코드가 있어요.</p>
+<pre><code class="language-js hljs">app<span class="hljs-punctuation">.</span>get<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;/kakaoPaySuccess&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-keyword">function</span> <span class="hljs-punctuation">(</span>req<span class="hljs-punctuation">,</span> res<span class="hljs-punctuation">)</span> <span class="hljs-punctuation">{</span>
+  <span class="hljs-keyword">const</span> pgToken <span class="hljs-operator">=</span> req<span class="hljs-punctuation">.</span>query<span class="hljs-punctuation">.</span>pg_token<span class="hljs-punctuation">;</span>
+
+  <span class="hljs-comment">// 받은 pg_token으로 카카오페이에 결제 승인을 요청해요.
+</span>  <span class="hljs-punctuation">...</span>
+<span class="hljs-punctuation">});</span>
+</code></pre>
+<p>Noir로 스캔하면 주소와 받는 값을 잘 찾아요. 그런데 결제 태그가 안 붙어요.</p>
+<pre><code class="language-text hljs">GET /kakaoPaySuccess?pg_token=
+</code></pre>
+<p>Noir가 <code>pg_token</code>이라는 이름을 모르기 때문이에요. Noir가 아는 이름은 대부분 해외 서비스 것이거든요. 이 이름을 추가하면 결과가 이렇게 바뀌어요.</p>
+<pre><code class="language-text hljs">GET /kakaoPaySuccess?pg_token=
+  ○ tags: payment
+</code></pre>
+<p>실제로 카카오페이를 붙인 공개 저장소 다섯 곳을 스캔해 봤어요. <code>pg_token</code>을 받는 주소 6개 중 3개에 결제 태그가 없었고, 이 단어를 추가하니 6개 모두에 붙었어요. 오늘은 이렇게 국내 서비스에서만 쓰는 이름을 룰에 추가해요.</p>
+<h2 id="룰-파일은-이렇게-생겼어요">룰 파일은 이렇게 생겼어요</h2>
+<p>태그를 붙이는 규칙은 <a href="https://github.com/owasp-noir/noir/tree/main/src/tagger/rules"><code>src/tagger/rules/</code></a> 폴더에 파일로 들어 있어요. 결제, 웹훅, 관리자처럼 태그 하나에 파일 하나예요. 결제 룰을 간단히 줄이면 이래요.</p>
+<pre><code class="language-yaml hljs"><span class="hljs-name">key</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">payment</span>
+<span class="hljs-name">match</span><span class="hljs-punctuation">:</span>
+  <span class="hljs-name">any</span><span class="hljs-punctuation">:</span>                        <span class="hljs-comment"># 아래 중 하나라도 맞으면 태그를 붙여요</span>
+    - <span class="hljs-name">path_segment</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-literal">payment, checkout, billing, paypal, stripe]</span>
+    - <span class="hljs-name">param</span><span class="hljs-punctuation">:</span>
+        <span class="hljs-name">name</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-literal">card_number, cvv, payment_method]</span>
+<span class="hljs-name">examples</span><span class="hljs-punctuation">:</span>
+  <span class="hljs-name">match</span><span class="hljs-punctuation">:</span>                      <span class="hljs-comment"># 태그가 붙어야 하는 예</span>
+    - { <span class="hljs-name">method: POST, url</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">/api/checkout }</span>
+  <span class="hljs-name">no_match</span><span class="hljs-punctuation">:</span>                   <span class="hljs-comment"># 태그가 붙으면 안 되는 예</span>
+    - { <span class="hljs-name">url</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">/api/orders }</span>
+</code></pre>
+<p>네 가지만 알면 돼요.</p>
+<table>
+<thead>
+<tr>
+<th>이름</th>
+<th>하는 일</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path_segment</code></td>
+<td>주소를 <code>/</code> <code>-</code> <code>_</code> <code>.</code>에서 잘라 조각으로 나눈 다음, 그 조각이 목록에 있는지 봐요. 대문자와 소문자는 구분하지 않아요.</td>
+<td><code>/kakao-pay/ready</code>는 <code>kakao</code>, <code>pay</code>, <code>ready</code>로 나뉘어요. <code>/kakaopay/ready</code>는 <code>kakaopay</code>, <code>ready</code>로 나뉘어요.</td>
+</tr>
+<tr>
+<td><code>param</code>의 <code>name</code></td>
+<td>요청에 담겨 오는 값의 이름을 봐요. 대문자와 소문자, <code>-</code>, <code>_</code>는 따지지 않아요.</td>
+<td><code>pg_token</code>, <code>pgToken</code>, <code>pg-token</code>을 모두 같은 이름으로 봐요. 하나만 적으면 돼요.</td>
+</tr>
+<tr>
+<td><code>url_contains</code></td>
+<td>주소를 조각으로 나누지 않고, 이 글자가 주소 어딘가에 들어 있는지 봐요. 소문자로 적어요.</td>
+<td><code>sign-in</code>처럼 <code>-</code>나 <code>_</code>가 들어간 말은 <code>path_segment</code>로 찾을 수 없어서 이걸 써요.</td>
+</tr>
+<tr>
+<td><code>examples</code></td>
+<td>룰이 제대로 동작하는지 확인하는 예시예요. PR을 올리면 자동 검사가 하나씩 돌려 봐요.</td>
+<td>테스트 코드를 따로 쓸 필요가 없어요.</td>
+</tr>
+</tbody>
+</table>
+<p>더 많은 조건은 <a href="https://github.com/owasp-noir/noir/blob/main/src/tagger/rules/README.md">룰 폴더의 README</a>에 있어요.</p>
+<h2 id="따라-하기">따라 하기</h2>
+<p>아래 예시는 위에서 본 카카오페이예요. 여러분은 첫 단계에서 고른 과제에 맞게 바꿔서 따라 하면 돼요.</p>
+<div class="steps">
+<h3 id="과제-고르기">과제 고르기</h3>
+<p><a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22">과제 목록</a>에서 하나를 골라 열어요. 과제는 크게 두 가지예요.</p>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>어떤 과제</th>
+<th>이 가이드와 다른 점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+yml+in%3Atitle">있는 룰에 단어 추가하기</a></td>
+<td>결제, 로그인, 본인인증처럼 이미 있는 태그에 국내 서비스의 단어를 넣어요.</td>
+<td>없어요. 아래 순서 그대로 하면 돼요.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+%22tagger+for%22+in%3Atitle">새 룰 파일 만들기</a></td>
+<td>검색, 주문, 프로필, 게시판처럼 아직 없는 태그를 만들어요.</td>
+<td>2단계에서 파일을 새로 만들어요.</td>
+</tr>
+</tbody>
+</table>
+<p>골랐으면 과제에 댓글을 남겨요. 댓글 칸은 과제 화면 맨 아래에 있어요.</p>
+<ul>
+<li>과제에 &quot;여러 사람이 이 이슈 하나를 같이 씁니다&quot;라고 적혀 있으면, 추가할 단어를 정해 &quot;<code>naverpay</code> 제가 할게요&quot;처럼 적어요. 다른 분이 이미 맡은 단어는 피해 주세요.</li>
+<li>그런 말이 없으면 한 사람이 맡는 과제예요. &quot;제가 할게요&quot;라고 적어요. 이미 댓글이 달려 있으면 다른 과제를 골라 주세요.</li>
+</ul>
+<p>추가할 이름은 기억에 기대지 말고, 그 서비스의 <strong>공식 문서나 공식 샘플 코드</strong>에서 확인해 주세요. 확인한 주소는 댓글에 같이 적고, 나중에 PR에도 붙여요.</p>
+<blockquote>
+<p>과제에 내 댓글이 달렸어요. 단어를 추가하는 과제라면 단어와, 그 단어를 확인한 주소도 적어 뒀어요.</p>
+</blockquote>
+<h3 id="고칠-파일-열기">고칠 파일 열기</h3>
+<p>고칠 파일을 GitHub에서 열어요. 결제 룰이라면 <a href="https://github.com/owasp-noir/noir/blob/main/src/tagger/rules/payment.yml">payment.yml</a>이에요. 다른 파일이라면 주소창에 <code>https://github.com/owasp-noir/noir/blob/main/</code>을 적고, 그 뒤에 과제에 적힌 경로(<code>src/tagger/rules/webhook.yml</code> 같은 것)를 붙여서 열어요. 파일이 열리면 오른쪽 위에 있는 연필 아이콘을 눌러요.</p>
+<p>이 저장소를 직접 고칠 권한은 없어서, GitHub가 내 계정에 복사본을 만들자고 해요. 이걸 <strong>포크</strong>라고 해요. <kbd>Fork this repository</kbd>를 누르면 복사본이 생기고, 거기서 고치게 돼요.</p>
+<p>새 룰 파일을 만드는 과제라면 <a href="https://github.com/owasp-noir/noir/new/main/src/tagger/rules">새 파일 만들기</a>를 열어요. 맨 위 이름 칸에 과제에 적힌 파일 이름(<code>search.yml</code> 같은 것)을 넣고, 아래 틀을 붙여 넣은 다음 내 과제에 맞게 바꿔요. 틀은 알림 태그를 예로 든 거예요.</p>
+<pre><code class="language-yaml hljs"><span class="hljs-name">key</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">notification</span>
+<span class="hljs-name">name</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">Notification Tagger</span>
+<span class="hljs-name">summary</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">Identifies notification endpoints</span>
+<span class="hljs-name">order</span><span class="hljs-punctuation">:</span> <span class="hljs-number">400</span>
+<span class="hljs-name">tag</span><span class="hljs-punctuation">:</span>
+  <span class="hljs-name">tagger</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">Notification</span>
+  <span class="hljs-name">description</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">Notification endpoint; review access.</span>
+<span class="hljs-name">match</span><span class="hljs-punctuation">:</span>
+  <span class="hljs-name">any</span><span class="hljs-punctuation">:</span>
+    - <span class="hljs-name">path_segment</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-literal">notification, notifications]</span>
+<span class="hljs-name">examples</span><span class="hljs-punctuation">:</span>
+  <span class="hljs-name">match</span><span class="hljs-punctuation">:</span>
+    - { <span class="hljs-name">url</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">/notifications }</span>
+    - { <span class="hljs-name">method: POST, url</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">/api/notification/read }</span>
+  <span class="hljs-name">no_match</span><span class="hljs-punctuation">:</span>
+    - { <span class="hljs-name">url</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">/blog/posts }</span>
+    - { <span class="hljs-name">url</span><span class="hljs-punctuation">:</span> <span class="hljs-literal">/catalog }</span>
+</code></pre>
+<ul>
+<li><code>key</code>는 파일 이름과 같아야 해요. <code>search.yml</code>이면 <code>search</code>예요.</li>
+<li><code>order</code>에는 과제에 적힌 숫자를 써요.</li>
+<li><code>name</code>, <code>summary</code>, <code>tag</code> 아래 두 줄은 영어로 짧게 적어요. <code>description</code>에는 이 태그가 붙은 주소에서 무엇을 점검해야 하는지 적어요.</li>
+<li><code>match</code>에는 조건을, <code>examples</code>에는 태그가 붙어야 하는 예(<code>match</code>)와 붙으면 안 되는 예(<code>no_match</code>)를 적어요.</li>
+</ul>
+<p>틀을 바꾸기 전에 3단계와 4단계의 설명을 읽어 보세요. 단어를 고르는 법과 <code>no_match</code>를 쓰는 법은 새 파일에서도 같아요. 다 바꿨으면 5단계로 넘어가요.</p>
+<blockquote>
+<p>파일 내용을 고칠 수 있는 편집 화면이 열렸어요.</p>
+</blockquote>
+<h3 id="단어-추가하기">단어 추가하기</h3>
+<p><code>match</code> 아래에서 알맞은 목록을 찾아 단어를 추가해요. 카카오페이 예시에서는 이름 하나를 넣어요.</p>
+<pre><code class="language-diff hljs">     - param:
+         name: [card_number, cc_number, cvv, cvc, cvv2, cvn, csc, security_code,
+                ...
+<span class="hljs-deletion">-               iban, routing_number, sort_code]
+</span><span class="hljs-addition">+               iban, routing_number, sort_code, pg_token]
+</span></code></pre>
+<ul>
+<li>위 상자에서 <code>-</code>로 시작하는 줄이 고치기 전, <code>+</code>로 시작하는 줄이 고친 뒤예요. 맨 앞의 <code>+</code>, <code>-</code> 기호와 <code>...</code>은 줄인 표시라서 입력하지 않아요.</li>
+<li>같은 이름의 목록이 두 개 있으면 <strong>위쪽 목록</strong>에 넣어요. 아래쪽 목록은 <code>all:</code> 안에 있어서, 다른 조건도 같이 맞아야 태그가 붙어요.</li>
+<li>띄어쓰기는 <strong>스페이스</strong>로 하고, 윗줄과 줄을 맞춰요. 탭 키는 쓰지 않아요.</li>
+<li>단어는 쉼표로 이어서 <code>]</code> 앞에 넣어요. <code>]</code>는 맨 끝에 하나만 있어야 해요.</li>
+<li>이름은 한 가지 모양으로만 적어요. <code>pg_token</code>을 넣으면 <code>pgToken</code>도 같이 잡혀요.</li>
+<li><code>path_segment</code>에는 <code>-</code>, <code>_</code>, <code>.</code>, <code>/</code>가 들어간 단어를 넣을 수 없어요. <code>kakao_pay</code>가 아니라 <code>kakaopay</code>로 적어요.</li>
+<li>너무 흔한 단어는 넣지 않아요. <code>token</code>만 넣으면 로그인 토큰을 받는 요청까지 전부 결제로 잡혀요.</li>
+</ul>
+<blockquote>
+<p>화면 위쪽의 Preview 탭을 누르면 바뀐 줄만 초록색과 빨간색으로 보여요. 내가 고치려던 줄만 바뀌었어요.</p>
+</blockquote>
+<h3 id="예시-추가하기">예시 추가하기</h3>
+<p>같은 파일 아래쪽에 있는 <code>examples</code>에 예시를 추가해요. <code>match</code>에는 방금 넣은 단어 덕분에 새로 태그가 붙는 요청을 적어요. <code>no_match</code>에는 비슷해 보여도 태그가 붙으면 안 되는 요청을 적어요.</p>
+<pre><code class="language-diff hljs"> examples:
+   match:
+     ...
+<span class="hljs-addition">+    - { url: /kakaoPaySuccess, params: [{ name: pg_token }] }
+</span>   no_match:
+     ...
+<span class="hljs-addition">+    - { url: /auth/refresh, params: [{ name: token }] }
+</span></code></pre>
+<p>여기서 제일 중요한 건 <code>no_match</code>예요. 태그는 붙이기보다 <strong>엉뚱한 데 안 붙게 하기</strong>가 더 어렵거든요. &quot;이 단어를 넣으면 어떤 주소가 잘못 걸릴까?&quot; 한 번 생각해 보고, 떠오른 주소를 적어 주세요.</p>
+<p>예를 하나 들게요. 전자정부 표준프레임워크에는 <code>/sym/cal/EgovAdministDayCalendar.do</code>라는 주소가 있어요. 여기서 Administ는 &quot;관리자&quot;가 아니라 &quot;행정&quot;이에요. <code>admin</code>이라는 글자가 들어 있다고 관리자 태그를 붙이면 틀려요. 이런 건 그 서비스를 써 본 사람이 제일 잘 알아요.</p>
+<blockquote>
+<p>추가한 단어마다 <code>match</code> 예시를 하나씩 넣었어요. <code>no_match</code> 예시도 하나 이상 넣었어요. 원래 있던 예시는 지우지 않았어요.</p>
+</blockquote>
+<h3 id="pr-올리기">PR 올리기</h3>
+<p>이제 고친 내용을 반영해 달라고 요청할 차례예요. 이 요청을 <strong>PR</strong>(풀 리퀘스트)이라고 해요.</p>
+<p>화면 오른쪽 위의 <kbd>Commit changes…</kbd>를 눌러요. 창이 뜨면 무엇을 고쳤는지 한 줄 적고 <kbd>Propose changes</kbd>를 눌러요. 바뀐 내용을 보여 주는 화면으로 넘어가요. 제목과 내용을 적는 칸이 바로 보이면 거기에 적으면 되고, 안 보이면 <kbd>Create pull request</kbd>를 한 번 눌러 칸을 열어요.</p>
+<p>제목에는 무엇을 바꿨는지 한 줄로 적어요. 제목과 내용 모두 한국어로 써도 돼요. 영어로 쓴다면 아래 예시를 조금 바꾸면 돼요.</p>
+<pre><code class="language-text hljs">feat: tag KakaoPay approval redirects as payment
+</code></pre>
+<p>내용은 아래 틀에서 내 과제에 맞게 바꿔 적어요.</p>
+<pre><code class="language-markdown hljs"><span class="hljs-section">## What</span>
+Adds <span class="hljs-string">`pg_token`</span> to the payment rule&#39;s parameter names.
+
+<span class="hljs-section">## Why</span>
+KakaoPay sends the user back to the merchant&#39;s approval URL with <span class="hljs-string">`pg_token`</span>. Endpoints such as <span class="hljs-string">`GET /kakaoPaySuccess?pg_token=`</span> were not tagged <span class="hljs-string">`payment`</span>.
+
+<span class="hljs-section">## Reference</span>
+https://developers.kakaopay.com/docs/payment/online/single-payment
+
+Refs <span class="hljs-symbol">#이슈번호</span>
+</code></pre>
+<p>마지막 줄에는 고른 과제의 번호를 적어요. 번호는 과제 화면의 제목 옆에 <code>#1234</code>처럼 적혀 있어요. 여러 사람이 같이 쓰는 과제라면 <code>Refs #번호</code>, 혼자 맡은 과제라면 <code>Closes #번호</code>라고 적어요. 같이 쓰는 과제에 <code>Closes</code>를 쓰면 첫 PR이 반영될 때 과제가 닫혀 버려요.</p>
+<p>다 적었으면 <kbd>Create pull request</kbd>를 눌러요. 내용을 빠뜨리고 올렸어도 괜찮아요. PR 화면에서 내용 오른쪽 위의 <kbd>…</kbd>를 누르고 Edit을 고르면 고칠 수 있어요.</p>
+<blockquote>
+<p>주소가 <code>github.com/owasp-noir/noir/pull/숫자</code>로 바뀌었고, 초록색 Open 표시가 보여요. PR이 올라갔어요.</p>
+</blockquote>
+<h3 id="자동-검사-확인하기">자동 검사 확인하기</h3>
+<p>PR 화면 아래쪽에 자동 검사 목록이 생겨요. 이 저장소에 처음 기여하는 계정은 관리자가 허락해야 검사가 시작돼요. 그래서 처음에는 기다리는 중이라고만 나올 수 있어요. 진행자가 차례로 허락할게요.</p>
+<p>먼저 볼 검사는 <code>Tag rule examples</code>예요. 내 룰의 예시를 하나씩 돌려 보는 검사이고, 1분 안에 끝나요. 빨간 X가 뜨면 그 검사의 이름(또는 옆의 Details)을 눌러 기록을 열어 보세요. <code>FAIL</code> 뒤에 어느 파일의 무엇이 틀렸는지 한 줄로 나와요.</p>
+<p><code>tests (1.22.0)</code>이라는 검사도 같이 돌아요. Noir의 다른 테스트까지 전부 돌리는 검사라 5~8분쯤 걸려요. 이건 기다리지 않아도 돼요. 회색으로 Skipped라고 나오는 검사들은 룰 파일과 상관없어서 건너뛴 거예요. 룰 파일 말고 다른 파일을 고친 PR에서는 <code>Tag rule examples</code>도 건너뛰어요. 그때는 빨간 X가 없는지만 보면 돼요.</p>
+<p>고칠 게 있으면 PR 화면의 Files changed 탭으로 가요. 파일 오른쪽의 <kbd>…</kbd>를 누르고 Edit file을 고르면 다시 고칠 수 있어요. <kbd>Commit changes…</kbd>로 저장하면 같은 PR에 반영되고 검사도 다시 돌아가요. PR을 새로 올릴 필요는 없어요.</p>
+<blockquote>
+<p><code>Tag rule examples</code> 옆에 초록색 체크가 떴어요. <code>tests</code>는 아직 돌고 있어도 괜찮아요.</p>
+</blockquote>
+</div>
+<h2 id="막혔을-때">막혔을 때</h2>
+<table>
+<thead>
+<tr>
+<th>이런 게 보이면</th>
+<th>이유</th>
+<th>이렇게 해요</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path_segment &#39;kakao_pay&#39; contains a separator (/ - _ .) and can never match a single segment</code></td>
+<td><code>path_segment</code>에 <code>-</code>, <code>_</code>, <code>.</code>, <code>/</code>가 들어간 단어를 넣었어요.</td>
+<td>그 글자를 빼고 한 단어로 적어요. 주소가 <code>/kakao-pay</code>처럼 생겼다면 <code>kakao</code>와 <code>pay</code>로 나뉘니까, 둘 중 어느 걸 볼지 다시 정해요.</td>
+</tr>
+<tr>
+<td><code>not tagged: POST /events (http) query:X-Example-Signature=</code></td>
+<td><code>match</code>에 적은 예시에 태그가 안 붙었어요.</td>
+<td>넣은 단어와 예시의 철자가 같은지 봐요. 단어를 <code>all:</code> 안에 있는 아래쪽 목록에 넣었다면 위쪽 목록으로 옮겨요. 웹훅 룰이라면 예시의 값에 <code>type: header</code>가 있는지 봐요.</td>
+</tr>
+<tr>
+<td><code>tagged but listed under no_match: GET /kakaopay/login (http)</code></td>
+<td><code>no_match</code>에 적은 예시에 태그가 붙어 버렸어요.</td>
+<td>예시를 잘못 적었다면 예시를 고쳐요. 예시가 맞다면 넣은 단어가 너무 흔한 거예요. 더 구체적인 단어로 바꿔요.</td>
+</tr>
+<tr>
+<td>기록에 YAML 오류와 줄 번호가 나와요</td>
+<td>줄이 안 맞거나, 탭이 섞였거나, <code>]</code>나 <code>,</code>가 빠졌어요.</td>
+<td>그 줄과 바로 윗줄을 위 예시와 한 글자씩 비교해 봐요.</td>
+</tr>
+<tr>
+<td><code>typos</code>라는 검사에 빨간 X가 떠요</td>
+<td>넣은 단어를 영어 오타로 본 거예요. <code>hight</code>, <code>ordr</code>처럼 실제로 쓰는 이름도 걸려요.</td>
+<td>오타가 맞으면 고쳐요. 실제 이름이라면 진행자에게 PR 번호를 알려 주세요.</td>
+</tr>
+<tr>
+<td>검사가 시작되지 않고 기다리는 중이라고만 나와요</td>
+<td>처음 기여하는 계정은 관리자가 허락해야 검사가 돌아가요.</td>
+<td>기다리면 돼요. 진행자에게 PR 번호를 알려 주세요.</td>
+</tr>
+<tr>
+<td>연필 아이콘이 안 눌려요</td>
+<td>GitHub에 로그인이 안 되어 있어요.</td>
+<td>로그인하고 화면을 새로 고쳐요.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2부에서-할-일">2부에서 할 일</h2>
+<p>쉬는 시간이 끝나면 1부에서 올린 PR의 검사 결과부터 다시 봐요. 그사이 <code>tests</code>도 끝나 있을 거예요. 빨간 X가 있으면 위 표를 보고 고쳐요. 초록색 체크를 받았다면 아래에서 다음 할 일을 골라 보세요. 아래로 갈수록 손이 더 많이 가요.</p>
+<table>
+<thead>
+<tr>
+<th>할 일</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>단어 하나 더</td>
+<td>다른 서비스 이름으로 PR을 하나 더 올려요. 같은 여섯 단계를 반복하면 되고, 두 번째는 훨씬 빨리 끝나요.</td>
+</tr>
+<tr>
+<td>새 룰 파일 만들기</td>
+<td>과제 목록에서 <a href="https://github.com/owasp-noir/noir/issues?q=is%3Aissue+is%3Aopen+label%3Aowasp-korea-day+label%3A%22%F0%9F%8C%90+browser-only%22+%22tagger+for%22+in%3Atitle">새 룰 파일 만들기</a> 과제를 하나 골라요. 2단계의 틀에서 시작하면 돼요.</td>
+</tr>
+<tr>
+<td>써 보고 제보하기</td>
+<td>Noir를 설치해서 직접 돌려 보고, 틀린 곳을 찾아 알려 줘요. <a href="/owasp-korea-day/report/">써 보고 제보하기 가이드</a></td>
+</tr>
+<tr>
+<td>코드로 기여하기</td>
+<td>Noir 코드를 직접 고쳐요. <a href="/owasp-korea-day/code/">코드로 기여하기 가이드</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="pr을-올린-뒤에는">PR을 올린 뒤에는</h2>
+<ul>
+<li>마무리 시간에 검사를 통과한 PR 한두 개를 그 자리에서 반영해 봐요. PR이 원본에 반영되는 걸 <strong>머지</strong>라고 해요. 나머지는 행사가 끝난 뒤 PR 댓글로 이야기를 이어 가요. GitHub에서 오는 알림 메일을 확인해 주세요.</li>
+<li>고쳐 달라는 댓글이 달리면 같은 PR에서 파일을 다시 고치면 돼요.</li>
+<li>머지되면 다음 Noir 버전에 내가 추가한 단어가 들어가요. 저장소 첫 화면의 기여자 그림에도 내 프로필이 올라가요.</li>
+</ul>
+
+        </article>
+      </div>
+
+    </main>
+  </div>
+</div>
+  </div>
+</div>
+
+
+<section class="wrap others" aria-labelledby="others-title">
+  <h2 id="others-title">다른 사건</h2>
+  
+  <ul class="cases cases--row">
+    
+    
+    <li class="case" data-case="report"><a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/report/">
+      
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-binoculars.webp" alt="" width="512" height="512" decoding="async" loading="lazy">
+  </div>
+  
+</figure>
+      <div class="case__main"><h3 class="case__name">써 보고 제보하기</h3><p class="case__what">Noir로 스캔하고, 빠지거나 틀린 결과를 이슈로 올려요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    
+    
+    <li class="case" data-case="code"><a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/code/">
+      
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-dev.webp" alt="" width="512" height="512" decoding="async" loading="lazy">
+  </div>
+  
+</figure>
+      <div class="case__main"><h3 class="case__name">코드로 기여하기</h3><p class="case__what">Noir 코드를 직접 고쳐요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    
+    
+    <li class="case" data-case="security"><a class="case__link" href="https://owasp-noir.github.io/owasp-korea-day/security/">
+      
+<figure class="photo">
+  <svg class="photo__clip" viewBox="0 0 26 62" aria-hidden="true"><path d="M17 16v27a5 5 0 0 1-10 0V12a9 9 0 0 1 18 0v33a12 12 0 0 1-24 0V18"/></svg>
+  <div class="photo__print">
+    <img src="https://owasp-noir.github.io/owasp-korea-day/images/mascot/hak-hacker.webp" alt="" width="512" height="512" decoding="async" loading="lazy">
+  </div>
+  
+</figure>
+      <div class="case__main"><h3 class="case__name">취약점 제보하기</h3><p class="case__what">Noir에서 찾은 보안 문제를 비공개로 제보해요.</p></div>
+      <span class="case__open">사건 열기</span>
+    </a></li>
+    
+  </ul>
+</section>
+
+
+<dialog class="finale" id="finale" aria-labelledby="finale-title">
+  <p class="stamp finale__stamp" aria-hidden="true">사건 종결</p>
+  <h2 id="finale-title">단계를 모두 끝냈어요</h2>
+  <form method="dialog" class="actions">
+    <a class="btn btn--primary" href="https://owasp-noir.github.io/owasp-korea-day/">다음 사건 고르기</a>
+    <button class="btn btn--line">계속 읽기</button>
+  </form>
+</dialog>
+  <footer class="site-footer">
+    <div class="wrap site-footer__in">
+      <p class="site-footer__who">
+        <img src="https://owasp-noir.github.io/owasp-korea-day/images/logo-s.png" alt="" width="20" height="20">
+        OWASP Noir, OWASP Korea Day 2026
+      </p>
+      <ul class="site-footer__links">
+        <li><a href="https://www.owaspkr.org/2026/">행사 안내</a></li>
+        <li><a href="https://github.com/owasp-noir/noir">저장소</a></li>
+        <li><a href="https://owasp-noir.github.io/noir/ko/">문서</a></li>
+        <li><a href="https://owasp.org/www-project-noir/">OWASP 프로젝트 페이지</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="https://owasp-noir.github.io/owasp-korea-day/js/site.js" defer></script>
+</body>
+</html>
